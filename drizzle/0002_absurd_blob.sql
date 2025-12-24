@@ -1,0 +1,1 @@
+ALTER TABLE `stamps` MODIFY COLUMN `description` text;

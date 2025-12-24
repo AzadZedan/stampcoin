@@ -1,0 +1,411 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --primary: oklch(42% 0.08 40);
+  --primary-foreground: oklch(98% 0.01 85);
+  --sidebar-primary: oklch(42% 0.08 40);
+  --sidebar-primary-foreground: oklch(98% 0.01 85);
+  --chart-1: oklch(65% 0.12 85);
+  --chart-2: oklch(55% 0.10 75);
+  --chart-3: oklch(45% 0.08 65);
+  --chart-4: oklch(35% 0.06 55);
+  --chart-5: oklch(25% 0.04 45);
+  --radius: 0.5rem;
+  --background: oklch(98.5% 0.01 85);
+  --foreground: oklch(20% 0.02 40);
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(20% 0.02 40);
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(20% 0.02 40);
+  --secondary: oklch(65% 0.12 85);
+  --secondary-foreground: oklch(20% 0.02 40);
+  --muted: oklch(96% 0.01 85);
+  --muted-foreground: oklch(55% 0.02 40);
+  --accent: oklch(35% 0.03 200);
+  --accent-foreground: oklch(98% 0.01 85);
+  --destructive: oklch(45% 0.15 25);
+  --destructive-foreground: oklch(98% 0.01 85);
+  --border: oklch(92% 0.01 85);
+  --input: oklch(92% 0.01 85);
+  --ring: oklch(42% 0.08 40);
+  --sidebar: oklch(100% 0 0);
+  --sidebar-foreground: oklch(20% 0.02 40);
+  --sidebar-accent: oklch(96% 0.01 85);
+  --sidebar-accent-foreground: oklch(20% 0.02 40);
+  --sidebar-border: oklch(92% 0.01 85);
+  --sidebar-ring: oklch(42% 0.08 40);
+}
+
+.dark {
+  --primary: var(--color-blue-700);
+  --primary-foreground: var(--color-blue-50);
+  --sidebar-primary: var(--color-blue-500);
+  --sidebar-primary-foreground: var(--color-blue-50);
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.85 0.005 65);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.85 0.005 65);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.85 0.005 65);
+  --secondary: oklch(0.24 0.006 286.033);
+  --secondary-foreground: oklch(0.7 0.005 65);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground:  oklch(0.92 0.005 65);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.488 0.243 264.376);
+  --chart-1: var(--color-blue-300);
+  --chart-2: var(--color-blue-500);
+  --chart-3: var(--color-blue-600);
+  --chart-4: var(--color-blue-700);
+  --chart-5: var(--color-blue-800);
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.85 0.005 65);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground:  oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.488 0.243 264.376);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  /**
+   * Custom container utility that centers content and adds responsive padding.
+   *
+   * This overrides Tailwind's default container behavior to:
+   * - Auto-center content (mx-auto)
+   * - Add responsive horizontal padding
+   * - Set max-width for large screens
+   *
+   * Usage: <div className="container">...</div>
+   *
+   * For custom widths, use max-w-* utilities directly:
+   * <div className="max-w-6xl mx-auto px-4">...</div>
+   */
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem; /* 16px - mobile padding */
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  .font-sans {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .shadow-elegant {
+    box-shadow: 0 4px 20px rgba(139, 69, 19, 0.08);
+  }
+
+  .shadow-elegant-lg {
+    box-shadow: 0 10px 40px rgba(139, 69, 19, 0.12);
+  }
+
+  .bg-gradient-elegant {
+    background: linear-gradient(135deg, #FDFBF7 0%, #F5F1E8 100%);
+  }
+
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(139, 69, 19, 0.15);
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  /* Premium Stamp Collection Backgrounds */
+  .bg-stamps-luxury {
+    background: linear-gradient(135deg, #1a1410 0%, #2d2420 50%, #1a1410 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bg-stamps-luxury::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(184, 134, 11, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Rare Stamp Pattern Background */
+  .bg-rare-stamps {
+    background: linear-gradient(45deg, #f5f1e8 25%, transparent 25%, transparent 75%, #f5f1e8 75%, #f5f1e8),
+                linear-gradient(45deg, #f5f1e8 25%, transparent 25%, transparent 75%, #f5f1e8 75%, #f5f1e8);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
+    background-color: #fdfbf7;
+  }
+
+  /* Vintage Stamp Texture */
+  .bg-vintage-texture {
+    background: linear-gradient(135deg, #fdfbf7 0%, #f5f1e8 50%, #ede8df 100%);
+    position: relative;
+  }
+
+  .bg-vintage-texture::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 69, 19, 0.03) 2px, rgba(139, 69, 19, 0.03) 4px),
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 69, 19, 0.03) 2px, rgba(139, 69, 19, 0.03) 4px);
+    pointer-events: none;
+  }
+
+  /* Gold Foil Effect */
+  .text-gold-foil {
+    background: linear-gradient(135deg, #daa520 0%, #ffd700 50%, #daa520 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
+  /* Stamp Card Hover Effect */
+  .stamp-card-hover {
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+  }
+
+  .stamp-card-hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .stamp-card-hover:hover::before {
+    left: 100%;
+  }
+
+  .stamp-card-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(218, 165, 32, 0.3);
+  }
+
+  /* Rarity Badge Glow */
+  .rarity-legendary {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #daa520 100%);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+
+  .rarity-very-rare {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 50%, #ff5a8a 100%);
+    box-shadow: 0 0 15px rgba(255, 107, 157, 0.5);
+  }
+
+  .rarity-rare {
+    background: linear-gradient(135deg, #4ecdc4 0%, #6ee7de 50%, #45b7b1 100%);
+    box-shadow: 0 0 15px rgba(78, 205, 196, 0.4);
+  }
+
+  .rarity-uncommon {
+    background: linear-gradient(135deg, #95e1d3 0%, #b8f3ea 50%, #7dd3c0 100%);
+    box-shadow: 0 0 10px rgba(149, 225, 211, 0.3);
+  }
+
+  /* Premium Section Background */
+  .premium-section {
+    background: linear-gradient(135deg, rgba(218, 165, 32, 0.05) 0%, rgba(184, 134, 11, 0.05) 100%),
+                linear-gradient(to bottom, #fdfbf7, #f5f1e8);
+    border-top: 2px solid rgba(218, 165, 32, 0.2);
+    border-bottom: 2px solid rgba(218, 165, 32, 0.2);
+  }
+
+  /* Shimmer Effect for Legendary Stamps */
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .shimmer-effect {
+    background: linear-gradient(90deg, #fdfbf7 0%, #ffd700 50%, #fdfbf7 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 3s infinite;
+  }
+
+  /* Elegant Border Decoration */
+  .border-gold-elegant {
+    border: 2px solid transparent;
+    background-image: linear-gradient(#fdfbf7, #fdfbf7), linear-gradient(135deg, #daa520, #ffd700, #daa520);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  /* Stamp Collection Grid Enhancement */
+  .stamps-grid-enhanced {
+    display: grid;
+    gap: 2rem;
+    perspective: 1000px;
+  }
+
+  .stamps-grid-enhanced > * {
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .stamps-grid-enhanced > *:hover {
+    transform: rotateY(5deg) rotateX(-5deg) translateZ(20px);
+  }
+
+  /* Luxury Text Shadow */
+  .text-shadow-luxury {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(218, 165, 32, 0.15);
+  }
+
+  /* Floating Animation */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Premium Card Style */
+  .card-premium {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 241, 232, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(218, 165, 32, 0.2);
+    box-shadow: 0 8px 32px rgba(139, 69, 19, 0.1);
+  }
+
+  .card-premium:hover {
+    box-shadow: 0 12px 48px rgba(218, 165, 32, 0.2);
+    border-color: rgba(218, 165, 32, 0.4);
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem; /* 32px - desktop padding */
+      padding-right: 2rem;
+      max-width: 1280px; /* Standard content width */
+    }
+  }
+}
