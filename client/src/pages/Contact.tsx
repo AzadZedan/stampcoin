@@ -7,20 +7,33 @@ import { Sparkles, Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
-    message: ""
+    message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const sendMessage = trpc.contact.send.useMutation({
+    onSuccess: () => {
+      toast.success("Message sent successfully! We'll get back to you soon.");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to send message. Please try again.");
+    },
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement API call to save contact message
-    toast.success("Message sent successfully! We'll get back to you soon.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    try {
+      await sendMessage.mutateAsync(formData);
+    } catch {
+      // error is handled by the onError callback
+    }
   };
 
   return (
@@ -126,8 +139,8 @@ export default function Contact() {
                     className="mt-2 min-h-[150px]"
                   />
                 </div>
-                <Button type="submit" size="lg" className="w-full">
-                  Send Message
+                <Button type="submit" size="lg" className="w-full" disabled={sendMessage.isPending} aria-busy={sendMessage.isPending}>
+                  {sendMessage.isPending ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </div>
