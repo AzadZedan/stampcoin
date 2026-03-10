@@ -17,11 +17,15 @@ export default function Marketplace() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedRarity, setSelectedRarity] = useState<string>("");
+  const [minPrice, setMinPrice] = useState<string>("");
+  const [maxPrice, setMaxPrice] = useState<string>("");
 
   const { data: stamps, isLoading } = trpc.stamps.list.useQuery({
     search: searchQuery || undefined,
     categoryId: selectedCategory ? parseInt(selectedCategory) : undefined,
     rarity: selectedRarity || undefined,
+    minPrice: minPrice ? parseFloat(minPrice) : undefined,
+    maxPrice: maxPrice ? parseFloat(maxPrice) : undefined,
   });
 
   const { data: categories } = trpc.categories.list.useQuery();
@@ -121,7 +125,38 @@ export default function Marketplace() {
                 </SelectContent>
               </Select>
             </div>
-            <Button variant="outline" size="icon">
+            <div className="w-full md:w-32">
+              <label className="text-sm font-medium mb-2 block">Min Price ($)</label>
+              <Input
+                type="number"
+                placeholder="0"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
+                min="0"
+              />
+            </div>
+            <div className="w-full md:w-32">
+              <label className="text-sm font-medium mb-2 block">Max Price ($)</label>
+              <Input
+                type="number"
+                placeholder="Any"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+                min="0"
+              />
+            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => {
+                setSearchQuery("");
+                setSelectedCategory("");
+                setSelectedRarity("");
+                setMinPrice("");
+                setMaxPrice("");
+              }}
+              title="Clear all filters"
+            >
               <Filter className="w-5 h-5" />
             </Button>
           </div>
