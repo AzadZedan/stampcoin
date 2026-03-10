@@ -23,7 +23,7 @@ const TOKEN = {
   consensus: "Proof of Staked Authority (PoSA)",
   standard: "BEP-20",
   network: "BSC Mainnet",
-  chainId: 56
+  chainId: 56,
 };
 
 const BLOCKCHAIN_FILE = path.join(__dirname, "blockchain-state.json");
@@ -40,7 +40,7 @@ function loadState() {
   return {
     mintedSupply: 0,
     balances: {},
-    mintEvents: []
+    mintEvents: [],
   };
 }
 
@@ -77,7 +77,8 @@ function validateAddress(address) {
 function getBlockchainInfo() {
   return {
     ...TOKEN,
-    contractAddress: process.env.STP_CONTRACT_ADDRESS || "Pending mainnet deployment"
+    contractAddress:
+      process.env.STP_CONTRACT_ADDRESS || "Pending mainnet deployment",
   };
 }
 
@@ -91,7 +92,7 @@ function getSupply() {
     mintedSupply: state.mintedSupply,
     remainingSupply: TOKEN.totalSupply - state.mintedSupply,
     symbol: TOKEN.symbol,
-    decimals: TOKEN.decimals
+    decimals: TOKEN.decimals,
   };
 }
 
@@ -104,7 +105,12 @@ function getSupply() {
 function mintTokens(toAddress, amount) {
   validateAddress(toAddress);
 
-  if (typeof amount !== "number" || !Number.isFinite(amount) || amount <= 0 || !Number.isInteger(amount)) {
+  if (
+    typeof amount !== "number" ||
+    !Number.isFinite(amount) ||
+    amount <= 0 ||
+    !Number.isInteger(amount)
+  ) {
     throw new Error("Mint amount must be a positive integer");
   }
 
@@ -113,7 +119,7 @@ function mintTokens(toAddress, amount) {
   if (state.mintedSupply + amount > TOKEN.totalSupply) {
     throw new Error(
       `Mint would exceed total supply cap of ${TOKEN.totalSupply} STP ` +
-      `(currently minted: ${state.mintedSupply})`
+        `(currently minted: ${state.mintedSupply})`
     );
   }
 
@@ -125,7 +131,7 @@ function mintTokens(toAddress, amount) {
     type: "mint",
     to: toAddress,
     amount,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
   state.mintEvents.push(event);
 
@@ -144,7 +150,7 @@ function getBalance(address) {
   return {
     address,
     balance: state.balances[address] || 0,
-    symbol: TOKEN.symbol
+    symbol: TOKEN.symbol,
   };
 }
 
@@ -160,10 +166,4 @@ function getMintEvents() {
 // Initialize state file on module load
 loadState();
 
-export {
-  getBlockchainInfo,
-  getSupply,
-  mintTokens,
-  getBalance,
-  getMintEvents
-};
+export { getBlockchainInfo, getSupply, mintTokens, getBalance, getMintEvents };

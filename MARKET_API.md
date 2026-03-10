@@ -19,11 +19,13 @@ http://localhost:10000/api/market
 Get a list of all items in the market with optional filtering.
 
 **Query Parameters:**
+
 - `status` (optional): Filter by item status (`available`, `sold`)
 - `type` (optional): Filter by item type (e.g., `stamp`, `collectible`)
 - `sellerId` (optional): Filter by seller user ID
 
 **Example Response:**
+
 ```json
 [
   {
@@ -47,6 +49,7 @@ Get a list of all items in the market with optional filtering.
 **GET** `/api/market/items/:itemId`
 
 **Error Response (404):**
+
 ```json
 { "error": "Market item not found" }
 ```
@@ -58,6 +61,7 @@ Get a list of all items in the market with optional filtering.
 **POST** `/api/market/items`
 
 **Request Body:**
+
 ```json
 {
   "sellerId": "user123",
@@ -78,6 +82,7 @@ Get a list of all items in the market with optional filtering.
 Only the seller can update their own listing.
 
 **Request Body:**
+
 ```json
 {
   "userId": "user123",
@@ -87,6 +92,7 @@ Only the seller can update their own listing.
 ```
 
 **Error Responses:**
+
 - `400` — `userId` missing or no updatable fields provided
 - `403` — caller is not the seller
 - `404` — item not found
@@ -98,6 +104,7 @@ Only the seller can update their own listing.
 **POST** `/api/market/items/:itemId/buy`
 
 **Request Body:**
+
 ```json
 { "buyerId": "user456" }
 ```
@@ -109,6 +116,7 @@ Only the seller can update their own listing.
 **DELETE** `/api/market/items/:itemId`
 
 **Request Body:**
+
 ```json
 { "userId": "user123" }
 ```
@@ -120,6 +128,7 @@ Only the seller can update their own listing.
 **GET** `/api/market/transactions`
 
 **Query Parameters:**
+
 - `buyerId` (optional)
 - `sellerId` (optional)
 

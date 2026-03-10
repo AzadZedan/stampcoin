@@ -2,7 +2,15 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getLoginUrl } from "@/const";
-import { ArrowRight, Shield, TrendingUp, Users, Sparkles, Globe, Award } from "lucide-react";
+import {
+  ArrowRight,
+  Shield,
+  TrendingUp,
+  Users,
+  Sparkles,
+  Globe,
+  Award,
+} from "lucide-react";
 import { Link } from "wouter";
 
 export default function Home() {
@@ -16,22 +24,39 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Sparkles className="w-8 h-8 text-primary" />
-              <h1 className="text-2xl font-serif font-bold text-primary">StampCoin</h1>
+              <h1 className="text-2xl font-serif font-bold text-primary">
+                StampCoin
+              </h1>
             </div>
             <div className="hidden md:flex items-center gap-6">
-              <Link href="/marketplace" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/marketplace"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Marketplace
               </Link>
-              <Link href="/gallery" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/gallery"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Gallery
               </Link>
-              <Link href="/investors" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/investors"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 For Investors
               </Link>
-              <Link href="/about" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/about"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 About
               </Link>
-              <Link href="/contact" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/contact"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Contact
               </Link>
             </div>
@@ -62,11 +87,14 @@ export default function Home() {
             <div className="animate-fade-in-up">
               <h2 className="text-5xl md:text-6xl font-serif font-bold text-foreground mb-6 leading-tight">
                 The Future of
-                <span className="text-gold-foil block text-shadow-luxury">Stamp Collecting</span>
+                <span className="text-gold-foil block text-shadow-luxury">
+                  Stamp Collecting
+                </span>
               </h2>
               <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                Join 70+ million stamp collectors worldwide in the digital revolution. 
-                Buy, sell, and trade authenticated digital stamps with blockchain technology.
+                Join 70+ million stamp collectors worldwide in the digital
+                revolution. Buy, sell, and trade authenticated digital stamps
+                with blockchain technology.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/marketplace">
@@ -82,15 +110,25 @@ export default function Home() {
               </div>
               <div className="mt-12 flex items-center gap-8">
                 <div>
-                  <div className="text-3xl font-serif font-bold text-primary">70M+</div>
-                  <div className="text-sm text-muted-foreground">Collectors Worldwide</div>
+                  <div className="text-3xl font-serif font-bold text-primary">
+                    70M+
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    Collectors Worldwide
+                  </div>
                 </div>
                 <div>
-                  <div className="text-3xl font-serif font-bold text-primary">$5B+</div>
-                  <div className="text-sm text-muted-foreground">Annual Market</div>
+                  <div className="text-3xl font-serif font-bold text-primary">
+                    $12B+
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    Annual Market
+                  </div>
                 </div>
                 <div>
-                  <div className="text-3xl font-serif font-bold text-primary">150+</div>
+                  <div className="text-3xl font-serif font-bold text-primary">
+                    150+
+                  </div>
                   <div className="text-sm text-muted-foreground">Countries</div>
                 </div>
               </div>
@@ -100,7 +138,9 @@ export default function Home() {
                 <div className="w-full h-full bg-card rounded-xl flex items-center justify-center">
                   <div className="text-center">
                     <Sparkles className="w-24 h-24 text-primary mx-auto mb-4" />
-                    <p className="text-lg font-serif text-muted-foreground">Featured Stamp Preview</p>
+                    <p className="text-lg font-serif text-muted-foreground">
+                      Featured Stamp Preview
+                    </p>
                   </div>
                 </div>
               </div>
@@ -117,7 +157,8 @@ export default function Home() {
               Why Choose StampCoin?
             </h3>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              The first specialized NFT platform designed exclusively for stamp collectors
+              The first specialized NFT platform designed exclusively for stamp
+              collectors
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -126,10 +167,12 @@ export default function Home() {
                 <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-6">
                   <Shield className="w-7 h-7 text-primary" />
                 </div>
-                <h4 className="text-2xl font-serif font-semibold mb-4">Authenticated</h4>
+                <h4 className="text-2xl font-serif font-semibold mb-4">
+                  Authenticated
+                </h4>
                 <p className="text-muted-foreground leading-relaxed">
-                  Every stamp is verified and authenticated by experts, ensuring the 
-                  authenticity and value of your digital collection.
+                  Every stamp is verified and authenticated by experts, ensuring
+                  the authenticity and value of your digital collection.
                 </p>
               </CardContent>
             </Card>
@@ -138,10 +181,12 @@ export default function Home() {
                 <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mb-6">
                   <Globe className="w-7 h-7 text-secondary" />
                 </div>
-                <h4 className="text-2xl font-serif font-semibold mb-4">Global Marketplace</h4>
+                <h4 className="text-2xl font-serif font-semibold mb-4">
+                  Global Marketplace
+                </h4>
                 <p className="text-muted-foreground leading-relaxed">
-                  Connect with collectors from 150+ countries. Buy, sell, and trade 
-                  stamps from around the world in one platform.
+                  Connect with collectors from 150+ countries. Buy, sell, and
+                  trade stamps from around the world in one platform.
                 </p>
               </CardContent>
             </Card>
@@ -150,10 +195,12 @@ export default function Home() {
                 <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mb-6">
                   <TrendingUp className="w-7 h-7 text-accent" />
                 </div>
-                <h4 className="text-2xl font-serif font-semibold mb-4">Investment Potential</h4>
+                <h4 className="text-2xl font-serif font-semibold mb-4">
+                  Investment Potential
+                </h4>
                 <p className="text-muted-foreground leading-relaxed">
-                  Rare stamps appreciate in value over time. Track market trends and 
-                  build a valuable digital collection.
+                  Rare stamps appreciate in value over time. Track market trends
+                  and build a valuable digital collection.
                 </p>
               </CardContent>
             </Card>
@@ -169,7 +216,9 @@ export default function Home() {
               <div>
                 <Users className="w-10 h-10 mx-auto mb-4 opacity-90" />
                 <div className="text-4xl font-serif font-bold mb-2">70M+</div>
-                <div className="text-primary-foreground/80">Active Collectors</div>
+                <div className="text-primary-foreground/80">
+                  Active Collectors
+                </div>
               </div>
               <div>
                 <Award className="w-10 h-10 mx-auto mb-4 opacity-90" />
@@ -183,7 +232,7 @@ export default function Home() {
               </div>
               <div>
                 <TrendingUp className="w-10 h-10 mx-auto mb-4 opacity-90" />
-                <div className="text-4xl font-serif font-bold mb-2">$5B+</div>
+                <div className="text-4xl font-serif font-bold mb-2">$12B+</div>
                 <div className="text-primary-foreground/80">Market Value</div>
               </div>
             </div>
@@ -199,7 +248,8 @@ export default function Home() {
               Start Your Digital Collection Today
             </h3>
             <p className="text-xl text-muted-foreground mb-8">
-              Join thousands of collectors who have already made the transition to digital stamp collecting
+              Join thousands of collectors who have already made the transition
+              to digital stamp collecting
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <a href={getLoginUrl()}>
@@ -227,29 +277,73 @@ export default function Home() {
                 <h4 className="text-lg font-serif font-bold">StampCoin</h4>
               </div>
               <p className="text-sm text-muted-foreground">
-                The world's first specialized NFT marketplace for digital stamp collecting.
+                The world's first specialized NFT marketplace for digital stamp
+                collecting.
               </p>
             </div>
             <div>
               <h5 className="font-semibold mb-4">Platform</h5>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/marketplace" className="hover:text-primary transition-colors">Marketplace</Link></li>
-                <li><Link href="/gallery" className="hover:text-primary transition-colors">Gallery</Link></li>
-                <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
+                <li>
+                  <Link
+                    href="/marketplace"
+                    className="hover:text-primary transition-colors"
+                  >
+                    Marketplace
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/gallery"
+                    className="hover:text-primary transition-colors"
+                  >
+                    Gallery
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/about"
+                    className="hover:text-primary transition-colors"
+                  >
+                    About Us
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h5 className="font-semibold mb-4">Resources</h5>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/investors" className="hover:text-primary transition-colors">For Investors</Link></li>
-                <li><Link href="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
+                <li>
+                  <Link
+                    href="/investors"
+                    className="hover:text-primary transition-colors"
+                  >
+                    For Investors
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/contact"
+                    className="hover:text-primary transition-colors"
+                  >
+                    Contact
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h5 className="font-semibold mb-4">Legal</h5>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Terms of Service</a></li>
+                <li>
+                  <a href="#" className="hover:text-primary transition-colors">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-primary transition-colors">
+                    Terms of Service
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
