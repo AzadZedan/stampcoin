@@ -1,4 +1,13 @@
-import { describe, expect, it } from "vitest";
+import { vi, describe, expect, it } from "vitest";
+
+vi.mock("./db", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("./db")>();
+  return {
+    ...actual,
+    createContactMessage: vi.fn().mockResolvedValue([{ affectedRows: 1 }]),
+  };
+});
+
 import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
 

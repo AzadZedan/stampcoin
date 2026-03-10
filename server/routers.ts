@@ -256,7 +256,7 @@ export const appRouter = router({
             "card",
           ];
 
-          const session = await stripe.checkout.sessions.create({
+          const session = await getStripe().checkout.sessions.create({
             payment_method_types: paymentMethods as any,
             line_items: [
               {
