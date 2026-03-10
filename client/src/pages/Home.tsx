@@ -25,6 +25,9 @@ export default function Home() {
               <Link href="/gallery" className="text-foreground/80 hover:text-primary transition-colors">
                 Gallery
               </Link>
+              <Link href="/ai-assistant" className="text-foreground/80 hover:text-primary transition-colors">
+                AI Assistant
+              </Link>
               <Link href="/investors" className="text-foreground/80 hover:text-primary transition-colors">
                 For Investors
               </Link>
