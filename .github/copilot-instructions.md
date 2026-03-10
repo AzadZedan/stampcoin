@@ -53,20 +53,20 @@ StampCoin is a full-stack web application for trading digital stamp NFTs/collect
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 19, Vite 7, Tailwind CSS 4, Wouter (routing) |
-| UI Components | shadcn/ui (Radix UI primitives + Tailwind) |
-| State / Data | TanStack React Query 5, React Hook Form 7 |
-| API Layer | tRPC 11 (type-safe RPC, no REST) |
-| Backend | Node.js, Express 4 |
-| Database | MySQL via Drizzle ORM 0.44.5 |
-| Auth | OAuth + JWT (jose), cookie-based sessions |
-| Payments | Stripe 20 |
-| Storage | AWS S3 (`@aws-sdk/client-s3`) |
-| Validation | Zod 4 |
-| Testing | Vitest 2 |
-| Formatting | Prettier 3 |
+| Layer         | Technology                                         |
+| ------------- | -------------------------------------------------- |
+| Frontend      | React 19, Vite 7, Tailwind CSS 4, Wouter (routing) |
+| UI Components | shadcn/ui (Radix UI primitives + Tailwind)         |
+| State / Data  | TanStack React Query 5, React Hook Form 7          |
+| API Layer     | tRPC 11 (type-safe RPC, no REST)                   |
+| Backend       | Node.js, Express 4                                 |
+| Database      | MySQL via Drizzle ORM 0.44.5                       |
+| Auth          | OAuth + JWT (jose), cookie-based sessions          |
+| Payments      | Stripe 20                                          |
+| Storage       | AWS S3 (`@aws-sdk/client-s3`)                      |
+| Validation    | Zod 4                                              |
+| Testing       | Vitest 2                                           |
+| Formatting    | Prettier 3                                         |
 
 **TypeScript** is used throughout; strict mode is enabled.
 
@@ -108,17 +108,17 @@ The dev server starts on port 3000. It serves the Express API at `/api/*` and pr
 
 Set these before running the server (see `server/_core/env.ts`):
 
-| Variable | Description |
-|----------|-------------|
-| `DATABASE_URL` | MySQL connection string (e.g., `mysql://user:pass@host/db`) |
-| `JWT_SECRET` | Secret for signing JWT tokens |
-| `STRIPE_SECRET_KEY` | Stripe API secret key (starts with `sk_`) |
-| `VITE_APP_ID` | Application ID (used by OAuth) |
-| `OAUTH_SERVER_URL` | OAuth server endpoint URL |
-| `OWNER_OPEN_ID` | OpenID of the admin/owner user |
-| `BUILT_IN_FORGE_API_URL` | Forge AI API endpoint |
-| `BUILT_IN_FORGE_API_KEY` | Forge AI API key |
-| `NODE_ENV` | `development` or `production` |
+| Variable                 | Description                                                 |
+| ------------------------ | ----------------------------------------------------------- |
+| `DATABASE_URL`           | MySQL connection string (e.g., `mysql://user:pass@host/db`) |
+| `JWT_SECRET`             | Secret for signing JWT tokens                               |
+| `STRIPE_SECRET_KEY`      | Stripe API secret key (starts with `sk_`)                   |
+| `VITE_APP_ID`            | Application ID (used by OAuth)                              |
+| `OAUTH_SERVER_URL`       | OAuth server endpoint URL                                   |
+| `OWNER_OPEN_ID`          | OpenID of the admin/owner user                              |
+| `BUILT_IN_FORGE_API_URL` | Forge AI API endpoint                                       |
+| `BUILT_IN_FORGE_API_KEY` | Forge AI API key                                            |
+| `NODE_ENV`               | `development` or `production`                               |
 
 AWS S3 credentials are needed for image uploads (use standard `AWS_*` env vars).
 
@@ -211,17 +211,17 @@ const caller = appRouter.createCaller(ctx);
 
 Routes are defined in `client/src/App.tsx` using [Wouter](https://github.com/molefrog/wouter):
 
-| Path | Component |
-|------|-----------|
-| `/` | Home |
-| `/marketplace` | Marketplace |
-| `/stamp/:id` | StampDetail |
-| `/dashboard` | Dashboard |
-| `/gallery` | Gallery |
-| `/about` | About |
-| `/investors` | Investors |
-| `/contact` | Contact |
-| `/partners` | Partners |
+| Path              | Component     |
+| ----------------- | ------------- |
+| `/`               | Home          |
+| `/marketplace`    | Marketplace   |
+| `/stamp/:id`      | StampDetail   |
+| `/dashboard`      | Dashboard     |
+| `/gallery`        | Gallery       |
+| `/about`          | About         |
+| `/investors`      | Investors     |
+| `/contact`        | Contact       |
+| `/partners`       | Partners      |
 | `/payment-result` | PaymentResult |
 
 ---
@@ -233,6 +233,7 @@ Routes are defined in `client/src/App.tsx` using [Wouter](https://github.com/mol
 The repository has a `.github/workflows/deno.yml` workflow that runs `deno lint` and `deno test`. **This workflow is expected to fail** because this is a Node.js/pnpm project, not a Deno project. The Deno linter flags Node.js-specific patterns (`process`, `window`, `any` types, etc.) as errors.
 
 **Do not attempt to fix these Deno lint errors** — they exist in the original codebase and are unrelated to the Node.js development workflow. The actual linting and testing is done via:
+
 - `pnpm format` (Prettier)
 - `pnpm check` (TypeScript)
 - `pnpm test` (Vitest)

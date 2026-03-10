@@ -14,7 +14,7 @@ const MARKET_FILE = path.join(__dirname, "market-data.json");
 // Initialize market data structure
 let marketData = {
   items: [],
-  transactions: []
+  transactions: [],
 };
 
 // Load market data from file
@@ -60,7 +60,7 @@ function addMarketItem(sellerId, item) {
     type: item.type || "stamp",
     imageUrl: item.imageUrl || "",
     status: "available",
-    listedAt: new Date().toISOString()
+    listedAt: new Date().toISOString(),
   };
 
   marketData.items.push(newItem);
@@ -144,7 +144,7 @@ function purchaseMarketItem(itemId, buyerId) {
     sellerId: item.sellerId,
     buyerId,
     price: item.price,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
 
   marketData.transactions.push(transaction);
@@ -152,7 +152,7 @@ function purchaseMarketItem(itemId, buyerId) {
 
   return {
     transaction,
-    item
+    item,
   };
 }
 
@@ -200,5 +200,5 @@ export {
   updateMarketItem,
   purchaseMarketItem,
   removeMarketItem,
-  getMarketTransactions
+  getMarketTransactions,
 };

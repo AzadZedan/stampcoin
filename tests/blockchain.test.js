@@ -9,12 +9,20 @@ let mockBlockchainStore;
 
 vi.mock("fs", () => ({
   default: {
-    existsSync: vi.fn().mockImplementation((filePath) => {
-      return String(filePath).includes("blockchain-state") ? !!mockBlockchainStore : false;
+    existsSync: vi.fn().mockImplementation(filePath => {
+      return String(filePath).includes("blockchain-state")
+        ? !!mockBlockchainStore
+        : false;
     }),
-    readFileSync: vi.fn().mockImplementation((filePath) => {
+    readFileSync: vi.fn().mockImplementation(filePath => {
       if (String(filePath).includes("blockchain-state")) {
-        return JSON.stringify(mockBlockchainStore || { mintedSupply: 0, balances: {}, mintEvents: [] });
+        return JSON.stringify(
+          mockBlockchainStore || {
+            mintedSupply: 0,
+            balances: {},
+            mintEvents: [],
+          }
+        );
       }
       return "{}";
     }),
@@ -105,7 +113,9 @@ describe("blockchain module", () => {
 
     test("throws when minting would exceed total supply cap", () => {
       bc.mintTokens("user1", 421000000);
-      expect(() => bc.mintTokens("user1", 1)).toThrow("exceed total supply cap");
+      expect(() => bc.mintTokens("user1", 1)).toThrow(
+        "exceed total supply cap"
+      );
     });
   });
 

@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'wouter';
-import { PaymentStatus } from '@/components/PaymentStatus';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Sparkles } from 'lucide-react';
-import { Link } from 'wouter';
+import { useEffect, useState } from "react";
+import { useLocation } from "wouter";
+import { PaymentStatus } from "@/components/PaymentStatus";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Sparkles } from "lucide-react";
+import { Link } from "wouter";
 
 export default function PaymentResult() {
   const [location] = useLocation();
-  const [sessionId, setSessionId] = useState<string>('');
-  const [paymentStatus, setPaymentStatus] = useState<string>('');
+  const [sessionId, setSessionId] = useState<string>("");
+  const [paymentStatus, setPaymentStatus] = useState<string>("");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const sessionIdParam = params.get('sessionId');
-    const statusParam = params.get('payment');
+    const sessionIdParam = params.get("sessionId");
+    const statusParam = params.get("payment");
 
     if (sessionIdParam) {
       setSessionId(sessionIdParam);
@@ -31,7 +31,9 @@ export default function PaymentResult() {
         <div className="container mx-auto px-4 py-4">
           <Link href="/" className="flex items-center gap-2">
             <Sparkles className="w-8 h-8 text-primary" />
-            <h1 className="text-2xl font-serif font-bold text-primary">StampCoin</h1>
+            <h1 className="text-2xl font-serif font-bold text-primary">
+              StampCoin
+            </h1>
           </Link>
         </div>
       </nav>
@@ -47,10 +49,10 @@ export default function PaymentResult() {
           <PaymentStatus
             sessionId={sessionId}
             onSuccess={() => {
-              console.log('Payment successful');
+              console.log("Payment successful");
             }}
-            onError={(error) => {
-              console.error('Payment error:', error);
+            onError={error => {
+              console.error("Payment error:", error);
             }}
           />
 
@@ -68,7 +70,8 @@ export default function PaymentResult() {
                   <div>
                     <h3 className="font-semibold">Payment Processing</h3>
                     <p className="text-sm text-muted-foreground">
-                      Your payment is being processed. You'll receive a confirmation email shortly.
+                      Your payment is being processed. You'll receive a
+                      confirmation email shortly.
                     </p>
                   </div>
                 </div>
@@ -80,7 +83,8 @@ export default function PaymentResult() {
                   <div>
                     <h3 className="font-semibold">Access Your Stamp</h3>
                     <p className="text-sm text-muted-foreground">
-                      Once confirmed, your stamp will be available in your dashboard.
+                      Once confirmed, your stamp will be available in your
+                      dashboard.
                     </p>
                   </div>
                 </div>
@@ -92,7 +96,8 @@ export default function PaymentResult() {
                   <div>
                     <h3 className="font-semibold">Manage Your Collection</h3>
                     <p className="text-sm text-muted-foreground">
-                      View your stamp details, add to favorites, and manage your collection.
+                      View your stamp details, add to favorites, and manage your
+                      collection.
                     </p>
                   </div>
                 </div>
@@ -115,7 +120,8 @@ export default function PaymentResult() {
             <CardContent className="pt-6">
               <h3 className="font-semibold mb-2">Need Help?</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                If you have any questions about your purchase or need assistance, please don't hesitate to contact our support team.
+                If you have any questions about your purchase or need
+                assistance, please don't hesitate to contact our support team.
               </p>
               <Button variant="outline" className="w-full">
                 Contact Support
