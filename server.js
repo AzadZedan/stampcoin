@@ -79,10 +79,17 @@ app.get("/api/wallet/:userId", (req, res) => {
 app.post("/api/wallet/transfer", (req, res) => {
   try {
     const { fromUserId, toUserId, amount } = req.body;
-    if (!fromUserId || !toUserId || !amount) return res.status(400).json({ error: "fromUserId, toUserId, and amount are required" });
-    const tx = wallet.transfer(fromUserId, toUserId, Number(amount));
+    if (!fromUserId || !toUserId || amount == null) {
+      return res.status(400).json({ error: "fromUserId, toUserId, and amount are required" });
+    }
+    const numAmount = Number(amount);
+    if (isNaN(numAmount) || numAmount <= 0) {
+      return res.status(400).json({ error: "amount must be a positive number" });
+    }
+    const tx = wallet.transfer(fromUserId, toUserId, numAmount);
     res.json(tx);
   } catch (e) {
+    if (e.message === "One or both wallets not found") return res.status(404).json({ error: e.message });
     res.status(400).json({ error: e.message });
   }
 });
@@ -102,6 +109,8 @@ app.post("/api/wallet/:userId/stamps", requireToken, (req, res) => {
   try {
     const stamp = req.body;
     if (!stamp || !stamp.name) return res.status(400).json({ error: "stamp name is required" });
+    if (stamp.value === undefined || stamp.value === null) return res.status(400).json({ error: "stamp value is required" });
+    if (!stamp.rarity) return res.status(400).json({ error: "stamp rarity is required" });
     const w = wallet.addStamp(req.params.userId, stamp);
     res.json(w);
   } catch (e) {
@@ -111,9 +120,9 @@ app.post("/api/wallet/:userId/stamps", requireToken, (req, res) => {
 });
 
 // List all wallets (admin endpoint, token-protected)
-app.get("/api/wallets", requireToken, (req, res) => {
+app.get("/api/wallets", requireToken, (_req, res) => {
   try {
-    res.json(wallet.getAllWallets());
+    res.json(Object.values(wallet.getAllWallets()));
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -122,10 +131,14 @@ app.get("/api/wallets", requireToken, (req, res) => {
 // Top-up wallet balance (token-protected)
 app.post("/api/wallet/:userId/topup", requireToken, (req, res) => {
   try {
-    const amount = Number((req.body && req.body.amount) || 1000);
-    const w = wallet.updateBalance(req.params.userId, amount);
+    const { amount } = req.body || {};
+    if (amount == null) return res.status(400).json({ error: "amount is required" });
+    const numAmount = Number(amount);
+    if (isNaN(numAmount) || numAmount <= 0) return res.status(400).json({ error: "amount must be a positive number" });
+    const w = wallet.updateBalance(req.params.userId, numAmount);
     res.json(w);
   } catch (e) {
+    if (e.message === "Wallet not found") return res.status(404).json({ error: e.message });
     res.status(400).json({ error: e.message });
   }
 });
