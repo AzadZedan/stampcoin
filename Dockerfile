@@ -13,7 +13,7 @@ COPY patches/ ./patches/
 RUN npm install -g pnpm
 
 # Install dependencies
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 # Copy all source files
 COPY . .

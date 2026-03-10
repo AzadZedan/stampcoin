@@ -31,7 +31,38 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
-  
+
+  // CORS middleware – allows the configured frontend origin (set FRONTEND_URL env var in production)
+  const allowedOrigin = process.env.FRONTEND_URL ?? "";
+  if (process.env.NODE_ENV === "production" && !allowedOrigin) {
+    console.warn("WARNING: FRONTEND_URL is not set. Cross-origin requests from browsers will be blocked.");
+  }
+  app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (allowedOrigin && origin === allowedOrigin) {
+      res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
+      res.setHeader("Vary", "Origin");
+      res.setHeader("Access-Control-Allow-Credentials", "true");
+    } else if (!allowedOrigin && process.env.NODE_ENV !== "production") {
+      // Development fallback: reflect the request origin so cookies work
+      res.setHeader("Access-Control-Allow-Origin", origin ?? "*");
+      res.setHeader("Vary", "Origin");
+      res.setHeader("Access-Control-Allow-Credentials", "true");
+    }
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+    if (req.method === "OPTIONS") {
+      res.sendStatus(204);
+      return;
+    }
+    next();
+  });
+
+  // Health check endpoint for deployment platforms
+  app.get("/api/health", (_req, res) => {
+    res.json({ status: "ok", timestamp: new Date().toISOString() });
+  });
+
   // Stripe webhook MUST be registered BEFORE express.json() to preserve raw body
   app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
   
