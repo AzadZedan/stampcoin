@@ -3,6 +3,7 @@
 ## Current Status
 
 ✅ **Stripe Integration Implemented**
+
 - Payment checkout API configured
 - Webhook handler created for payment events
 - Test sandbox environment available
@@ -36,12 +37,12 @@ Once your sandbox is claimed, you can test the payment system:
 
 Use these test cards in your checkout flow:
 
-| Card Number | Description | Expected Result |
-|------------|-------------|-----------------|
-| `4242 4242 4242 4242` | Visa | Success |
-| `4000 0025 0000 3155` | Visa (requires authentication) | Success with 3D Secure |
-| `4000 0000 0000 9995` | Visa | Declined (insufficient funds) |
-| `4000 0000 0000 0002` | Visa | Declined (generic decline) |
+| Card Number           | Description                    | Expected Result               |
+| --------------------- | ------------------------------ | ----------------------------- |
+| `4242 4242 4242 4242` | Visa                           | Success                       |
+| `4000 0025 0000 3155` | Visa (requires authentication) | Success with 3D Secure        |
+| `4000 0000 0000 9995` | Visa                           | Declined (insufficient funds) |
+| `4000 0000 0000 0002` | Visa                           | Declined (generic decline)    |
 
 **CVV:** Any 3 digits (e.g., `123`)  
 **Expiry:** Any future date (e.g., `12/34`)  
@@ -77,11 +78,13 @@ To test webhooks in development:
 1. Install Stripe CLI: `brew install stripe/stripe-cli/stripe` (Mac) or download from [stripe.com/docs/stripe-cli](https://stripe.com/docs/stripe-cli)
 
 2. Login to Stripe CLI:
+
    ```bash
    stripe login
    ```
 
 3. Forward webhooks to your local server:
+
    ```bash
    stripe listen --forward-to localhost:3000/api/stripe/webhook
    ```
@@ -112,11 +115,11 @@ The following Stripe environment variables are automatically configured:
 
 Current stamp products configured in the system:
 
-| Product | Price | Rarity |
-|---------|-------|--------|
-| Common Digital Stamp | $9.99 | Common |
-| Uncommon Digital Stamp | $29.99 | Uncommon |
-| Rare Digital Stamp | $99.99 | Rare |
+| Product                 | Price   | Rarity    |
+| ----------------------- | ------- | --------- |
+| Common Digital Stamp    | $9.99   | Common    |
+| Uncommon Digital Stamp  | $29.99  | Uncommon  |
+| Rare Digital Stamp      | $99.99  | Rare      |
 | Very Rare Digital Stamp | $299.99 | Very Rare |
 | Legendary Digital Stamp | $999.99 | Legendary |
 
@@ -157,6 +160,7 @@ When ready to accept real payments:
 ## Support
 
 For Stripe-specific issues, visit:
+
 - [Stripe Documentation](https://stripe.com/docs)
 - [Stripe Support](https://support.stripe.com)
 

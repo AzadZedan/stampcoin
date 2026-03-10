@@ -1,6 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Shield, Globe, TrendingUp, Users, Award, Target } from "lucide-react";
+import {
+  Sparkles,
+  Shield,
+  Globe,
+  TrendingUp,
+  Users,
+  Award,
+  Target,
+  Search,
+  LayoutDashboard,
+  CreditCard,
+  MessageSquare,
+  Store,
+} from "lucide-react";
 import { Link } from "wouter";
 
 export default function About() {
@@ -12,22 +25,36 @@ export default function About() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <Sparkles className="w-8 h-8 text-primary" />
-              <h1 className="text-2xl font-serif font-bold text-primary">StampCoin</h1>
+              <h1 className="text-2xl font-serif font-bold text-primary">
+                StampCoin
+              </h1>
             </Link>
             <div className="hidden md:flex items-center gap-6">
-              <Link href="/marketplace" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/marketplace"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Marketplace
               </Link>
-              <Link href="/gallery" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/gallery"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Gallery
               </Link>
-              <Link href="/investors" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/investors"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 For Investors
               </Link>
               <Link href="/about" className="text-primary font-medium">
                 About
               </Link>
-              <Link href="/contact" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/contact"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Contact
               </Link>
             </div>
@@ -45,7 +72,8 @@ export default function About() {
             About StampCoin
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Revolutionizing stamp collecting through blockchain technology and NFTs
+            A comprehensive platform for buying, selling, and trading digital
+            stamps as Non-Fungible Tokens (NFTs)
           </p>
         </div>
       </section>
@@ -55,24 +83,107 @@ export default function About() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h3 className="text-4xl font-serif font-bold text-foreground mb-6 text-center">
-              Our Vision
+              Our Mission
             </h3>
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              StampCoin is the world's first specialized NFT marketplace designed exclusively for stamp collectors. 
-              We're bridging the traditional $5+ billion stamp collecting market with cutting-edge blockchain technology 
-              to create a secure, transparent, and accessible platform for collectors worldwide.
+              StampCoin is a comprehensive platform that allows users to buy,
+              sell, and trade digital stamps as Non-Fungible Tokens (NFTs). Our
+              mission is to modernize the stamp collecting industry by providing
+              a secure, transparent, and attractive marketplace for collectors
+              around the world.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Our mission is to preserve cultural heritage while making stamp collecting more accessible to the next 
-              generation. By digitizing rare and valuable stamps as NFTs, we ensure their preservation for future 
-              generations while creating new opportunities for collectors and investors.
+              By digitizing rare and valuable stamps as NFTs, we preserve
+              cultural heritage while creating new opportunities for collectors
+              and investors in the rapidly growing digital collectibles market.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Values Section */}
+      {/* Key Features Section */}
       <section className="py-20 bg-background/50">
+        <div className="container mx-auto px-4">
+          <h3 className="text-4xl font-serif font-bold text-foreground mb-12 text-center">
+            Key Features
+          </h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                  <Store className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="text-2xl font-serif font-semibold mb-4">
+                  NFT Marketplace
+                </h4>
+                <p className="text-muted-foreground">
+                  A fully functional marketplace for buying and selling digital
+                  stamps as unique non-fungible tokens.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-6">
+                  <Search className="w-8 h-8 text-secondary" />
+                </div>
+                <h4 className="text-2xl font-serif font-semibold mb-4">
+                  Advanced Search
+                </h4>
+                <p className="text-muted-foreground">
+                  Powerful search and filtering capabilities to find rare and
+                  valuable stamps from collectors worldwide.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6">
+                  <LayoutDashboard className="w-8 h-8 text-accent" />
+                </div>
+                <h4 className="text-2xl font-serif font-semibold mb-4">
+                  User Dashboard
+                </h4>
+                <p className="text-muted-foreground">
+                  A personal dashboard to manage your collections, favorites,
+                  and complete purchase history in one place.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                  <CreditCard className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="text-2xl font-serif font-semibold mb-4">
+                  Secure Payments
+                </h4>
+                <p className="text-muted-foreground">
+                  Integrated with Stripe for secure and reliable payment
+                  processing, giving collectors complete peace of mind.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="border-border/50 bg-card/80 backdrop-blur-sm md:col-span-2 lg:col-span-1">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-6">
+                  <MessageSquare className="w-8 h-8 text-secondary" />
+                </div>
+                <h4 className="text-2xl font-serif font-semibold mb-4">
+                  Community Features
+                </h4>
+                <p className="text-muted-foreground">
+                  Ratings, reviews, and social sharing to foster a vibrant and
+                  engaged collector community.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <h3 className="text-4xl font-serif font-bold text-foreground mb-12 text-center">
             Our Core Values
@@ -83,9 +194,12 @@ export default function About() {
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
                   <Shield className="w-8 h-8 text-primary" />
                 </div>
-                <h4 className="text-2xl font-serif font-semibold mb-4">Authenticity</h4>
+                <h4 className="text-2xl font-serif font-semibold mb-4">
+                  Authenticity
+                </h4>
                 <p className="text-muted-foreground">
-                  Every stamp is verified and authenticated by expert philatelists, ensuring the integrity of your collection.
+                  Every stamp is verified and authenticated by expert
+                  philatelists, ensuring the integrity of your collection.
                 </p>
               </CardContent>
             </Card>
@@ -94,9 +208,12 @@ export default function About() {
                 <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-6">
                   <Globe className="w-8 h-8 text-secondary" />
                 </div>
-                <h4 className="text-2xl font-serif font-semibold mb-4">Accessibility</h4>
+                <h4 className="text-2xl font-serif font-semibold mb-4">
+                  Accessibility
+                </h4>
                 <p className="text-muted-foreground">
-                  Making rare stamps accessible to collectors worldwide, breaking down geographical and financial barriers.
+                  Making rare stamps accessible to collectors worldwide,
+                  breaking down geographical and financial barriers.
                 </p>
               </CardContent>
             </Card>
@@ -105,9 +222,12 @@ export default function About() {
                 <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6">
                   <Award className="w-8 h-8 text-accent" />
                 </div>
-                <h4 className="text-2xl font-serif font-semibold mb-4">Preservation</h4>
+                <h4 className="text-2xl font-serif font-semibold mb-4">
+                  Preservation
+                </h4>
                 <p className="text-muted-foreground">
-                  Preserving cultural and historical heritage through digital archiving and blockchain technology.
+                  Preserving cultural and historical heritage through digital
+                  archiving and blockchain technology.
                 </p>
               </CardContent>
             </Card>
@@ -116,7 +236,7 @@ export default function About() {
       </section>
 
       {/* Technology Section */}
-      <section className="py-20">
+      <section className="py-20 bg-background/50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h3 className="text-4xl font-serif font-bold text-foreground mb-6 text-center">
@@ -129,8 +249,9 @@ export default function About() {
                   Blockchain Security
                 </h4>
                 <p className="text-muted-foreground">
-                  Built on secure blockchain infrastructure, every transaction and ownership record is immutable 
-                  and transparent, providing collectors with complete peace of mind.
+                  Built on secure blockchain infrastructure, every transaction
+                  and ownership record is immutable and transparent, providing
+                  collectors with complete peace of mind.
                 </p>
               </div>
               <div className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border border-border/50">
@@ -139,8 +260,9 @@ export default function About() {
                   NFT Authentication
                 </h4>
                 <p className="text-muted-foreground">
-                  Each digital stamp is minted as a unique NFT with detailed provenance, authentication certificates, 
-                  and high-resolution imagery verified by philatelic experts.
+                  Each digital stamp is minted as a unique NFT with detailed
+                  provenance, authentication certificates, and high-resolution
+                  imagery verified by philatelic experts.
                 </p>
               </div>
               <div className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border border-border/50">
@@ -149,8 +271,9 @@ export default function About() {
                   Global Marketplace
                 </h4>
                 <p className="text-muted-foreground">
-                  Our platform connects collectors from 150+ countries, facilitating secure transactions with 
-                  multiple payment options and instant settlement.
+                  Our platform connects collectors from 150+ countries,
+                  facilitating secure transactions with multiple payment options
+                  and instant settlement.
                 </p>
               </div>
             </div>
@@ -165,12 +288,16 @@ export default function About() {
             <div>
               <Users className="w-12 h-12 mx-auto mb-4 opacity-90" />
               <div className="text-4xl font-serif font-bold mb-2">70M+</div>
-              <div className="text-primary-foreground/80">Global Collectors</div>
+              <div className="text-primary-foreground/80">
+                Global Collectors
+              </div>
             </div>
             <div>
               <Award className="w-12 h-12 mx-auto mb-4 opacity-90" />
               <div className="text-4xl font-serif font-bold mb-2">10K+</div>
-              <div className="text-primary-foreground/80">Authenticated Stamps</div>
+              <div className="text-primary-foreground/80">
+                Authenticated Stamps
+              </div>
             </div>
             <div>
               <Globe className="w-12 h-12 mx-auto mb-4 opacity-90" />
@@ -179,9 +306,35 @@ export default function About() {
             </div>
             <div>
               <TrendingUp className="w-12 h-12 mx-auto mb-4 opacity-90" />
-              <div className="text-4xl font-serif font-bold mb-2">$5B+</div>
-              <div className="text-primary-foreground/80">Market Opportunity</div>
+              <div className="text-4xl font-serif font-bold mb-2">$12B+</div>
+              <div className="text-primary-foreground/80">
+                Market Opportunity
+              </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Market Opportunity Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h3 className="text-4xl font-serif font-bold text-foreground mb-6 text-center">
+              Market Opportunity
+            </h3>
+            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+              The global stamp collecting market is worth more than{" "}
+              <span className="font-semibold text-foreground">$12 billion</span>{" "}
+              and is poised for significant growth as it transitions to the
+              digital age. StampCoin is leading this transformation, offering a
+              unique and attractive proposition for stamp collectors worldwide.
+            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              With over 70 million collectors globally, the opportunity to
+              digitize and modernize this beloved hobby has never been greater.
+              Our platform bridges the gap between traditional philately and the
+              future of digital ownership.
+            </p>
           </div>
         </div>
       </section>
@@ -194,13 +347,12 @@ export default function About() {
               Join the Revolution
             </h3>
             <p className="text-xl text-muted-foreground mb-8">
-              Be part of the future of stamp collecting. Start your digital collection today.
+              Be part of the future of stamp collecting. Start your digital
+              collection today.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link href="/marketplace">
-                <Button size="lg">
-                  Explore Marketplace
-                </Button>
+                <Button size="lg">Explore Marketplace</Button>
               </Link>
               <Link href="/contact">
                 <Button size="lg" variant="outline">

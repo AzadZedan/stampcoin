@@ -49,6 +49,7 @@ I've created an optimized `vercel.json` file. Upload it to your GitHub repositor
 Go to: **Settings → Build & Development Settings**
 
 Set these values:
+
 - **Framework Preset:** Other
 - **Build Command:** `npm run build`
 - **Output Directory:** `dist/public`
@@ -71,11 +72,13 @@ If you want to deploy only the frontend:
 Deploy frontend and backend separately:
 
 **Frontend (Vercel):**
+
 - Deploy only the `client` folder
 - Set root directory to `client`
 - Framework: Vite
 
 **Backend (Railway/Render):**
+
 - Deploy the server separately
 - Update API endpoints in frontend
 
@@ -134,6 +137,7 @@ SESSION_SECRET=your_session_secret
 ## Support
 
 If you need help:
+
 - Vercel Docs: https://vercel.com/docs
 - Support: https://vercel.com/support
 

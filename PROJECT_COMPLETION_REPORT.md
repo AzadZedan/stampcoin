@@ -29,6 +29,7 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 ### Phase 1: Database & Backend Infrastructure ✅
 
 **Database Schema:**
+
 - Users table with authentication and role management
 - Categories table with multi-language support (EN, AR, DE, FR, ES, ZH, KO)
 - Stamps table with comprehensive metadata
@@ -38,6 +39,7 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 - Reviews table for ratings and feedback
 
 **Database Seeding:**
+
 - ✅ 6 stamp categories successfully created:
   - Vintage
   - Modern
@@ -56,6 +58,7 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 ### Phase 2: Frontend Pages & User Interface ✅
 
 **Pages Implemented:**
+
 1. **Home Page** - Landing page with platform overview and call-to-action
 2. **Marketplace** - Browse and filter stamps with advanced search
 3. **Gallery** - Visual showcase of stamp collections
@@ -69,6 +72,7 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 8. **Contact** - Contact form for inquiries
 
 **Design Features:**
+
 - Elegant gradient backgrounds with artistic styling
 - Responsive design for all devices
 - Smooth animations and transitions
@@ -80,6 +84,7 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 **API Endpoints Implemented:**
 
 **Stamps API:**
+
 - `stamps.list` - List all stamps with filtering and search
 - `stamps.getById` - Get detailed stamp information
 - `stamps.create` - Create new stamp (authenticated)
@@ -87,33 +92,40 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 - `stamps.delete` - Delete stamp (authenticated)
 
 **Categories API:**
+
 - `categories.list` - Get all stamp categories
 - `categories.getById` - Get category details
 
 **Favorites API:**
+
 - `favorites.list` - Get user's favorite stamps
 - `favorites.check` - Check if stamp is favorited
 - `favorites.add` - Add stamp to favorites
 - `favorites.remove` - Remove stamp from favorites
 
 **Transactions API:**
+
 - `transactions.myTransactions` - Get user's purchase history
 - `transactions.stampHistory` - Get stamp transaction history
 - `transactions.create` - Create new transaction
 
 **Reviews API:**
+
 - `reviews.create` - Submit a review and rating
 - `reviews.getStampReviews` - Get all reviews for a stamp
 - `reviews.getStampRating` - Get average rating for a stamp
 - `reviews.myReviews` - Get user's submitted reviews
 
 **Upload API:**
+
 - `upload.uploadImage` - Upload stamp images to S3
 
 **Payments API:**
+
 - `payments.createCheckout` - Create Stripe checkout session
 
 **Contact API:**
+
 - `contact.send` - Submit contact form message
 - `contact.list` - View all messages (admin only)
 - `contact.markAsRead` - Mark message as read (admin only)
@@ -121,6 +133,7 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 ### Phase 4: Payment Integration ✅
 
 **Stripe Integration:**
+
 - ✅ Checkout session creation
 - ✅ Webhook handler for payment events
 - ✅ Product pricing configured:
@@ -131,11 +144,13 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
   - Legendary Digital Stamp: $999.99
 
 **Webhook Events Supported:**
+
 - `checkout.session.completed` - Payment successful
 - `payment_intent.succeeded` - Payment processing complete
 - `payment_intent.payment_failed` - Payment failed
 
 **Test Environment:**
+
 - ✅ Stripe test sandbox configured
 - ✅ Test API keys configured
 - ✅ Webhook signing secret configured
@@ -144,6 +159,7 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 ### Phase 5: Image Upload System ✅
 
 **S3 Integration:**
+
 - ✅ Image upload API endpoint
 - ✅ Base64 image encoding/decoding
 - ✅ Secure file storage with unique naming
@@ -152,6 +168,7 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 ### Phase 6: Reviews & Ratings System ✅
 
 **Features Implemented:**
+
 - ✅ 1-5 star rating system
 - ✅ Optional review comments
 - ✅ Average rating calculation
@@ -162,6 +179,7 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 - ✅ Timestamp tracking for reviews
 
 **User Interface:**
+
 - Interactive star rating selector
 - Comment textarea for detailed feedback
 - Display of average rating with star visualization
@@ -171,6 +189,7 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 ### Phase 7: Authentication & Security ✅
 
 **Features:**
+
 - ✅ User authentication system
 - ✅ Role-based access control (user/admin)
 - ✅ Protected endpoints
@@ -180,12 +199,14 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 ### Phase 8: Testing & Quality Assurance ✅
 
 **Test Results:**
+
 - ✅ **3/3 test files passed**
 - ✅ **9/9 tests passed**
 - ✅ **0 TypeScript errors**
 - ✅ **100% test coverage** for core functionality
 
 **Tests Include:**
+
 - Stamps API tests (list, get, favorites)
 - Categories API tests
 - Payments API tests
@@ -196,33 +217,33 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 
 ## Technical Stack
 
-| Component | Technology |
-|-----------|-----------|
+| Component              | Technology               |
+| ---------------------- | ------------------------ |
 | **Frontend Framework** | React 18 with TypeScript |
-| **Build Tool** | Vite |
-| **Styling** | TailwindCSS |
-| **UI Components** | Radix UI |
-| **API Communication** | tRPC |
-| **Database** | MySQL (TiDB Cloud) |
-| **ORM** | Drizzle ORM |
-| **Payment Processing** | Stripe |
-| **File Storage** | AWS S3 |
-| **Authentication** | Custom OAuth integration |
-| **Testing** | Vitest |
-| **Type Checking** | TypeScript |
+| **Build Tool**         | Vite                     |
+| **Styling**            | TailwindCSS              |
+| **UI Components**      | Radix UI                 |
+| **API Communication**  | tRPC                     |
+| **Database**           | MySQL (TiDB Cloud)       |
+| **ORM**                | Drizzle ORM              |
+| **Payment Processing** | Stripe                   |
+| **File Storage**       | AWS S3                   |
+| **Authentication**     | Custom OAuth integration |
+| **Testing**            | Vitest                   |
+| **Type Checking**      | TypeScript               |
 
 ---
 
 ## Database Statistics
 
-| Table | Records |
-|-------|---------|
-| Categories | 6 |
-| Stamps | 15 |
-| Users | (Dynamic) |
-| Transactions | (Dynamic) |
-| Favorites | (Dynamic) |
-| Reviews | (Dynamic) |
+| Table            | Records   |
+| ---------------- | --------- |
+| Categories       | 6         |
+| Stamps           | 15        |
+| Users            | (Dynamic) |
+| Transactions     | (Dynamic) |
+| Favorites        | (Dynamic) |
+| Reviews          | (Dynamic) |
 | Contact Messages | (Dynamic) |
 
 ---
@@ -230,25 +251,32 @@ The StampCoin blockchain-based NFT platform for stamp collectors has been succes
 ## API Documentation
 
 ### Base URL
+
 ```
 http://localhost:3000/api/trpc
 ```
 
 ### Authentication
+
 - Protected endpoints require user authentication
 - Admin endpoints require `role: 'admin'`
 
 ### Response Format
+
 All APIs return JSON with the following structure:
+
 ```json
 {
   "result": {
-    "data": { /* response data */ }
+    "data": {
+      /* response data */
+    }
   }
 }
 ```
 
 ### Error Handling
+
 - Proper HTTP status codes
 - Descriptive error messages
 - Validation error details
@@ -258,6 +286,7 @@ All APIs return JSON with the following structure:
 ## Deployment Instructions
 
 ### Prerequisites
+
 - Node.js 18+
 - npm or pnpm
 - MySQL database (TiDB Cloud)
@@ -265,6 +294,7 @@ All APIs return JSON with the following structure:
 - Stripe account
 
 ### Environment Variables
+
 ```bash
 DATABASE_URL=mysql://[user]:[password]@[host]:[port]/[database]
 STRIPE_SECRET_KEY=sk_test_...
@@ -277,6 +307,7 @@ AWS_S3_BUCKET=stampcoin-...
 ```
 
 ### Build & Deploy
+
 ```bash
 # Install dependencies
 npm install
@@ -295,6 +326,7 @@ npm start
 ```
 
 ### Development
+
 ```bash
 # Start development server
 npm run dev
@@ -314,21 +346,24 @@ npm run format
 ## Stripe Sandbox Setup
 
 ### Activation Status
+
 ✅ **Stripe test sandbox is configured and ready for testing**
 
 ### Test Card Numbers
-| Card Number | Type | Result |
-|------------|------|--------|
-| 4242 4242 4242 4242 | Visa | Success |
-| 4000 0025 0000 3155 | Visa 3D Secure | Success with authentication |
-| 4000 0000 0000 9995 | Visa | Declined (insufficient funds) |
-| 4000 0000 0000 0002 | Visa | Declined (generic decline) |
+
+| Card Number         | Type           | Result                        |
+| ------------------- | -------------- | ----------------------------- |
+| 4242 4242 4242 4242 | Visa           | Success                       |
+| 4000 0025 0000 3155 | Visa 3D Secure | Success with authentication   |
+| 4000 0000 0000 9995 | Visa           | Declined (insufficient funds) |
+| 4000 0000 0000 0002 | Visa           | Declined (generic decline)    |
 
 **CVV:** Any 3 digits  
 **Expiry:** Any future date  
 **ZIP:** Any 5 digits
 
 ### Testing Payments
+
 1. Navigate to Marketplace
 2. Click "Buy Now" on any stamp
 3. Use a test card number
@@ -339,13 +374,13 @@ npm run format
 
 ## Performance Metrics
 
-| Metric | Value |
-|--------|-------|
-| Build Time | < 5 seconds |
-| Test Execution | 2.32 seconds |
-| Page Load Time | < 2 seconds |
-| API Response Time | < 200ms |
-| Database Query Time | < 100ms |
+| Metric              | Value        |
+| ------------------- | ------------ |
+| Build Time          | < 5 seconds  |
+| Test Execution      | 2.32 seconds |
+| Page Load Time      | < 2 seconds  |
+| API Response Time   | < 200ms      |
+| Database Query Time | < 100ms      |
 
 ---
 
@@ -366,6 +401,7 @@ npm run format
 ## Future Enhancements
 
 ### Planned Features
+
 1. **Advanced Search** - Full-text search with filters
 2. **User Profiles** - Detailed collector profiles
 3. **Auctions** - Bidding system for stamps
@@ -392,12 +428,14 @@ npm run format
 ## Support & Maintenance
 
 ### Monitoring
+
 - Monitor database performance
 - Track API response times
 - Monitor Stripe webhook delivery
 - Track S3 upload success rates
 
 ### Maintenance Tasks
+
 - Regular database backups
 - Update dependencies monthly
 - Review and optimize slow queries
@@ -407,18 +445,21 @@ npm run format
 ### Troubleshooting
 
 **Payment Not Processing:**
+
 1. Verify Stripe API keys
 2. Check webhook configuration
 3. Review Stripe Dashboard logs
 4. Ensure webhook endpoint is accessible
 
 **Image Upload Failing:**
+
 1. Verify AWS S3 credentials
 2. Check bucket permissions
 3. Verify bucket exists and is accessible
 4. Check file size limits
 
 **Database Connection Issues:**
+
 1. Verify DATABASE_URL
 2. Check network connectivity
 3. Verify database credentials
@@ -431,6 +472,7 @@ npm run format
 The StampCoin platform is now **fully functional and ready for deployment**. All core features have been implemented, tested, and verified. The platform provides a solid foundation for a modern stamp collecting marketplace with blockchain capabilities.
 
 ### Completion Checklist
+
 - ✅ Database design and implementation
 - ✅ Frontend pages and UI
 - ✅ Backend APIs
@@ -443,6 +485,7 @@ The StampCoin platform is now **fully functional and ready for deployment**. All
 - ✅ Deployment readiness
 
 **Next Steps:**
+
 1. Deploy to production environment
 2. Configure custom domain
 3. Set up monitoring and logging
@@ -455,6 +498,7 @@ The StampCoin platform is now **fully functional and ready for deployment**. All
 ## Contact & Support
 
 For technical issues or questions:
+
 - **Email:** support@stampcoin.io
 - **Documentation:** /docs
 - **API Docs:** /api/docs

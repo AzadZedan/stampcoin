@@ -13,7 +13,7 @@ export default function Contact() {
     name: "",
     email: "",
     subject: "",
-    message: ""
+    message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -31,19 +31,33 @@ export default function Contact() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <Sparkles className="w-8 h-8 text-primary" />
-              <h1 className="text-2xl font-serif font-bold text-primary">StampCoin</h1>
+              <h1 className="text-2xl font-serif font-bold text-primary">
+                StampCoin
+              </h1>
             </Link>
             <div className="hidden md:flex items-center gap-6">
-              <Link href="/marketplace" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/marketplace"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Marketplace
               </Link>
-              <Link href="/gallery" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/gallery"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Gallery
               </Link>
-              <Link href="/investors" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/investors"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 For Investors
               </Link>
-              <Link href="/about" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/about"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 About
               </Link>
               <Link href="/contact" className="text-primary font-medium">
@@ -64,7 +78,8 @@ export default function Contact() {
             Get in Touch
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            Have questions? We'd love to hear from you. Send us a message and
+            we'll respond as soon as possible.
           </p>
         </div>
       </section>
@@ -86,7 +101,9 @@ export default function Contact() {
                     type="text"
                     placeholder="John Doe"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={e =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     required
                     className="mt-2"
                   />
@@ -98,7 +115,9 @@ export default function Contact() {
                     type="email"
                     placeholder="john@example.com"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={e =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     required
                     className="mt-2"
                   />
@@ -110,7 +129,9 @@ export default function Contact() {
                     type="text"
                     placeholder="How can we help?"
                     value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    onChange={e =>
+                      setFormData({ ...formData, subject: e.target.value })
+                    }
                     required
                     className="mt-2"
                   />
@@ -121,7 +142,9 @@ export default function Contact() {
                     id="message"
                     placeholder="Tell us more about your inquiry..."
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={e =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
                     required
                     className="mt-2 min-h-[150px]"
                   />
@@ -146,8 +169,12 @@ export default function Contact() {
                       </div>
                       <div>
                         <h4 className="font-semibold text-lg mb-1">Email</h4>
-                        <p className="text-muted-foreground">contact@stampcoin.io</p>
-                        <p className="text-muted-foreground">support@stampcoin.io</p>
+                        <p className="text-muted-foreground">
+                          contact@stampcoin.io
+                        </p>
+                        <p className="text-muted-foreground">
+                          support@stampcoin.io
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -161,8 +188,12 @@ export default function Contact() {
                       </div>
                       <div>
                         <h4 className="font-semibold text-lg mb-1">Phone</h4>
-                        <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                        <p className="text-sm text-muted-foreground mt-1">Mon-Fri, 9am-6pm EST</p>
+                        <p className="text-muted-foreground">
+                          +1 (555) 123-4567
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Mon-Fri, 9am-6pm EST
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -177,8 +208,10 @@ export default function Contact() {
                       <div>
                         <h4 className="font-semibold text-lg mb-1">Office</h4>
                         <p className="text-muted-foreground">
-                          123 Blockchain Street<br />
-                          San Francisco, CA 94102<br />
+                          123 Blockchain Street
+                          <br />
+                          San Francisco, CA 94102
+                          <br />
                           United States
                         </p>
                       </div>
@@ -187,12 +220,18 @@ export default function Contact() {
                 </Card>
 
                 <div className="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl p-6 mt-8">
-                  <h4 className="font-serif font-semibold text-lg mb-3">Business Inquiries</h4>
+                  <h4 className="font-serif font-semibold text-lg mb-3">
+                    Business Inquiries
+                  </h4>
                   <p className="text-muted-foreground mb-4">
-                    For partnership opportunities, investment discussions, or media inquiries, 
-                    please reach out to our business development team.
+                    For partnership opportunities, investment discussions, or
+                    media inquiries, please reach out to our business
+                    development team.
                   </p>
-                  <a href="mailto:business@stampcoin.io" className="text-primary font-medium hover:underline">
+                  <a
+                    href="mailto:business@stampcoin.io"
+                    className="text-primary font-medium hover:underline"
+                  >
                     business@stampcoin.io
                   </a>
                 </div>

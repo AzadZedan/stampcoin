@@ -1,7 +1,29 @@
 import { eq, desc, and, like, or, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, stamps, categories, transactions, favorites, contactMessages, reviews, partners, partnerBenefits, partnerTransactions, InsertStamp, InsertCategory, InsertTransaction, InsertFavorite, InsertContactMessage, InsertReview, InsertPartner, InsertPartnerBenefit, InsertPartnerTransaction, Partner } from "../drizzle/schema";
-import { ENV } from './_core/env';
+import {
+  InsertUser,
+  users,
+  stamps,
+  categories,
+  transactions,
+  favorites,
+  contactMessages,
+  reviews,
+  partners,
+  partnerBenefits,
+  partnerTransactions,
+  InsertStamp,
+  InsertCategory,
+  InsertTransaction,
+  InsertFavorite,
+  InsertContactMessage,
+  InsertReview,
+  InsertPartner,
+  InsertPartnerBenefit,
+  InsertPartnerTransaction,
+  Partner,
+} from "../drizzle/schema";
+import { ENV } from "./_core/env";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -58,8 +80,8 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       values.role = user.role;
       updateSet.role = user.role;
     } else if (user.openId === ENV.ownerOpenId) {
-      values.role = 'admin';
-      updateSet.role = 'admin';
+      values.role = "admin";
+      updateSet.role = "admin";
     }
 
     if (!values.lastSignedIn) {
@@ -86,7 +108,11 @@ export async function getUserByOpenId(openId: string) {
     return undefined;
   }
 
-  const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
+  const result = await db
+    .select()
+    .from(users)
+    .where(eq(users.openId, openId))
+    .limit(1);
 
   return result.length > 0 ? result[0] : undefined;
 }
@@ -112,7 +138,11 @@ export async function getCategoryById(id: number) {
   const db = await getDb();
   if (!db) return undefined;
 
-  const result = await db.select().from(categories).where(eq(categories.id, id)).limit(1);
+  const result = await db
+    .select()
+    .from(categories)
+    .where(eq(categories.id, id))
+    .limit(1);
   return result.length > 0 ? result[0] : undefined;
 }
 
@@ -189,7 +219,11 @@ export async function getStampById(id: number) {
   const db = await getDb();
   if (!db) return undefined;
 
-  const result = await db.select().from(stamps).where(eq(stamps.id, id)).limit(1);
+  const result = await db
+    .select()
+    .from(stamps)
+    .where(eq(stamps.id, id))
+    .limit(1);
   return result.length > 0 ? result[0] : undefined;
 }
 
@@ -226,7 +260,9 @@ export async function getUserTransactions(userId: number) {
   return await db
     .select()
     .from(transactions)
-    .where(or(eq(transactions.buyerId, userId), eq(transactions.sellerId, userId)))
+    .where(
+      or(eq(transactions.buyerId, userId), eq(transactions.sellerId, userId))
+    )
     .orderBy(desc(transactions.createdAt));
 }
 
@@ -319,7 +355,7 @@ export async function markMessageAsRead(id: number) {
 
   const result = await db
     .update(contactMessages)
-    .set({ status: 'read' })
+    .set({ status: "read" })
     .where(eq(contactMessages.id, id));
   return result;
 }
@@ -329,7 +365,7 @@ export async function markMessageAsRead(id: number) {
 export async function createReview(review: InsertReview) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  
+
   const [result] = await db.insert(reviews).values(review);
   return result;
 }
@@ -337,7 +373,7 @@ export async function createReview(review: InsertReview) {
 export async function getStampReviews(stampId: number) {
   const db = await getDb();
   if (!db) return [];
-  
+
   const result = await db
     .select({
       id: reviews.id,
@@ -351,27 +387,29 @@ export async function getStampReviews(stampId: number) {
     .leftJoin(users, eq(reviews.userId, users.id))
     .where(eq(reviews.stampId, stampId))
     .orderBy(desc(reviews.createdAt));
-  
+
   return result;
 }
 
 export async function getUserReviews(userId: number) {
   const db = await getDb();
   if (!db) return [];
-  
+
   const result = await db
     .select()
     .from(reviews)
     .where(eq(reviews.userId, userId))
     .orderBy(desc(reviews.createdAt));
-  
+
   return result;
 }
 
-export async function getStampAverageRating(stampId: number): Promise<{ average: number; count: number }> {
+export async function getStampAverageRating(
+  stampId: number
+): Promise<{ average: number; count: number }> {
   const db = await getDb();
   if (!db) return { average: 0, count: 0 };
-  
+
   const result = await db
     .select({
       average: sql<number>`AVG(${reviews.rating})`,
@@ -379,13 +417,12 @@ export async function getStampAverageRating(stampId: number): Promise<{ average:
     })
     .from(reviews)
     .where(eq(reviews.stampId, stampId));
-  
+
   return {
     average: result[0]?.average ? Number(result[0].average) : 0,
     count: result[0]?.count ? Number(result[0].count) : 0,
   };
 }
-
 
 // ============ Partner Operations ============
 
@@ -401,7 +438,11 @@ export async function getPartnerById(id: number) {
   const db = await getDb();
   if (!db) return undefined;
 
-  const result = await db.select().from(partners).where(eq(partners.id, id)).limit(1);
+  const result = await db
+    .select()
+    .from(partners)
+    .where(eq(partners.id, id))
+    .limit(1);
   return result.length > 0 ? result[0] : undefined;
 }
 
@@ -409,7 +450,11 @@ export async function getPartnerByUserId(userId: number) {
   const db = await getDb();
   if (!db) return undefined;
 
-  const result = await db.select().from(partners).where(eq(partners.userId, userId)).limit(1);
+  const result = await db
+    .select()
+    .from(partners)
+    .where(eq(partners.userId, userId))
+    .limit(1);
   return result.length > 0 ? result[0] : undefined;
 }
 
@@ -424,7 +469,7 @@ export async function getAllPartners(status?: string) {
       .where(eq(partners.status, status as any))
       .orderBy(desc(partners.totalInvestment));
   }
-  
+
   return await db
     .select()
     .from(partners)
@@ -438,15 +483,21 @@ export async function getPartnersByTier(tier: string) {
   return await db
     .select()
     .from(partners)
-    .where(and(eq(partners.tier, tier as any), eq(partners.status, 'active')))
+    .where(and(eq(partners.tier, tier as any), eq(partners.status, "active")))
     .orderBy(desc(partners.totalInvestment));
 }
 
-export async function updatePartner(id: number, partner: Partial<InsertPartner>) {
+export async function updatePartner(
+  id: number,
+  partner: Partial<InsertPartner>
+) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  const result = await db.update(partners).set(partner).where(eq(partners.id, id));
+  const result = await db
+    .update(partners)
+    .set(partner)
+    .where(eq(partners.id, id));
   return result;
 }
 
@@ -457,7 +508,7 @@ export async function approvePartner(id: number, approvedBy: number) {
   const result = await db
     .update(partners)
     .set({
-      status: 'approved',
+      status: "approved",
       approvedBy,
       approvalDate: new Date(),
     })
@@ -472,7 +523,7 @@ export async function rejectPartner(id: number, approvedBy: number) {
   const result = await db
     .update(partners)
     .set({
-      status: 'rejected',
+      status: "rejected",
       approvedBy,
       approvalDate: new Date(),
     })
@@ -497,7 +548,12 @@ export async function getPartnerBenefits(partnerId: number) {
   return await db
     .select()
     .from(partnerBenefits)
-    .where(and(eq(partnerBenefits.partnerId, partnerId), eq(partnerBenefits.isActive, true)))
+    .where(
+      and(
+        eq(partnerBenefits.partnerId, partnerId),
+        eq(partnerBenefits.isActive, true)
+      )
+    )
     .orderBy(desc(partnerBenefits.createdAt));
 }
 
@@ -505,13 +561,17 @@ export async function deletePartnerBenefit(id: number) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  const result = await db.delete(partnerBenefits).where(eq(partnerBenefits.id, id));
+  const result = await db
+    .delete(partnerBenefits)
+    .where(eq(partnerBenefits.id, id));
   return result;
 }
 
 // ============ Partner Transaction Operations ============
 
-export async function createPartnerTransaction(transaction: InsertPartnerTransaction) {
+export async function createPartnerTransaction(
+  transaction: InsertPartnerTransaction
+) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
@@ -539,15 +599,26 @@ export async function getPartnerTotalEarnings(partnerId: number) {
       total: sql<number>`SUM(${partnerTransactions.amount})`,
     })
     .from(partnerTransactions)
-    .where(and(eq(partnerTransactions.partnerId, partnerId), eq(partnerTransactions.status, 'completed')));
+    .where(
+      and(
+        eq(partnerTransactions.partnerId, partnerId),
+        eq(partnerTransactions.status, "completed")
+      )
+    );
 
   return result[0]?.total ? Number(result[0].total) : 0;
 }
 
-export async function updatePartnerTransaction(id: number, transaction: Partial<InsertPartnerTransaction>) {
+export async function updatePartnerTransaction(
+  id: number,
+  transaction: Partial<InsertPartnerTransaction>
+) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  const result = await db.update(partnerTransactions).set(transaction).where(eq(partnerTransactions.id, id));
+  const result = await db
+    .update(partnerTransactions)
+    .set(transaction)
+    .where(eq(partnerTransactions.id, id));
   return result;
 }

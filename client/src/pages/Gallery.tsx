@@ -1,7 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Sparkles, Search, Filter } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
@@ -20,7 +26,7 @@ export default function Gallery() {
       year: 1840,
       rarity: "legendary",
       price: "25000",
-      imageUrl: "/placeholder-stamp-1.jpg"
+      imageUrl: "/placeholder-stamp-1.jpg",
     },
     {
       id: 2,
@@ -29,7 +35,7 @@ export default function Gallery() {
       year: 1847,
       rarity: "legendary",
       price: "45000",
-      imageUrl: "/placeholder-stamp-2.jpg"
+      imageUrl: "/placeholder-stamp-2.jpg",
     },
     {
       id: 3,
@@ -38,7 +44,7 @@ export default function Gallery() {
       year: 1918,
       rarity: "very_rare",
       price: "18000",
-      imageUrl: "/placeholder-stamp-3.jpg"
+      imageUrl: "/placeholder-stamp-3.jpg",
     },
   ];
 
@@ -48,7 +54,7 @@ export default function Gallery() {
       uncommon: "text-blue-600",
       rare: "text-purple-600",
       very_rare: "text-yellow-600",
-      legendary: "text-red-600"
+      legendary: "text-red-600",
     };
     return colors[rarity as keyof typeof colors] || colors.common;
   };
@@ -59,7 +65,7 @@ export default function Gallery() {
       uncommon: "Uncommon",
       rare: "Rare",
       very_rare: "Very Rare",
-      legendary: "Legendary"
+      legendary: "Legendary",
     };
     return labels[rarity as keyof typeof labels] || "Common";
   };
@@ -72,22 +78,36 @@ export default function Gallery() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <Sparkles className="w-8 h-8 text-primary" />
-              <h1 className="text-2xl font-serif font-bold text-primary">StampCoin</h1>
+              <h1 className="text-2xl font-serif font-bold text-primary">
+                StampCoin
+              </h1>
             </Link>
             <div className="hidden md:flex items-center gap-6">
-              <Link href="/marketplace" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/marketplace"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Marketplace
               </Link>
               <Link href="/gallery" className="text-primary font-medium">
                 Gallery
               </Link>
-              <Link href="/investors" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/investors"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 For Investors
               </Link>
-              <Link href="/about" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/about"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 About
               </Link>
-              <Link href="/contact" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/contact"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Contact
               </Link>
             </div>
@@ -105,7 +125,8 @@ export default function Gallery() {
             Stamp Gallery
           </h2>
           <p className="text-xl text-muted-foreground text-center max-w-2xl mx-auto">
-            Explore our curated collection of rare and valuable digital stamps from around the world
+            Explore our curated collection of rare and valuable digital stamps
+            from around the world
           </p>
         </div>
       </section>
@@ -121,11 +142,14 @@ export default function Gallery() {
                 placeholder="Search stamps by name, country, or year..."
                 className="pl-10"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={e => setSearchQuery(e.target.value)}
               />
             </div>
             <div className="flex gap-4 w-full md:w-auto">
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <Select
+                value={selectedCategory}
+                onValueChange={setSelectedCategory}
+              >
                 <SelectTrigger className="w-full md:w-[180px]">
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
@@ -158,8 +182,11 @@ export default function Gallery() {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="stamps-grid-enhanced grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {stamps.map((stamp) => (
-              <Card key={stamp.id} className="stamp-card-hover card-premium overflow-hidden">
+            {stamps.map(stamp => (
+              <Card
+                key={stamp.id}
+                className="stamp-card-hover card-premium overflow-hidden"
+              >
                 <CardContent className="p-0">
                   <div className="aspect-square bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative overflow-hidden">
                     <div className="text-center text-muted-foreground">
@@ -169,21 +196,34 @@ export default function Gallery() {
                   </div>
                   <div className="p-6 space-y-4">
                     <div>
-                      <h3 className="text-lg font-serif font-bold text-foreground">{stamp.title}</h3>
-                      <p className="text-sm text-muted-foreground">{stamp.country} • {stamp.year}</p>
+                      <h3 className="text-lg font-serif font-bold text-foreground">
+                        {stamp.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        {stamp.country} • {stamp.year}
+                      </p>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        stamp.rarity === 'legendary' ? 'rarity-legendary text-white' :
-                        stamp.rarity === 'very_rare' ? 'rarity-very-rare text-white' :
-                        stamp.rarity === 'rare' ? 'rarity-rare text-white' :
-                        'rarity-uncommon text-white'
-                      }`}>
+                      <span
+                        className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          stamp.rarity === "legendary"
+                            ? "rarity-legendary text-white"
+                            : stamp.rarity === "very_rare"
+                              ? "rarity-very-rare text-white"
+                              : stamp.rarity === "rare"
+                                ? "rarity-rare text-white"
+                                : "rarity-uncommon text-white"
+                        }`}
+                      >
                         {getRarityLabel(stamp.rarity)}
                       </span>
-                      <span className="text-lg font-serif font-bold text-primary">${stamp.price}</span>
+                      <span className="text-lg font-serif font-bold text-primary">
+                        ${stamp.price}
+                      </span>
                     </div>
-                    <Button className="w-full" variant="default">View Details</Button>
+                    <Button className="w-full" variant="default">
+                      View Details
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
