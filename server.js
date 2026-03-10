@@ -1,7 +1,6 @@
 import express from "express";
 import { promises as fsPromises } from "fs";
 import path from "path";
-import cors from "cors";
 import { fileURLToPath } from "url";
 import * as wallet from "./wallet.js";
 import * as market from "./market.js";
@@ -15,17 +14,29 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",").map(o => o.trim())
   : ["http://localhost:8080", "http://localhost:3000", "http://localhost:10000"];
 
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    // In development mode, allow all origins for easier local testing
-    if (process.env.NODE_ENV !== "production") {
-      return callback(null, true);
-    }
-    callback(new Error("Not allowed by CORS"));
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  const allowed =
+    !origin ||
+    allowedOrigins.includes(origin) ||
+    process.env.NODE_ENV !== "production";
+  if (!allowed) {
+    res.status(403).json({ error: "Not allowed by CORS" });
+    return;
   }
-}));
+  if (origin) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Vary", "Origin");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  if (req.method === "OPTIONS") {
+    res.sendStatus(204);
+    return;
+  }
+  next();
+});
 app.use(express.json());
 
 const DATA_FILE = path.join(__dirname, "data.json");
