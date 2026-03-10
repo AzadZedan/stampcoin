@@ -8,6 +8,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { handleStripeWebhook } from "../stripe-webhook";
+import { ENV } from "./env";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -33,8 +34,8 @@ async function startServer() {
   const server = createServer(app);
 
   // CORS middleware – allows the configured frontend origin (set FRONTEND_URL env var in production)
-  const allowedOrigin = process.env.FRONTEND_URL ?? "";
-  if (process.env.NODE_ENV === "production" && !allowedOrigin) {
+  const allowedOrigin = ENV.frontendUrl;
+  if (ENV.isProduction && !allowedOrigin) {
     console.warn("WARNING: FRONTEND_URL is not set. Cross-origin requests from browsers will be blocked.");
   }
   app.use((req, res, next) => {
@@ -43,7 +44,7 @@ async function startServer() {
       res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
       res.setHeader("Vary", "Origin");
       res.setHeader("Access-Control-Allow-Credentials", "true");
-    } else if (!allowedOrigin && process.env.NODE_ENV !== "production") {
+    } else if (!allowedOrigin && !ENV.isProduction) {
       // Development fallback: reflect the request origin so cookies work
       res.setHeader("Access-Control-Allow-Origin", origin ?? "*");
       res.setHeader("Vary", "Origin");
