@@ -20,6 +20,7 @@ This guide provides step-by-step instructions for deploying the StampCoin backen
 ### Option 1: Railway (Recommended)
 
 **Why Railway?**
+
 - ✅ Easy deployment
 - ✅ Free tier available
 - ✅ Automatic HTTPS
@@ -29,6 +30,7 @@ This guide provides step-by-step instructions for deploying the StampCoin backen
 ### Option 2: Render
 
 **Why Render?**
+
 - ✅ Free tier with limitations
 - ✅ Auto-deploy from GitHub
 - ✅ Good for Node.js apps
@@ -36,6 +38,7 @@ This guide provides step-by-step instructions for deploying the StampCoin backen
 ### Option 3: Heroku
 
 **Why Heroku?**
+
 - ✅ Mature platform
 - ✅ Extensive documentation
 - ✅ Many add-ons
@@ -47,6 +50,7 @@ This guide provides step-by-step instructions for deploying the StampCoin backen
 ### Step 1: Prepare Repository
 
 1. **Push code to GitHub:**
+
    ```bash
    cd /home/ubuntu/stampcoin-platform
    git add .
@@ -96,13 +100,15 @@ PORT=3000
 ### Step 5: Verify Deployment
 
 Test the backend:
+
 ```bash
 curl https://your-backend-url.railway.app/api/health
 ```
 
 Expected response:
+
 ```json
-{"status": "ok", "timestamp": "2025-12-23T..."}
+{ "status": "ok", "timestamp": "2025-12-23T..." }
 ```
 
 ---
@@ -175,6 +181,7 @@ git push heroku main
 ## Files Created for Deployment
 
 ### 1. Dockerfile
+
 ```dockerfile
 FROM node:22-alpine
 WORKDIR /app
@@ -190,12 +197,15 @@ CMD ["node", "dist/index.js"]
 ```
 
 ### 2. .dockerignore
+
 Excludes unnecessary files from Docker build
 
 ### 3. railway.json
+
 Railway-specific configuration
 
 ### 4. start-production.sh
+
 Production startup script with validation
 
 ---
@@ -207,6 +217,7 @@ Production startup script with validation
 Update frontend to use new backend URL:
 
 **In Netlify:**
+
 1. Go to Site Settings → Environment Variables
 2. Add:
    ```
@@ -217,12 +228,15 @@ Update frontend to use new backend URL:
 ### 2. Configure CORS
 
 Ensure backend allows frontend origin:
+
 ```typescript
 // In server/_core/index.ts
-app.use(cors({
-  origin: 'https://frolicking-conkies-18edaf.netlify.app',
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "https://frolicking-conkies-18edaf.netlify.app",
+    credentials: true,
+  })
+);
 ```
 
 ### 3. Update Stripe Webhook
@@ -252,6 +266,7 @@ app.use(cors({
 ### Build Fails
 
 **Check:**
+
 - All dependencies in `package.json`
 - Node version compatibility
 - Build logs for errors
@@ -259,6 +274,7 @@ app.use(cors({
 ### Database Connection Fails
 
 **Check:**
+
 - DATABASE_URL is correct
 - Database is accessible from Railway
 - SSL settings are correct
@@ -266,6 +282,7 @@ app.use(cors({
 ### API Calls Fail
 
 **Check:**
+
 - CORS configuration
 - Frontend API URL is correct
 - Environment variables are set
@@ -283,21 +300,25 @@ app.use(cors({
 ### Health Checks
 
 Add health check endpoint:
+
 ```typescript
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 ```
 
 ### Logging
 
 Use structured logging:
+
 ```typescript
-console.log(JSON.stringify({
-  level: 'info',
-  message: 'Server started',
-  port: PORT
-}));
+console.log(
+  JSON.stringify({
+    level: "info",
+    message: "Server started",
+    port: PORT,
+  })
+);
 ```
 
 ---
@@ -316,16 +337,19 @@ console.log(JSON.stringify({
 ## Cost Estimates
 
 ### Railway
+
 - **Free Tier:** $5 credit/month
 - **Hobby:** $5/month
 - **Pro:** $20/month
 
 ### Render
+
 - **Free:** Limited resources
 - **Starter:** $7/month
 - **Standard:** $25/month
 
 ### Heroku
+
 - **Free:** Discontinued
 - **Eco:** $5/month
 - **Basic:** $7/month
@@ -346,6 +370,7 @@ console.log(JSON.stringify({
 ## Support
 
 For issues or questions:
+
 - Railway Docs: https://docs.railway.app
 - Render Docs: https://render.com/docs
 - Heroku Docs: https://devcenter.heroku.com

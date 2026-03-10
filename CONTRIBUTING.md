@@ -5,6 +5,7 @@ Thank you for your interest in contributing to Stampcoin — the world's first d
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - pnpm 10+
 - Git

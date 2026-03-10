@@ -34,22 +34,36 @@ export default function Marketplace() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <Sparkles className="w-8 h-8 text-primary" />
-              <h1 className="text-2xl font-serif font-bold text-primary">StampCoin</h1>
+              <h1 className="text-2xl font-serif font-bold text-primary">
+                StampCoin
+              </h1>
             </Link>
             <div className="hidden md:flex items-center gap-6">
               <Link href="/marketplace" className="text-primary font-medium">
                 Marketplace
               </Link>
-              <Link href="/gallery" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/gallery"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Gallery
               </Link>
-              <Link href="/investors" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/investors"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 For Investors
               </Link>
-              <Link href="/about" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/about"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 About
               </Link>
-              <Link href="/contact" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/contact"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Contact
               </Link>
             </div>
@@ -67,7 +81,8 @@ export default function Marketplace() {
             Digital Stamp Marketplace
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Discover, collect, and trade authenticated digital stamps from around the world
+            Discover, collect, and trade authenticated digital stamps from
+            around the world
           </p>
         </div>
       </section>
@@ -77,27 +92,32 @@ export default function Marketplace() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-4 items-end">
             <div className="flex-1">
-              <label className="text-sm font-medium mb-2 block">Search Stamps</label>
+              <label className="text-sm font-medium mb-2 block">
+                Search Stamps
+              </label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <Input
                   type="text"
                   placeholder="Search by title, country, or description..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={e => setSearchQuery(e.target.value)}
                   className="pl-10"
                 />
               </div>
             </div>
             <div className="w-full md:w-48">
               <label className="text-sm font-medium mb-2 block">Category</label>
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <Select
+                value={selectedCategory}
+                onValueChange={setSelectedCategory}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Categories</SelectItem>
-                  {categories?.map((cat) => (
+                  {categories?.map(cat => (
                     <SelectItem key={cat.id} value={cat.id.toString()}>
                       {cat.name}
                     </SelectItem>
@@ -137,7 +157,7 @@ export default function Marketplace() {
             </div>
           ) : stamps && stamps.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {stamps.map((stamp) => (
+              {stamps.map(stamp => (
                 <Card
                   key={stamp.id}
                   className="group hover:shadow-xl transition-all duration-300 border-border/50 bg-card/80 backdrop-blur-sm overflow-hidden"
@@ -177,7 +197,9 @@ export default function Marketplace() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-xs text-muted-foreground">Price</p>
-                        <p className="text-xl font-bold text-primary">${stamp.price}</p>
+                        <p className="text-xl font-bold text-primary">
+                          ${stamp.price}
+                        </p>
                       </div>
                       <Link href={`/stamp/${stamp.id}`}>
                         <Button size="sm">View Details</Button>
@@ -190,7 +212,9 @@ export default function Marketplace() {
           ) : (
             <div className="text-center py-12">
               <Sparkles className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-              <p className="text-xl font-medium text-foreground mb-2">No stamps found</p>
+              <p className="text-xl font-medium text-foreground mb-2">
+                No stamps found
+              </p>
               <p className="text-muted-foreground">
                 Try adjusting your search or filter criteria
               </p>

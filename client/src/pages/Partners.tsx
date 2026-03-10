@@ -3,8 +3,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sparkles, Award, TrendingUp, Users, DollarSign, CheckCircle, Clock, XCircle } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Sparkles,
+  Award,
+  TrendingUp,
+  Users,
+  DollarSign,
+  CheckCircle,
+  Clock,
+  XCircle,
+} from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
@@ -52,7 +67,7 @@ export default function Partners() {
         contactPhone: "",
       });
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(error.message || "Failed to submit partnership application");
     },
   });
@@ -79,11 +94,36 @@ export default function Partners() {
 
   const getTierBenefits = (tier: string) => {
     const benefits = {
-      bronze: ["$1,000+ investment", "5% commission on referrals", "Basic branding", "Email support"],
-      silver: ["$5,000+ investment", "10% commission on referrals", "Premium branding", "Priority support"],
-      gold: ["$10,000+ investment", "15% commission on referrals", "Featured placement", "Dedicated account manager"],
-      platinum: ["$25,000+ investment", "20% commission on referrals", "Premium features", "24/7 support"],
-      diamond: ["$50,000+ investment", "25% commission on referrals", "All features", "Executive support"],
+      bronze: [
+        "$1,000+ investment",
+        "5% commission on referrals",
+        "Basic branding",
+        "Email support",
+      ],
+      silver: [
+        "$5,000+ investment",
+        "10% commission on referrals",
+        "Premium branding",
+        "Priority support",
+      ],
+      gold: [
+        "$10,000+ investment",
+        "15% commission on referrals",
+        "Featured placement",
+        "Dedicated account manager",
+      ],
+      platinum: [
+        "$25,000+ investment",
+        "20% commission on referrals",
+        "Premium features",
+        "24/7 support",
+      ],
+      diamond: [
+        "$50,000+ investment",
+        "25% commission on referrals",
+        "All features",
+        "Executive support",
+      ],
     };
     return benefits[tier as keyof typeof benefits] || benefits.bronze;
   };
@@ -109,22 +149,36 @@ export default function Partners() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <Sparkles className="w-8 h-8 text-primary" />
-              <h1 className="text-2xl font-serif font-bold text-primary">StampCoin</h1>
+              <h1 className="text-2xl font-serif font-bold text-primary">
+                StampCoin
+              </h1>
             </Link>
             <div className="hidden md:flex items-center gap-6">
-              <Link href="/marketplace" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/marketplace"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Marketplace
               </Link>
-              <Link href="/gallery" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/gallery"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Gallery
               </Link>
               <Link href="/partners" className="text-primary font-medium">
                 Partners
               </Link>
-              <Link href="/investors" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/investors"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 For Investors
               </Link>
-              <Link href="/about" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/about"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 About
               </Link>
             </div>
@@ -142,11 +196,17 @@ export default function Partners() {
             Partner With StampCoin
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Join our growing community of partners and supporters. Invest in the future of digital stamp collecting and earn exclusive benefits and commissions.
+            Join our growing community of partners and supporters. Invest in the
+            future of digital stamp collecting and earn exclusive benefits and
+            commissions.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button size="lg" variant="default">Become a Partner</Button>
-            <Button size="lg" variant="outline">Learn More</Button>
+            <Button size="lg" variant="default">
+              Become a Partner
+            </Button>
+            <Button size="lg" variant="outline">
+              Learn More
+            </Button>
           </div>
         </div>
       </section>
@@ -154,12 +214,19 @@ export default function Partners() {
       {/* Partnership Tiers */}
       <section className="py-16 bg-background/50">
         <div className="container mx-auto px-4">
-          <h3 className="text-3xl font-serif font-bold text-center mb-12 text-gold-foil">Partnership Tiers</h3>
+          <h3 className="text-3xl font-serif font-bold text-center mb-12 text-gold-foil">
+            Partnership Tiers
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {["bronze", "silver", "gold", "platinum", "diamond"].map((tier) => (
-              <Card key={tier} className={`card-premium bg-gradient-to-br ${getTierColor(tier)} text-white overflow-hidden`}>
+            {["bronze", "silver", "gold", "platinum", "diamond"].map(tier => (
+              <Card
+                key={tier}
+                className={`card-premium bg-gradient-to-br ${getTierColor(tier)} text-white overflow-hidden`}
+              >
                 <CardHeader>
-                  <CardTitle className="capitalize text-xl">{tier} Partner</CardTitle>
+                  <CardTitle className="capitalize text-xl">
+                    {tier} Partner
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
@@ -170,11 +237,13 @@ export default function Partners() {
                       </div>
                     ))}
                   </div>
-                  <Button 
+                  <Button
                     className="w-full bg-white text-foreground hover:bg-gray-100"
                     onClick={() => {
                       setFormData({ ...formData, tier: tier as any });
-                      document.getElementById("partnership-form")?.scrollIntoView({ behavior: "smooth" });
+                      document
+                        .getElementById("partnership-form")
+                        ?.scrollIntoView({ behavior: "smooth" });
                     }}
                   >
                     Apply Now
@@ -190,9 +259,12 @@ export default function Partners() {
       {partners && partners.length > 0 && (
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <h3 className="text-3xl font-serif font-bold text-center mb-4 text-gold-foil">Our Partners</h3>
+            <h3 className="text-3xl font-serif font-bold text-center mb-4 text-gold-foil">
+              Our Partners
+            </h3>
             <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-              Meet the companies and organizations supporting the StampCoin ecosystem
+              Meet the companies and organizations supporting the StampCoin
+              ecosystem
             </p>
 
             {/* Tier Filter */}
@@ -214,13 +286,20 @@ export default function Partners() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {partners.map((partner: any) => (
-                <Card key={partner.id} className="card-premium stamp-card-hover">
+                <Card
+                  key={partner.id}
+                  className="card-premium stamp-card-hover"
+                >
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <CardTitle className="capitalize">{partner.companyName}</CardTitle>
+                        <CardTitle className="capitalize">
+                          {partner.companyName}
+                        </CardTitle>
                         <div className="flex items-center gap-2 mt-2">
-                          <span className={`px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${getTierColor(partner.tier)} text-white`}>
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${getTierColor(partner.tier)} text-white`}
+                          >
                             {partner.tier.toUpperCase()}
                           </span>
                           {getStatusIcon(partner.status)}
@@ -230,16 +309,26 @@ export default function Partners() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {partner.description && (
-                      <p className="text-sm text-muted-foreground">{partner.description}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {partner.description}
+                      </p>
                     )}
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center gap-2">
                         <DollarSign className="w-4 h-4 text-primary" />
-                        <span>Investment: ${parseFloat(partner.totalInvestment).toLocaleString()}</span>
+                        <span>
+                          Investment: $
+                          {parseFloat(partner.totalInvestment).toLocaleString()}
+                        </span>
                       </div>
                       {partner.website && (
                         <div className="flex items-center gap-2">
-                          <a href={partner.website} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                          <a
+                            href={partner.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline"
+                          >
                             {partner.website}
                           </a>
                         </div>
@@ -256,8 +345,10 @@ export default function Partners() {
       {/* Partnership Application Form */}
       <section id="partnership-form" className="py-16 bg-background/50">
         <div className="container mx-auto px-4 max-w-2xl">
-          <h3 className="text-3xl font-serif font-bold text-center mb-12 text-gold-foil">Apply for Partnership</h3>
-          
+          <h3 className="text-3xl font-serif font-bold text-center mb-12 text-gold-foil">
+            Apply for Partnership
+          </h3>
+
           {myPartner ? (
             <Card className="card-premium">
               <CardHeader>
@@ -272,7 +363,9 @@ export default function Partners() {
                   <Label>Status</Label>
                   <div className="flex items-center gap-2">
                     {getStatusIcon(myPartner.status)}
-                    <span className="capitalize font-medium">{myPartner.status}</span>
+                    <span className="capitalize font-medium">
+                      {myPartner.status}
+                    </span>
                   </div>
                 </div>
                 <div>
@@ -281,7 +374,9 @@ export default function Partners() {
                 </div>
                 <div>
                   <Label>Total Investment</Label>
-                  <p className="text-foreground">${parseFloat(myPartner.totalInvestment).toLocaleString()}</p>
+                  <p className="text-foreground">
+                    ${parseFloat(myPartner.totalInvestment).toLocaleString()}
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -295,17 +390,29 @@ export default function Partners() {
                       <Input
                         id="companyName"
                         value={formData.companyName}
-                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                        onChange={e =>
+                          setFormData({
+                            ...formData,
+                            companyName: e.target.value,
+                          })
+                        }
                         placeholder="Your company name"
                         required
                       />
                     </div>
                     <div>
-                      <Label htmlFor="companyNameAr">Company Name (Arabic)</Label>
+                      <Label htmlFor="companyNameAr">
+                        Company Name (Arabic)
+                      </Label>
                       <Input
                         id="companyNameAr"
                         value={formData.companyNameAr}
-                        onChange={(e) => setFormData({ ...formData, companyNameAr: e.target.value })}
+                        onChange={e =>
+                          setFormData({
+                            ...formData,
+                            companyNameAr: e.target.value,
+                          })
+                        }
                         placeholder="اسم الشركة"
                       />
                     </div>
@@ -316,7 +423,12 @@ export default function Partners() {
                     <Textarea
                       id="description"
                       value={formData.description}
-                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                      onChange={e =>
+                        setFormData({
+                          ...formData,
+                          description: e.target.value,
+                        })
+                      }
                       placeholder="Tell us about your company"
                       rows={3}
                     />
@@ -327,7 +439,12 @@ export default function Partners() {
                     <Textarea
                       id="descriptionAr"
                       value={formData.descriptionAr}
-                      onChange={(e) => setFormData({ ...formData, descriptionAr: e.target.value })}
+                      onChange={e =>
+                        setFormData({
+                          ...formData,
+                          descriptionAr: e.target.value,
+                        })
+                      }
                       placeholder="اخبرنا عن شركتك"
                       rows={3}
                     />
@@ -340,34 +457,56 @@ export default function Partners() {
                         id="website"
                         type="url"
                         value={formData.website}
-                        onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                        onChange={e =>
+                          setFormData({ ...formData, website: e.target.value })
+                        }
                         placeholder="https://example.com"
                       />
                     </div>
                     <div>
                       <Label htmlFor="tier">Partnership Tier *</Label>
-                      <Select value={formData.tier} onValueChange={(value) => setFormData({ ...formData, tier: value as any })}>
+                      <Select
+                        value={formData.tier}
+                        onValueChange={value =>
+                          setFormData({ ...formData, tier: value as any })
+                        }
+                      >
                         <SelectTrigger id="tier">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="bronze">Bronze ($1,000+)</SelectItem>
-                          <SelectItem value="silver">Silver ($5,000+)</SelectItem>
+                          <SelectItem value="bronze">
+                            Bronze ($1,000+)
+                          </SelectItem>
+                          <SelectItem value="silver">
+                            Silver ($5,000+)
+                          </SelectItem>
                           <SelectItem value="gold">Gold ($10,000+)</SelectItem>
-                          <SelectItem value="platinum">Platinum ($25,000+)</SelectItem>
-                          <SelectItem value="diamond">Diamond ($50,000+)</SelectItem>
+                          <SelectItem value="platinum">
+                            Platinum ($25,000+)
+                          </SelectItem>
+                          <SelectItem value="diamond">
+                            Diamond ($50,000+)
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
 
                   <div>
-                    <Label htmlFor="totalInvestment">Total Investment Amount (USD) *</Label>
+                    <Label htmlFor="totalInvestment">
+                      Total Investment Amount (USD) *
+                    </Label>
                     <Input
                       id="totalInvestment"
                       type="number"
                       value={formData.totalInvestment}
-                      onChange={(e) => setFormData({ ...formData, totalInvestment: e.target.value })}
+                      onChange={e =>
+                        setFormData({
+                          ...formData,
+                          totalInvestment: e.target.value,
+                        })
+                      }
                       placeholder="0.00"
                       step="0.01"
                       required
@@ -380,7 +519,12 @@ export default function Partners() {
                       <Input
                         id="contactPerson"
                         value={formData.contactPerson}
-                        onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
+                        onChange={e =>
+                          setFormData({
+                            ...formData,
+                            contactPerson: e.target.value,
+                          })
+                        }
                         placeholder="Full name"
                       />
                     </div>
@@ -390,7 +534,12 @@ export default function Partners() {
                         id="contactEmail"
                         type="email"
                         value={formData.contactEmail}
-                        onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
+                        onChange={e =>
+                          setFormData({
+                            ...formData,
+                            contactEmail: e.target.value,
+                          })
+                        }
                         placeholder="email@example.com"
                       />
                     </div>
@@ -402,13 +551,24 @@ export default function Partners() {
                       id="contactPhone"
                       type="tel"
                       value={formData.contactPhone}
-                      onChange={(e) => setFormData({ ...formData, contactPhone: e.target.value })}
+                      onChange={e =>
+                        setFormData({
+                          ...formData,
+                          contactPhone: e.target.value,
+                        })
+                      }
                       placeholder="+1 (555) 123-4567"
                     />
                   </div>
 
-                  <Button type="submit" className="w-full" disabled={createPartner.isPending}>
-                    {createPartner.isPending ? "Submitting..." : "Submit Partnership Application"}
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={createPartner.isPending}
+                  >
+                    {createPartner.isPending
+                      ? "Submitting..."
+                      : "Submit Partnership Application"}
                   </Button>
                 </form>
               </CardContent>
@@ -420,7 +580,9 @@ export default function Partners() {
       {/* Benefits Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h3 className="text-3xl font-serif font-bold text-center mb-12 text-gold-foil">Why Partner With StampCoin?</h3>
+          <h3 className="text-3xl font-serif font-bold text-center mb-12 text-gold-foil">
+            Why Partner With StampCoin?
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="card-premium">
               <CardHeader>
@@ -429,7 +591,8 @@ export default function Partners() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Access a rapidly growing market of digital stamp collectors with increasing demand for NFT-based collectibles.
+                  Access a rapidly growing market of digital stamp collectors
+                  with increasing demand for NFT-based collectibles.
                 </p>
               </CardContent>
             </Card>
@@ -441,7 +604,8 @@ export default function Partners() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Join a vibrant community of collectors, investors, and enthusiasts dedicated to preserving stamp culture.
+                  Join a vibrant community of collectors, investors, and
+                  enthusiasts dedicated to preserving stamp culture.
                 </p>
               </CardContent>
             </Card>
@@ -453,7 +617,8 @@ export default function Partners() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Earn commissions on referrals and exclusive benefits based on your partnership tier and investment level.
+                  Earn commissions on referrals and exclusive benefits based on
+                  your partnership tier and investment level.
                 </p>
               </CardContent>
             </Card>
