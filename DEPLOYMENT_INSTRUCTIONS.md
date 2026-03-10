@@ -14,10 +14,10 @@
 cd /home/ubuntu/stampcoin-platform
 
 # Login to Vercel (opens browser)
-npx vercel login
+pnpm dlx vercel login
 
 # Deploy to production
-npx vercel --prod
+pnpm dlx vercel --prod
 ```
 
 ### Option 2: Vercel Dashboard (Web Interface)
@@ -26,8 +26,8 @@ npx vercel --prod
 2. Import Git Repository or upload project
 3. Configure project settings:
    - Framework Preset: Vite
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
+   - Build Command: `pnpm run build && pnpm run build:frontend`
+   - Output Directory: `dist/public`
 4. Add environment variables (see below)
 5. Click "Deploy"
 
@@ -46,14 +46,24 @@ Add these environment variables in Vercel dashboard:
 
 ```env
 # Database
-DATABASE_URL=your_database_url_here
+DATABASE_URL=your_mysql_database_url_here
+
+# Authentication (OAuth + JWT)
+JWT_SECRET=your_random_jwt_secret
+VITE_APP_ID=your_oauth_app_id
+OAUTH_SERVER_URL=your_oauth_server_url
+OWNER_OPEN_ID=your_admin_open_id
 
 # Stripe Payment
 STRIPE_SECRET_KEY=your_stripe_secret_key
 STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 
-# Session
-SESSION_SECRET=your_random_session_secret
+# Forge AI (image storage proxy)
+BUILT_IN_FORGE_API_URL=your_forge_api_url
+BUILT_IN_FORGE_API_KEY=your_forge_api_key
+
+# CORS (set to your deployed frontend URL in production)
+FRONTEND_URL=https://your-domain.vercel.app
 
 # Environment
 NODE_ENV=production
@@ -94,13 +104,13 @@ NODE_ENV=production
 
 ```bash
 # Create production database (example with Railway)
-# Or use any provider: PlanetScale, Supabase, Neon, etc.
+# Or use any MySQL provider: PlanetScale, Railway, etc.
 
 # Set DATABASE_URL in .env.production
-DATABASE_URL="postgresql://user:password@host:5432/stampcoin"
+DATABASE_URL="mysql://user:password@host:3306/stampcoin"
 
 # Run migrations
-npm run db:push
+pnpm db:push
 ```
 
 ### Step 2: Configure Stripe
@@ -112,7 +122,7 @@ npm run db:push
    - Copy "Secret key"
 4. Create webhook:
    - Developers → Webhooks
-   - Add endpoint: `https://your-domain.vercel.app/api/stripe-webhook`
+   - Add endpoint: `https://your-domain.vercel.app/api/stripe/webhook`
    - Select events: `checkout.session.completed`, `payment_intent.succeeded`, `payment_intent.payment_failed`
    - Copy "Signing secret"
 
@@ -122,7 +132,7 @@ npm run db:push
 
 ```bash
 # Install Vercel CLI
-npm install -g vercel
+pnpm install -g vercel
 
 # Login
 vercel login
@@ -148,8 +158,8 @@ vercel --prod
    - Project Name: `stampcoin-platform`
    - Framework: Vite
    - Root Directory: `./`
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
+   - Build Command: `pnpm run build && pnpm run build:frontend`
+   - Output Directory: `dist/public`
 5. Add environment variables
 6. Click "Deploy"
 
@@ -160,9 +170,15 @@ In Vercel Dashboard:
 2. Click "Environment Variables"
 3. Add all required variables:
    - DATABASE_URL
+   - JWT_SECRET
+   - VITE_APP_ID
+   - OAUTH_SERVER_URL
+   - OWNER_OPEN_ID
    - STRIPE_SECRET_KEY
    - STRIPE_WEBHOOK_SECRET
-   - SESSION_SECRET
+   - BUILT_IN_FORGE_API_URL
+   - BUILT_IN_FORGE_API_KEY
+   - FRONTEND_URL
    - NODE_ENV=production
 
 ### Step 5: Update Stripe Webhook
@@ -170,7 +186,7 @@ In Vercel Dashboard:
 After deployment:
 1. Copy your Vercel URL (e.g., `stampcoin-platform.vercel.app`)
 2. Go to Stripe Dashboard → Webhooks
-3. Update endpoint URL to: `https://stampcoin-platform.vercel.app/api/stripe-webhook`
+3. Update endpoint URL to: `https://stampcoin-platform.vercel.app/api/stripe/webhook`
 4. Save changes
 
 ### Step 6: Test Deployment
@@ -200,7 +216,7 @@ After deployment:
 
 ```bash
 # Install Netlify CLI
-npm install -g netlify-cli
+pnpm install -g netlify-cli
 
 # Login
 netlify login
@@ -213,7 +229,7 @@ netlify deploy --prod
 
 ```bash
 # Install Railway CLI
-npm install -g @railway/cli
+pnpm install -g @railway/cli
 
 # Login
 railway login
@@ -265,10 +281,10 @@ railway up
 ### Build Fails
 
 **Error:** `Module not found`
-**Solution:** Check package.json dependencies, run `npm install`
+**Solution:** Check package.json dependencies, run `pnpm install`
 
 **Error:** `TypeScript errors`
-**Solution:** Run `npm run check` locally, fix errors
+**Solution:** Run `pnpm check` locally, fix errors
 
 ### Database Connection Issues
 
@@ -283,7 +299,7 @@ railway up
 **Error:** `Webhook signature verification failed`
 **Solution:**
 - Verify STRIPE_WEBHOOK_SECRET is correct
-- Check webhook endpoint URL
+- Check webhook endpoint URL (`/api/stripe/webhook`)
 - Ensure webhook is in live mode (not test mode)
 
 ### Environment Variables Not Loading
@@ -325,31 +341,34 @@ Before going live:
 
 ```bash
 # Local development
-npm run dev
+pnpm dev
 
-# Build for production
-npm run build
+# Build for production (backend)
+pnpm build
+
+# Build frontend
+pnpm build:frontend
 
 # Preview production build
-npm run preview
+pnpm run preview
 
 # Run tests
-npm test
+pnpm test
 
 # Type check
-npm run check
+pnpm check
 
 # Database push
-npm run db:push
+pnpm db:push
 
 # Deploy to Vercel
-npx vercel --prod
+pnpm dlx vercel --prod
 
 # View deployment logs
-npx vercel logs
+pnpm dlx vercel logs
 
 # View environment variables
-npx vercel env ls
+pnpm dlx vercel env ls
 ```
 
 ---
