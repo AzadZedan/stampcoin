@@ -1,0 +1,13 @@
+[
+  {
+    "name": "search_docs",
+    "description": "Search Cloudflare documentation",
+    "arguments": [
+      {
+        "name": "query",
+        "type": "string",
+        "desc": "The search query to look up in Cloudflare documentation"
+      }
+    ]
+  }
+]

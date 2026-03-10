@@ -1,0 +1,25 @@
+name: stampcoin-wallet-mcp
+image: mcp/stampcoin-wallet-mcp
+type: server
+meta:
+  category: finance
+  tags:
+    - finance
+    - wallet
+    - blockchain
+    - stampcoin
+about:
+  title: Stampcoin Wallet MCP
+  description: MCP server for interacting with the Stampcoin digital wallet and marketplace
+  icon: https://avatars.githubusercontent.com/u/259446803?v=4
+source:
+  project: https://github.com/AzadZedan/stampcoin
+  commit: main
+config:
+  description: Configure the Stampcoin Wallet MCP server connection
+  env:
+    - name: PORT
+      example: "3000"
+      value: "3000"
+    - name: SYNC_TOKEN
+      example: your-sync-token-here
