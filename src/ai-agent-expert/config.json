@@ -38,7 +38,8 @@
             "optimizePerformance": "/agent/optimize-performance",
             "auditSecurity": "/agent/audit-security",
             "generateDocs": "/agent/generate-docs",
-            "createTests": "/agent/create-tests"
+            "createTests": "/agent/create-tests",
+            "history": "/agent/history"
         }
     },
     "integrations": {
