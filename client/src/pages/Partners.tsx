@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sparkles, Award, TrendingUp, Users, DollarSign, CheckCircle, Clock, XCircle } from "lucide-react";
+import { Sparkles, Award, TrendingUp, Users, DollarSign, CheckCircle, Clock, XCircle, Coins, ArrowRight, Globe } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
@@ -414,6 +414,77 @@ export default function Partners() {
               </CardContent>
             </Card>
           )}
+        </div>
+      </section>
+
+      {/* Exchange Partners Section */}
+      <section className="py-16 bg-background/50">
+        <div className="container mx-auto px-4">
+          <h3 className="text-3xl font-serif font-bold text-center mb-4 text-gold-foil">Exchange Partnerships</h3>
+          <p className="text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
+            StampCoin is actively pursuing listings and strategic partnerships with leading cryptocurrency
+            exchanges to give STAMP token holders secure and accessible trading venues worldwide.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-10">
+            <Card className="card-premium border-primary/20">
+              <CardHeader>
+                <Coins className="w-8 h-8 text-primary mb-2" />
+                <CardTitle>Token Listing</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground text-sm">
+                  List the native <span className="font-semibold">STAMP</span> token on partner exchanges to provide a
+                  reliable and regulated trading platform for our growing community.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="card-premium border-primary/20">
+              <CardHeader>
+                <Globe className="w-8 h-8 text-secondary mb-2" />
+                <CardTitle>Co-Marketing</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground text-sm">
+                  Run joint promotional campaigns with exchange partners to amplify
+                  visibility, attract new collectors, and grow mutual user bases.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="card-premium border-primary/20">
+              <CardHeader>
+                <TrendingUp className="w-8 h-8 text-accent mb-2" />
+                <CardTitle>Exclusive Promotions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground text-sm">
+                  Offer exclusive discounts, early-access stamps, and staking rewards
+                  to exchange-partner users as part of integrated promotional programs.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <Card className="card-premium bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
+              <CardContent className="p-8">
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                  <div className="flex-1">
+                    <h4 className="text-xl font-serif font-bold text-foreground mb-2">
+                      Interested in an Exchange Partnership?
+                    </h4>
+                    <p className="text-muted-foreground text-sm">
+                      We welcome proposals from exchanges looking to list STAMP or explore
+                      strategic integration. Contact our team to start the conversation.
+                    </p>
+                  </div>
+                  <Link href="/contact">
+                    <Button size="lg" className="gap-2 flex-shrink-0">
+                      Get in Touch <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
