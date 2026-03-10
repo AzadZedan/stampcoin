@@ -5,7 +5,7 @@ import cors from "cors";
 import { fileURLToPath } from "url";
 import * as wallet from "./wallet.js";
 import * as market from "./market.js";
-import * as blockchain from "./blockchain.js";
+import { createBlockchainRouter } from "./blockchain-router.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -251,50 +251,7 @@ app.get("/api/token", (req, res) => {
 });
 
 // --- Blockchain API ---
-
-app.get("/api/blockchain/info", (req, res) => {
-  try {
-    res.json(blockchain.getBlockchainInfo());
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.get("/api/blockchain/supply", (req, res) => {
-  try {
-    res.json(blockchain.getSupply());
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.post("/api/blockchain/mint", requireToken, (req, res) => {
-  try {
-    const { toAddress, amount } = req.body || {};
-    if (!toAddress) return res.status(400).json({ error: "toAddress is required" });
-    if (amount === undefined || amount === null) return res.status(400).json({ error: "amount is required" });
-    const event = blockchain.mintTokens(toAddress, Number(amount));
-    res.json(event);
-  } catch (e) {
-    res.status(400).json({ error: e.message });
-  }
-});
-
-app.get("/api/blockchain/balance/:address", (req, res) => {
-  try {
-    res.json(blockchain.getBalance(req.params.address));
-  } catch (e) {
-    res.status(400).json({ error: e.message });
-  }
-});
-
-app.get("/api/blockchain/mint/events", requireToken, (req, res) => {
-  try {
-    res.json(blockchain.getMintEvents());
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
+app.use("/api/blockchain", createBlockchainRouter(SYNC_TOKEN));
 
 // --- Auctions API (in-memory — data resets on server restart) ---
 // For production, replace with a persistent data store (e.g., database or JSON file).
