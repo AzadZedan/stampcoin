@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { Router, Request, Response } from "express";
+import { rateLimit } from "express-rate-limit";
 import { sdk } from "./_core/sdk";
 import * as db from "./db";
 
@@ -12,6 +13,15 @@ const TOKEN_DECIMALS = 18;
 const TOKEN_MAX_SUPPLY = "21000000";
 const CHAIN_ID = 1337;
 const CHAIN_NAME = "StampChain";
+
+// ─── Rate limiter (30 requests per minute per IP) ────────────────────────────
+const apiLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests, please try again later" },
+});
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -59,7 +69,7 @@ router.get("/token", async (_req: Request, res: Response) => {
 
 // ─── POST /api/users/register ─────────────────────────────────────────────────
 
-router.post("/users/register", async (req: Request, res: Response) => {
+router.post("/users/register", apiLimiter, async (req: Request, res: Response) => {
   const { name, email } = req.body as { name?: string; email?: string };
 
   if (!name || !email) {
@@ -83,7 +93,7 @@ router.post("/users/register", async (req: Request, res: Response) => {
 
 // ─── POST /api/wallet/create ──────────────────────────────────────────────────
 
-router.post("/wallet/create", async (req: Request, res: Response) => {
+router.post("/wallet/create", apiLimiter, async (req: Request, res: Response) => {
   const user = await requireAuth(req, res);
   if (!user) return;
 
@@ -101,7 +111,7 @@ router.post("/wallet/create", async (req: Request, res: Response) => {
 
 // ─── POST /api/wallet/transfer ────────────────────────────────────────────────
 
-router.post("/wallet/transfer", async (req: Request, res: Response) => {
+router.post("/wallet/transfer", apiLimiter, async (req: Request, res: Response) => {
   const user = await requireAuth(req, res);
   if (!user) return;
 
@@ -186,7 +196,7 @@ router.get("/blockchain/supply", async (_req: Request, res: Response) => {
 
 // ─── POST /api/blockchain/mint (🔒 admin) ────────────────────────────────────
 
-router.post("/blockchain/mint", async (req: Request, res: Response) => {
+router.post("/blockchain/mint", apiLimiter, async (req: Request, res: Response) => {
   const user = await requireAdmin(req, res);
   if (!user) return;
 
@@ -243,7 +253,7 @@ router.get("/blockchain/balance/:addr", async (req: Request, res: Response) => {
 
 // ─── POST /api/market/items ───────────────────────────────────────────────────
 
-router.post("/market/items", async (req: Request, res: Response) => {
+router.post("/market/items", apiLimiter, async (req: Request, res: Response) => {
   const user = await requireAuth(req, res);
   if (!user) return;
 
@@ -277,7 +287,7 @@ router.post("/market/items", async (req: Request, res: Response) => {
 
 // ─── POST /api/market/items/:id/buy ──────────────────────────────────────────
 
-router.post("/market/items/:id/buy", async (req: Request, res: Response) => {
+router.post("/market/items/:id/buy", apiLimiter, async (req: Request, res: Response) => {
   const user = await requireAuth(req, res);
   if (!user) return;
 
@@ -314,7 +324,7 @@ router.post("/market/items/:id/buy", async (req: Request, res: Response) => {
 
 // ─── POST /api/auctions ───────────────────────────────────────────────────────
 
-router.post("/auctions", async (req: Request, res: Response) => {
+router.post("/auctions", apiLimiter, async (req: Request, res: Response) => {
   const user = await requireAuth(req, res);
   if (!user) return;
 
@@ -360,7 +370,7 @@ router.post("/auctions", async (req: Request, res: Response) => {
 
 // ─── POST /api/nft/mint ───────────────────────────────────────────────────────
 
-router.post("/nft/mint", async (req: Request, res: Response) => {
+router.post("/nft/mint", apiLimiter, async (req: Request, res: Response) => {
   const user = await requireAuth(req, res);
   if (!user) return;
 
