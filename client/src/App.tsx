@@ -15,6 +15,7 @@ import StampDetail from "./pages/StampDetail";
 import Dashboard from "./pages/Dashboard";
 import Partners from "./pages/Partners";
 import PaymentResult from "./pages/PaymentResult";
+import AIAssistant from "./pages/AIAssistant";
 
 function Router() {
   return (
@@ -29,6 +30,7 @@ function Router() {
       <Route path={"/contact"} component={Contact} />
       <Route path={"/partners"} component={Partners} />
       <Route path={"payment-result"} component={PaymentResult} />
+      <Route path={"/ai-assistant"} component={AIAssistant} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

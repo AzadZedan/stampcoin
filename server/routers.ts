@@ -8,6 +8,7 @@ import { storagePut } from "./storage";
 import { randomBytes } from "crypto";
 import Stripe from 'stripe';
 import { STAMP_PRODUCTS } from './products';
+import { invokeLLM } from "./_core/llm";
 
 let _stripe: Stripe | null = null;
 
@@ -527,6 +528,30 @@ export const appRouter = router({
           return await db.getPartnerTotalEarnings(input.partnerId);
         }),
     }),
+  }),
+  // AI
+  ai: router({
+    chat: publicProcedure
+      .input(
+        z.object({
+          messages: z.array(
+            z.object({
+              role: z.enum(["system", "user", "assistant"]),
+              content: z.string(),
+            })
+          ),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const result = await invokeLLM({ messages: input.messages });
+        const content = result.choices[0]?.message?.content;
+        if (typeof content !== "string") {
+          throw new Error(
+            `Unexpected response format from LLM: expected string content, got ${typeof content} (choices length: ${result.choices.length})`
+          );
+        }
+        return content;
+      }),
   }),
 });
 
