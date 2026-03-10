@@ -1,7 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, Heart, ShoppingCart, ArrowLeft, Shield, Calendar, MapPin, Star } from "lucide-react";
+import {
+  Sparkles,
+  Heart,
+  ShoppingCart,
+  ArrowLeft,
+  Shield,
+  Calendar,
+  MapPin,
+  Star,
+} from "lucide-react";
 import { Link, useParams } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -14,7 +23,9 @@ export default function StampDetail() {
   const stampId = params.id ? parseInt(params.id) : 0;
 
   const { user } = useAuth();
-  const { data: stamp, isLoading } = trpc.stamps.getById.useQuery({ id: stampId });
+  const { data: stamp, isLoading } = trpc.stamps.getById.useQuery({
+    id: stampId,
+  });
   const { data: reviews } = trpc.reviews.getStampReviews.useQuery({ stampId });
   const { data: rating } = trpc.reviews.getStampRating.useQuery({ stampId });
   const createReview = trpc.reviews.create.useMutation({
@@ -27,16 +38,16 @@ export default function StampDetail() {
       toast.error("Failed to submit review");
     },
   });
-  
+
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewComment, setReviewComment] = useState("");
-  
+
   const handleSubmitReview = async () => {
     if (!user) {
       toast.error("Please login to submit a review");
       return;
     }
-    
+
     await createReview.mutateAsync({
       stampId,
       rating: reviewRating,
@@ -57,7 +68,9 @@ export default function StampDetail() {
       <div className="min-h-screen bg-vintage-texture flex items-center justify-center">
         <div className="text-center">
           <Sparkles className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-          <p className="text-xl font-medium text-foreground mb-2">Stamp not found</p>
+          <p className="text-xl font-medium text-foreground mb-2">
+            Stamp not found
+          </p>
           <Link href="/marketplace">
             <Button>Back to Marketplace</Button>
           </Link>
@@ -74,22 +87,39 @@ export default function StampDetail() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <Sparkles className="w-8 h-8 text-primary" />
-              <h1 className="text-2xl font-serif font-bold text-primary">StampCoin</h1>
+              <h1 className="text-2xl font-serif font-bold text-primary">
+                StampCoin
+              </h1>
             </Link>
             <div className="hidden md:flex items-center gap-6">
-              <Link href="/marketplace" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/marketplace"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Marketplace
               </Link>
-              <Link href="/gallery" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/gallery"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Gallery
               </Link>
-              <Link href="/investors" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/investors"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 For Investors
               </Link>
-              <Link href="/about" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/about"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 About
               </Link>
-              <Link href="/contact" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/contact"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Contact
               </Link>
             </div>
@@ -173,11 +203,18 @@ export default function StampDetail() {
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <p className="text-sm text-muted-foreground mb-1">Current Price</p>
-                      <p className="text-4xl font-bold text-primary">${stamp.price}</p>
+                      <p className="text-sm text-muted-foreground mb-1">
+                        Current Price
+                      </p>
+                      <p className="text-4xl font-bold text-primary">
+                        ${stamp.price}
+                      </p>
                     </div>
                     {stamp.isAvailable && (
-                      <Badge variant="outline" className="bg-green-500/10 text-green-700 border-green-500/20">
+                      <Badge
+                        variant="outline"
+                        className="bg-green-500/10 text-green-700 border-green-500/20"
+                      >
                         Available
                       </Badge>
                     )}
@@ -199,15 +236,21 @@ export default function StampDetail() {
               {/* Additional Information */}
               <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <h3 className="font-serif font-semibold text-xl mb-4">Stamp Information</h3>
+                  <h3 className="font-serif font-semibold text-xl mb-4">
+                    Stamp Information
+                  </h3>
                   <div className="space-y-3">
                     <div className="flex justify-between py-2 border-b border-border/30">
                       <span className="text-muted-foreground">Category</span>
-                      <span className="font-medium">Category #{stamp.categoryId}</span>
+                      <span className="font-medium">
+                        Category #{stamp.categoryId}
+                      </span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-border/30">
                       <span className="text-muted-foreground">Country</span>
-                      <span className="font-medium">{stamp.country || "N/A"}</span>
+                      <span className="font-medium">
+                        {stamp.country || "N/A"}
+                      </span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-border/30">
                       <span className="text-muted-foreground">Year</span>
@@ -215,7 +258,9 @@ export default function StampDetail() {
                     </div>
                     <div className="flex justify-between py-2 border-b border-border/30">
                       <span className="text-muted-foreground">Rarity</span>
-                      <span className="font-medium capitalize">{stamp.rarity}</span>
+                      <span className="font-medium capitalize">
+                        {stamp.rarity}
+                      </span>
                     </div>
                     <div className="flex justify-between py-2">
                       <span className="text-muted-foreground">Status</span>
@@ -231,17 +276,21 @@ export default function StampDetail() {
 
           {/* Reviews Section */}
           <div className="mt-16 max-w-6xl mx-auto">
-            <h2 className="text-3xl font-serif font-bold mb-8">Reviews & Ratings</h2>
-            
+            <h2 className="text-3xl font-serif font-bold mb-8">
+              Reviews & Ratings
+            </h2>
+
             {/* Average Rating */}
             {rating && rating.count > 0 && (
               <Card className="mb-8 border-border/50 bg-gradient-to-br from-primary/5 to-secondary/5">
                 <CardContent className="p-8">
                   <div className="flex items-center gap-6">
-                    <div className="text-6xl font-bold text-primary">{rating.average.toFixed(1)}</div>
+                    <div className="text-6xl font-bold text-primary">
+                      {rating.average.toFixed(1)}
+                    </div>
                     <div>
                       <div className="flex items-center gap-1 mb-2">
-                        {[1, 2, 3, 4, 5].map((star) => (
+                        {[1, 2, 3, 4, 5].map(star => (
                           <Star
                             key={star}
                             className={`h-6 w-6 ${
@@ -253,24 +302,29 @@ export default function StampDetail() {
                         ))}
                       </div>
                       <div className="text-sm text-muted-foreground">
-                        Based on {rating.count} {rating.count === 1 ? "review" : "reviews"}
+                        Based on {rating.count}{" "}
+                        {rating.count === 1 ? "review" : "reviews"}
                       </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             )}
-            
+
             {/* Add Review Form */}
             {user && (
               <Card className="mb-8 border-border/50 bg-card/80 backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-serif font-semibold mb-4">Write a Review</h3>
-                  
+                  <h3 className="text-xl font-serif font-semibold mb-4">
+                    Write a Review
+                  </h3>
+
                   <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Rating</label>
+                    <label className="block text-sm font-medium mb-2">
+                      Rating
+                    </label>
                     <div className="flex items-center gap-2">
-                      {[1, 2, 3, 4, 5].map((star) => (
+                      {[1, 2, 3, 4, 5].map(star => (
                         <button
                           key={star}
                           type="button"
@@ -288,17 +342,19 @@ export default function StampDetail() {
                       ))}
                     </div>
                   </div>
-                  
+
                   <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Comment (Optional)</label>
+                    <label className="block text-sm font-medium mb-2">
+                      Comment (Optional)
+                    </label>
                     <Textarea
                       value={reviewComment}
-                      onChange={(e) => setReviewComment(e.target.value)}
+                      onChange={e => setReviewComment(e.target.value)}
                       placeholder="Share your thoughts about this stamp..."
                       rows={4}
                     />
                   </div>
-                  
+
                   <Button
                     onClick={handleSubmitReview}
                     disabled={createReview.isPending}
@@ -308,18 +364,23 @@ export default function StampDetail() {
                 </CardContent>
               </Card>
             )}
-            
+
             {/* Reviews List */}
             <div className="space-y-4">
               {reviews && reviews.length > 0 ? (
-                reviews.map((review) => (
-                  <Card key={review.id} className="border-border/50 bg-card/80 backdrop-blur-sm">
+                reviews.map(review => (
+                  <Card
+                    key={review.id}
+                    className="border-border/50 bg-card/80 backdrop-blur-sm"
+                  >
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <div className="font-semibold text-lg">{review.userName || "Anonymous"}</div>
+                          <div className="font-semibold text-lg">
+                            {review.userName || "Anonymous"}
+                          </div>
                           <div className="flex items-center gap-1 mt-1">
-                            {[1, 2, 3, 4, 5].map((star) => (
+                            {[1, 2, 3, 4, 5].map(star => (
                               <Star
                                 key={star}
                                 className={`h-4 w-4 ${
@@ -336,7 +397,9 @@ export default function StampDetail() {
                         </div>
                       </div>
                       {review.comment && (
-                        <p className="text-muted-foreground">{review.comment}</p>
+                        <p className="text-muted-foreground">
+                          {review.comment}
+                        </p>
                       )}
                     </CardContent>
                   </Card>

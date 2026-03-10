@@ -79,6 +79,7 @@ Thank you for your time and consideration.
 The StampCoin Team
 
 **Contact:**
+
 - **Email:** azadzedan13@gmail.com
 - **Website:** [Your Website URL]
 - **Project Demo:** [Link to Demo]

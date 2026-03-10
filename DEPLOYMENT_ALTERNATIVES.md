@@ -61,6 +61,7 @@ The project is built and ready for deployment, but all major platforms (Vercel, 
 Since I cannot complete authentication automatically, you can:
 
 #### Netlify CLI:
+
 ```bash
 cd /home/ubuntu/stampcoin-platform
 netlify login
@@ -69,8 +70,9 @@ netlify deploy --dir=dist/public --prod
 ```
 
 #### Vercel CLI:
+
 ```bash
-cd /home/ubuntu/stampcoin-platform  
+cd /home/ubuntu/stampcoin-platform
 vercel login
 # Complete authentication
 vercel --prod
@@ -83,12 +85,14 @@ vercel --prod
 For frontend-only deployment:
 
 #### GitHub Pages:
+
 1. Create repository
 2. Upload `dist/public` contents
 3. Enable GitHub Pages in Settings
 4. Done!
 
 #### Cloudflare Pages:
+
 1. Go to: https://pages.cloudflare.com
 2. Create new project
 3. Upload files
@@ -101,6 +105,7 @@ For frontend-only deployment:
 ### Option 1: Create Deployment Package
 
 I can create a ready-to-upload package with:
+
 - Built files
 - Configuration files
 - Environment variables template
@@ -113,6 +118,7 @@ I can give you exact commands and steps for any platform you choose.
 ### Option 3: Alternative Deployment Method
 
 I can explore other deployment options like:
+
 - Docker containers
 - FTP upload
 - Custom server setup
