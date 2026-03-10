@@ -16,7 +16,7 @@
 
 ## المتطلبات
 
-- Node.js 18+ 
+- Node.js 18+
 - npm أو pnpm
 - مشروع Stampcoin Platform
 
@@ -29,19 +29,19 @@ node src/ai-agent-expert/index.js
 
 ## واجهة برمجة التطبيقات (API)
 
-| الطريقة | المسار | الوصف |
-|--------|-------|------|
-| GET | /agent/status | الحصول على حالة الوكيل |
-| POST | /agent/activate | تفعيل الوكيل |
-| POST | /agent/deactivate | تعطيل الوكيل |
-| POST | /agent/analyze-code | تحليل الكود |
-| POST | /agent/fix-issues | إصلاح المشاكل |
-| POST | /agent/organize-project | تنظيم المشروع |
-| POST | /agent/optimize-performance | تحسين الأداء |
-| POST | /agent/audit-security | التدقيق الأمني |
-| POST | /agent/generate-docs | إنشاء الوثائق |
-| POST | /agent/create-tests | إنشاء الاختبارات |
-| GET | /agent/history | عرض سجل المهام |
+| الطريقة | المسار                      | الوصف                  |
+| ------- | --------------------------- | ---------------------- |
+| GET     | /agent/status               | الحصول على حالة الوكيل |
+| POST    | /agent/activate             | تفعيل الوكيل           |
+| POST    | /agent/deactivate           | تعطيل الوكيل           |
+| POST    | /agent/analyze-code         | تحليل الكود            |
+| POST    | /agent/fix-issues           | إصلاح المشاكل          |
+| POST    | /agent/organize-project     | تنظيم المشروع          |
+| POST    | /agent/optimize-performance | تحسين الأداء           |
+| POST    | /agent/audit-security       | التدقيق الأمني         |
+| POST    | /agent/generate-docs        | إنشاء الوثائق          |
+| POST    | /agent/create-tests         | إنشاء الاختبارات       |
+| GET     | /agent/history              | عرض سجل المهام         |
 
 ## الترخيص
 

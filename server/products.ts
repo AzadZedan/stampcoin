@@ -9,7 +9,7 @@ export interface StampProduct {
   description: string;
   price: number; // in USD
   stripePriceId?: string; // Will be set when creating products in Stripe
-  rarity: 'common' | 'uncommon' | 'rare' | 'very_rare' | 'legendary';
+  rarity: "common" | "uncommon" | "rare" | "very_rare" | "legendary";
   imageUrl?: string;
 }
 
@@ -19,39 +19,39 @@ export interface StampProduct {
  */
 export const STAMP_PRODUCTS: Record<string, StampProduct> = {
   COMMON_STAMP: {
-    id: 'common_stamp',
-    name: 'Common Digital Stamp',
-    description: 'A beautiful common digital stamp for your collection',
+    id: "common_stamp",
+    name: "Common Digital Stamp",
+    description: "A beautiful common digital stamp for your collection",
     price: 9.99,
-    rarity: 'common',
+    rarity: "common",
   },
   UNCOMMON_STAMP: {
-    id: 'uncommon_stamp',
-    name: 'Uncommon Digital Stamp',
-    description: 'A rare uncommon digital stamp with unique design',
+    id: "uncommon_stamp",
+    name: "Uncommon Digital Stamp",
+    description: "A rare uncommon digital stamp with unique design",
     price: 29.99,
-    rarity: 'uncommon',
+    rarity: "uncommon",
   },
   RARE_STAMP: {
-    id: 'rare_stamp',
-    name: 'Rare Digital Stamp',
-    description: 'A highly sought-after rare digital stamp',
+    id: "rare_stamp",
+    name: "Rare Digital Stamp",
+    description: "A highly sought-after rare digital stamp",
     price: 99.99,
-    rarity: 'rare',
+    rarity: "rare",
   },
   VERY_RARE_STAMP: {
-    id: 'very_rare_stamp',
-    name: 'Very Rare Digital Stamp',
-    description: 'An extremely rare digital stamp for serious collectors',
+    id: "very_rare_stamp",
+    name: "Very Rare Digital Stamp",
+    description: "An extremely rare digital stamp for serious collectors",
     price: 299.99,
-    rarity: 'very_rare',
+    rarity: "very_rare",
   },
   LEGENDARY_STAMP: {
-    id: 'legendary_stamp',
-    name: 'Legendary Digital Stamp',
-    description: 'The ultimate legendary digital stamp - a true masterpiece',
+    id: "legendary_stamp",
+    name: "Legendary Digital Stamp",
+    description: "The ultimate legendary digital stamp - a true masterpiece",
     price: 999.99,
-    rarity: 'legendary',
+    rarity: "legendary",
   },
 };
 
@@ -72,6 +72,8 @@ export function getAllProducts(): StampProduct[] {
 /**
  * Get product by rarity
  */
-export function getProductsByRarity(rarity: StampProduct['rarity']): StampProduct[] {
+export function getProductsByRarity(
+  rarity: StampProduct["rarity"]
+): StampProduct[] {
   return getAllProducts().filter(product => product.rarity === rarity);
 }
