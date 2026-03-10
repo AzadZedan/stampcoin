@@ -4,7 +4,7 @@ services:
     env: node
     region: oregon
     plan: free
-    buildCommand: npm install -g pnpm && pnpm install --frozen-lockfile && pnpm run build
+    buildCommand: npm install -g pnpm && pnpm install --frozen-lockfile && pnpm run build && pnpm run build:frontend
     startCommand: node dist/index.js
     envVars:
       - key: NODE_ENV
@@ -13,11 +13,21 @@ services:
         value: 10000
       - key: DATABASE_URL
         sync: false
+      - key: JWT_SECRET
+        sync: false
       - key: STRIPE_SECRET_KEY
         sync: false
       - key: STRIPE_WEBHOOK_SECRET
         sync: false
-      - key: VITE_STRIPE_PUBLISHABLE_KEY
+      - key: VITE_APP_ID
         sync: false
-      - key: SESSION_SECRET
+      - key: OAUTH_SERVER_URL
+        sync: false
+      - key: OWNER_OPEN_ID
+        sync: false
+      - key: BUILT_IN_FORGE_API_URL
+        sync: false
+      - key: BUILT_IN_FORGE_API_KEY
+        sync: false
+      - key: FRONTEND_URL
         sync: false

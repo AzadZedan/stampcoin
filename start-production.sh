@@ -15,8 +15,8 @@ if [ -z "$STRIPE_SECRET_KEY" ]; then
     exit 1
 fi
 
-if [ -z "$SESSION_SECRET" ]; then
-    echo "Error: SESSION_SECRET is not set"
+if [ -z "$JWT_SECRET" ]; then
+    echo "Error: JWT_SECRET is not set"
     exit 1
 fi
 

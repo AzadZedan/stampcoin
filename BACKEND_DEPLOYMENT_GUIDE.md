@@ -74,13 +74,23 @@ In Railway Dashboard → Variables, add:
 ```
 DATABASE_URL=your_tidb_database_url_here
 
+JWT_SECRET=your_jwt_secret_here
+
 STRIPE_SECRET_KEY=your_stripe_secret_key_here
 
 STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret_here
 
-VITE_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key_here
+VITE_APP_ID=your_app_id_here
 
-SESSION_SECRET=your_session_secret_here
+OAUTH_SERVER_URL=your_oauth_server_url_here
+
+OWNER_OPEN_ID=your_owner_open_id_here
+
+BUILT_IN_FORGE_API_URL=your_forge_api_url_here
+
+BUILT_IN_FORGE_API_KEY=your_forge_api_key_here
+
+FRONTEND_URL=https://your-frontend-domain.com
 
 NODE_ENV=production
 
@@ -216,21 +226,20 @@ Update frontend to use new backend URL:
 
 ### 2. Configure CORS
 
-Ensure backend allows frontend origin:
-```typescript
-// In server/_core/index.ts
-app.use(cors({
-  origin: 'https://frolicking-conkies-18edaf.netlify.app',
-  credentials: true
-}));
+Ensure backend allows frontend origin by setting the `FRONTEND_URL` environment variable:
+
 ```
+FRONTEND_URL=https://your-frontend-domain.com
+```
+
+The backend automatically reads this variable to configure CORS. No code changes are required.
 
 ### 3. Update Stripe Webhook
 
 1. Go to Stripe Dashboard → Webhooks
 2. Add new endpoint:
    ```
-   https://your-backend-url.railway.app/api/stripe-webhook
+   https://your-backend-url.railway.app/api/stripe/webhook
    ```
 3. Select events:
    - `checkout.session.completed`

@@ -48,12 +48,24 @@ Add these environment variables in Vercel dashboard:
 # Database
 DATABASE_URL=your_database_url_here
 
+# Authentication
+JWT_SECRET=your_jwt_secret_here
+
 # Stripe Payment
 STRIPE_SECRET_KEY=your_stripe_secret_key
 STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 
-# Session
-SESSION_SECRET=your_random_session_secret
+# OAuth
+VITE_APP_ID=your_app_id_here
+OAUTH_SERVER_URL=your_oauth_server_url_here
+OWNER_OPEN_ID=your_owner_open_id_here
+
+# Forge API
+BUILT_IN_FORGE_API_URL=your_forge_api_url_here
+BUILT_IN_FORGE_API_KEY=your_forge_api_key_here
+
+# CORS
+FRONTEND_URL=https://your-frontend-url.vercel.app
 
 # Environment
 NODE_ENV=production
@@ -112,7 +124,7 @@ npm run db:push
    - Copy "Secret key"
 4. Create webhook:
    - Developers → Webhooks
-   - Add endpoint: `https://your-domain.vercel.app/api/stripe-webhook`
+   - Add endpoint: `https://your-domain.vercel.app/api/stripe/webhook`
    - Select events: `checkout.session.completed`, `payment_intent.succeeded`, `payment_intent.payment_failed`
    - Copy "Signing secret"
 
@@ -160,9 +172,15 @@ In Vercel Dashboard:
 2. Click "Environment Variables"
 3. Add all required variables:
    - DATABASE_URL
+   - JWT_SECRET
    - STRIPE_SECRET_KEY
    - STRIPE_WEBHOOK_SECRET
-   - SESSION_SECRET
+   - VITE_APP_ID
+   - OAUTH_SERVER_URL
+   - OWNER_OPEN_ID
+   - BUILT_IN_FORGE_API_URL
+   - BUILT_IN_FORGE_API_KEY
+   - FRONTEND_URL
    - NODE_ENV=production
 
 ### Step 5: Update Stripe Webhook
@@ -170,7 +188,7 @@ In Vercel Dashboard:
 After deployment:
 1. Copy your Vercel URL (e.g., `stampcoin-platform.vercel.app`)
 2. Go to Stripe Dashboard → Webhooks
-3. Update endpoint URL to: `https://stampcoin-platform.vercel.app/api/stripe-webhook`
+3. Update endpoint URL to: `https://stampcoin-platform.vercel.app/api/stripe/webhook`
 4. Save changes
 
 ### Step 6: Test Deployment
