@@ -46,6 +46,7 @@ The StampCoin platform has a fully integrated Stripe payment system that enables
 **Authentication:** Required (user must be logged in)
 
 **Input:**
+
 ```typescript
 {
   stampId: number,        // ID of the stamp being purchased
@@ -54,6 +55,7 @@ The StampCoin platform has a fully integrated Stripe payment system that enables
 ```
 
 **Output:**
+
 ```typescript
 {
   url: string,           // Stripe checkout URL
@@ -62,10 +64,11 @@ The StampCoin platform has a fully integrated Stripe payment system that enables
 ```
 
 **Example Request:**
+
 ```javascript
 const result = await trpc.payments.createCheckout.mutate({
   stampId: 1,
-  productId: "COMMON_STAMP"
+  productId: "COMMON_STAMP",
 });
 
 // Redirect to checkout
@@ -73,6 +76,7 @@ window.location.href = result.url;
 ```
 
 **Error Handling:**
+
 - Returns error if product not found
 - Returns error if user not authenticated
 - Returns error if Stripe API fails
@@ -84,6 +88,7 @@ window.location.href = result.url;
 ### API Keys
 
 **Environment Variables Required:**
+
 ```
 STRIPE_SECRET_KEY=sk_test_...      # Secret key for backend
 STRIPE_WEBHOOK_SECRET=whsec_...    # Webhook signing secret
@@ -92,11 +97,13 @@ STRIPE_WEBHOOK_SECRET=whsec_...    # Webhook signing secret
 ### Checkout Session Configuration
 
 **Payment Methods:**
+
 - Credit cards (Visa, Mastercard, American Express, Discover)
 - Debit cards
 - Digital wallets (Apple Pay, Google Pay)
 
 **Features Enabled:**
+
 - Promotion codes (discount codes)
 - Customer email capture
 - Metadata tracking
@@ -130,22 +137,25 @@ STRIPE_WEBHOOK_SECRET=whsec_...    # Webhook signing secret
 The system handles the following Stripe events:
 
 #### 1. checkout.session.completed
+
 **Triggered:** When payment is successfully completed
 
 **Data Available:**
+
 - Session ID
 - Customer email
 - Payment intent ID
 - Metadata (user_id, stamp_id, etc.)
 
 **Processing:**
+
 ```typescript
 case 'checkout.session.completed': {
   const session = event.data.object as Stripe.Checkout.Session;
-  
+
   // 1. Get user ID from metadata
   const userId = session.metadata?.user_id;
-  
+
   // 2. Create transaction record
   // 3. Grant access to purchased stamp
   // 4. Send confirmation email
@@ -153,18 +163,22 @@ case 'checkout.session.completed': {
 ```
 
 #### 2. payment_intent.succeeded
+
 **Triggered:** When payment intent succeeds
 
 **Data Available:**
+
 - Payment intent ID
 - Amount
 - Currency
 - Status
 
 #### 3. payment_intent.payment_failed
+
 **Triggered:** When payment fails
 
 **Data Available:**
+
 - Payment intent ID
 - Error message
 - Failure reason
@@ -172,6 +186,7 @@ case 'checkout.session.completed': {
 ### Webhook Security
 
 **Signature Verification:**
+
 ```typescript
 const event = stripe.webhooks.constructEvent(
   req.body,
@@ -181,6 +196,7 @@ const event = stripe.webhooks.constructEvent(
 ```
 
 **Features:**
+
 - Verifies webhook signature
 - Prevents unauthorized requests
 - Handles test events safely
@@ -199,28 +215,28 @@ export const STAMP_PRODUCTS = {
   COMMON_STAMP: {
     name: "Common Stamp",
     description: "A common digital stamp NFT",
-    price: 39.99
+    price: 39.99,
   },
   UNCOMMON_STAMP: {
     name: "Uncommon Stamp",
     description: "An uncommon digital stamp NFT",
-    price: 99.99
+    price: 99.99,
   },
   RARE_STAMP: {
     name: "Rare Stamp",
     description: "A rare digital stamp NFT",
-    price: 299.99
+    price: 299.99,
   },
   VERY_RARE_STAMP: {
     name: "Very Rare Stamp",
     description: "A very rare digital stamp NFT",
-    price: 999.99
+    price: 999.99,
   },
   LEGENDARY_STAMP: {
     name: "Legendary Stamp",
     description: "A legendary digital stamp NFT",
-    price: 4999.99
-  }
+    price: 4999.99,
+  },
 };
 ```
 
@@ -239,14 +255,15 @@ To add a new product:
 ### Marketplace Component
 
 **Buy Button:**
+
 ```typescript
 const handleBuy = async (stampId: number) => {
   try {
     const result = await trpc.payments.createCheckout.mutate({
       stampId,
-      productId: "COMMON_STAMP"
+      productId: "COMMON_STAMP",
     });
-    
+
     // Redirect to Stripe Checkout
     window.location.href = result.url;
   } catch (error) {
@@ -258,11 +275,13 @@ const handleBuy = async (stampId: number) => {
 ### Success/Cancel Handling
 
 **Success URL:** `/dashboard?payment=success`
+
 - User redirected after successful payment
 - Transaction recorded in database
 - Confirmation displayed
 
 **Cancel URL:** `/marketplace?payment=cancelled`
+
 - User redirected if payment cancelled
 - Can retry purchase
 
@@ -275,6 +294,7 @@ const handleBuy = async (stampId: number) => {
 When payment completes, the system:
 
 1. **Creates Transaction Record**
+
 ```typescript
 {
   stampId: number,
@@ -305,29 +325,36 @@ When payment completes, the system:
 ### Common Errors
 
 **Product Not Found**
+
 ```
 Error: Product not found
 Status: 400
 ```
+
 **Solution:** Verify product ID exists in STAMP_PRODUCTS
 
 **Authentication Required**
+
 ```
 Error: User not authenticated
 Status: 401
 ```
+
 **Solution:** User must be logged in to purchase
 
 **Stripe API Error**
+
 ```
 Error: Stripe API error
 Status: 500
 ```
+
 **Solution:** Check Stripe API keys and network connectivity
 
 ### Error Recovery
 
 The system includes:
+
 - Automatic retry logic
 - Detailed error logging
 - User-friendly error messages
@@ -342,10 +369,12 @@ The system includes:
 **File:** `server/payments.test.ts`
 
 **Test Cases:**
+
 1. Creates checkout session for authenticated user
 2. Throws error for invalid product ID
 
 **Test Results:**
+
 - ✅ 2/2 tests passing
 - ✅ All assertions passing
 - ✅ Error handling verified
@@ -357,6 +386,7 @@ npm test
 ```
 
 **Output:**
+
 ```
 ✓ payments.createCheckout (2)
   ✓ creates a checkout session for authenticated user
@@ -369,6 +399,7 @@ Tests  9 passed (9)
 ### Manual Testing
 
 **Test Cards:**
+
 - Visa: 4242 4242 4242 4242
 - Mastercard: 5555 5555 5555 4444
 - American Express: 3782 822463 10005
@@ -383,6 +414,7 @@ Tests  9 passed (9)
 ### PCI Compliance
 
 The system is PCI DSS compliant:
+
 - No card data stored locally
 - All payments processed through Stripe
 - Secure transmission (HTTPS)
@@ -409,6 +441,7 @@ The system is PCI DSS compliant:
 ### Webhook Logging
 
 All webhook events logged:
+
 ```
 [Webhook] Event received: checkout.session.completed evt_...
 [Webhook] Checkout completed: {
@@ -421,6 +454,7 @@ All webhook events logged:
 ### Error Logging
 
 All errors logged with context:
+
 ```
 [Webhook] Error processing event: Error message
 [Webhook] Signature verification failed: Invalid signature
@@ -429,6 +463,7 @@ All errors logged with context:
 ### Metrics
 
 Track:
+
 - Total transactions
 - Success rate
 - Average transaction value
@@ -440,6 +475,7 @@ Track:
 ## Deployment Checklist
 
 ### Pre-Deployment
+
 - ✅ Stripe account created and verified
 - ✅ API keys configured
 - ✅ Webhook secret configured
@@ -447,6 +483,7 @@ Track:
 - ✅ Error handling verified
 
 ### Deployment Steps
+
 1. Set environment variables
 2. Deploy code
 3. Configure webhook endpoint
@@ -454,6 +491,7 @@ Track:
 5. Monitor for errors
 
 ### Post-Deployment
+
 1. Verify checkout works
 2. Test webhook delivery
 3. Monitor transaction logs
@@ -483,6 +521,7 @@ Track:
    - Copy signing secret
 
 4. **Set Environment Variables**
+
    ```
    STRIPE_SECRET_KEY=sk_test_...
    STRIPE_WEBHOOK_SECRET=whsec_...
@@ -500,6 +539,7 @@ Track:
 ### Live Mode
 
 When going live:
+
 1. Switch to live API keys
 2. Update webhook endpoint
 3. Test with real cards
@@ -509,6 +549,7 @@ When going live:
 ### Scaling
 
 For high volume:
+
 1. Implement rate limiting
 2. Add caching layer
 3. Monitor webhook latency
@@ -518,6 +559,7 @@ For high volume:
 ### Compliance
 
 Ensure:
+
 - PCI DSS compliance
 - GDPR compliance
 - Terms of service updated
@@ -529,18 +571,21 @@ Ensure:
 ## Troubleshooting
 
 ### Checkout Not Loading
+
 - Check Stripe API keys
 - Verify product ID exists
 - Check network connectivity
 - Review browser console
 
 ### Webhook Not Triggering
+
 - Verify webhook endpoint URL
 - Check webhook signing secret
 - Review Stripe webhook logs
 - Check firewall rules
 
 ### Payment Failing
+
 - Verify card details
 - Check fraud detection
 - Review Stripe logs
@@ -551,12 +596,14 @@ Ensure:
 ## Future Enhancements
 
 ### Phase 2
+
 1. Multiple payment methods
 2. Subscription billing
 3. Invoicing system
 4. Refund management
 
 ### Phase 3
+
 1. Advanced analytics
 2. Revenue reporting
 3. Tax calculation
@@ -567,6 +614,7 @@ Ensure:
 ## Support
 
 For issues or questions:
+
 - Email: support@stampcoin.io
 - Stripe Support: support.stripe.com
 - Documentation: /docs
@@ -591,4 +639,3 @@ The StampCoin Stripe payment system is fully implemented, tested, and production
 **Project Lead:** Manus AI  
 **Completion Date:** December 21, 2025  
 **Status:** ✅ PRODUCTION READY
-

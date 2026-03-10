@@ -64,24 +64,28 @@ NODE_ENV=production
 ## Pre-Deployment Checklist
 
 ### ✅ Code Ready
+
 - [x] All features implemented
 - [x] All tests passing (9/9)
 - [x] No TypeScript errors
 - [x] Code committed to Git
 
 ### ✅ Database Setup
+
 - [ ] Production database created
 - [ ] DATABASE_URL configured
 - [ ] Migrations run
 - [ ] Sample data seeded (optional)
 
 ### ✅ Stripe Configuration
+
 - [ ] Stripe account verified
 - [ ] Live API keys obtained
 - [ ] Webhook endpoint configured
 - [ ] Products created in Stripe
 
 ### ✅ Domain Setup (Optional)
+
 - [ ] Custom domain purchased
 - [ ] DNS configured
 - [ ] SSL certificate (automatic with Vercel)
@@ -156,6 +160,7 @@ vercel --prod
 ### Step 4: Configure Environment Variables
 
 In Vercel Dashboard:
+
 1. Go to Project Settings
 2. Click "Environment Variables"
 3. Add all required variables:
@@ -168,6 +173,7 @@ In Vercel Dashboard:
 ### Step 5: Update Stripe Webhook
 
 After deployment:
+
 1. Copy your Vercel URL (e.g., `stampcoin-platform.vercel.app`)
 2. Go to Stripe Dashboard → Webhooks
 3. Update endpoint URL to: `https://stampcoin-platform.vercel.app/api/stripe-webhook`
@@ -239,21 +245,25 @@ railway up
 ## Post-Deployment Tasks
 
 ### 1. Monitor Performance
+
 - Check Vercel Analytics
 - Monitor error logs
 - Track response times
 
 ### 2. SEO Optimization
+
 - Submit sitemap to Google Search Console
 - Configure meta tags
 - Set up Google Analytics
 
 ### 3. Security
+
 - Enable Vercel firewall
 - Configure CORS if needed
 - Set up rate limiting
 
 ### 4. Backup
+
 - Set up database backups
 - Export Stripe data regularly
 - Version control all code
@@ -273,7 +283,8 @@ railway up
 ### Database Connection Issues
 
 **Error:** `Connection timeout`
-**Solution:** 
+**Solution:**
+
 - Check DATABASE_URL is correct
 - Verify database allows connections from Vercel IPs
 - Check firewall rules
@@ -282,6 +293,7 @@ railway up
 
 **Error:** `Webhook signature verification failed`
 **Solution:**
+
 - Verify STRIPE_WEBHOOK_SECRET is correct
 - Check webhook endpoint URL
 - Ensure webhook is in live mode (not test mode)
@@ -289,6 +301,7 @@ railway up
 ### Environment Variables Not Loading
 
 **Solution:**
+
 - Redeploy after adding environment variables
 - Check variable names match exactly
 - Verify no extra spaces in values
@@ -357,4 +370,3 @@ npx vercel env ls
 **Deployment Guide Version:** 1.0  
 **Last Updated:** December 21, 2025  
 **Status:** ✅ Ready for Production
-
