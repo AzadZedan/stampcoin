@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, TrendingUp, DollarSign, BarChart3, Target, Users, Globe } from "lucide-react";
+import { Sparkles, TrendingUp, DollarSign, BarChart3, Target, Users, Globe, Coins, Zap } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Investors() {
@@ -46,7 +46,7 @@ export default function Investors() {
               Investment Opportunity
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Join us in revolutionizing the $5+ billion stamp collecting market with blockchain technology
+              Join us in revolutionizing the $12+ billion stamp collecting market with blockchain technology
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link href="/contact">
@@ -72,7 +72,7 @@ export default function Investors() {
             <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
               <CardContent className="p-8 text-center">
                 <DollarSign className="w-12 h-12 text-primary mx-auto mb-4" />
-                <div className="text-4xl font-serif font-bold text-primary mb-2">$5B+</div>
+                <div className="text-4xl font-serif font-bold text-primary mb-2">$12B+</div>
                 <div className="text-lg font-semibold mb-2">Annual Market Size</div>
                 <p className="text-muted-foreground">
                   The global stamp collecting market represents a massive untapped opportunity for digital transformation
@@ -209,6 +209,77 @@ export default function Investors() {
                 <p className="text-muted-foreground">
                   Rare stamps have consistently appreciated in value, with some increasing 300%+ over 10 years.
                 </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* STAMP Token */}
+      <section className="py-20 bg-background/50">
+        <div className="container mx-auto px-4">
+          <h3 className="text-4xl font-serif font-bold text-foreground mb-4 text-center">
+            STAMP Token
+          </h3>
+          <p className="text-xl text-muted-foreground text-center max-w-3xl mx-auto mb-12">
+            Our native <span className="font-semibold">STAMP</span> token powers the StampCoin ecosystem — enabling
+            seamless transactions, rewards, and governance for all platform participants.
+          </p>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+            <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-8 text-center">
+                <Coins className="w-12 h-12 text-primary mx-auto mb-4" />
+                <h4 className="text-xl font-serif font-semibold mb-3">Token Utility</h4>
+                <p className="text-muted-foreground">
+                  Use STAMP tokens to purchase stamps, pay platform fees at a discount, and
+                  participate in exclusive auctions and limited-edition releases.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-8 text-center">
+                <Zap className="w-12 h-12 text-secondary mx-auto mb-4" />
+                <h4 className="text-xl font-serif font-semibold mb-3">Staking Rewards</h4>
+                <p className="text-muted-foreground">
+                  Stake STAMP tokens to earn passive income, unlock premium features, and
+                  receive enhanced commission rates as a partner or collector.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-8 text-center">
+                <TrendingUp className="w-12 h-12 text-accent mx-auto mb-4" />
+                <h4 className="text-xl font-serif font-semibold mb-3">Exchange Listing</h4>
+                <p className="text-muted-foreground">
+                  STAMP is pursuing listings on major crypto exchanges — including a proposed
+                  partnership with BingX — to provide secure, liquid trading for all holders.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-border/50 bg-gradient-to-br from-primary/5 to-secondary/5">
+              <CardContent className="p-8">
+                <h4 className="text-2xl font-serif font-semibold mb-6 text-center">Token Distribution</h4>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {[
+                    { label: "Public Sale", value: "30%", desc: "Available for purchase by the public on partner exchanges" },
+                    { label: "Ecosystem & Rewards", value: "25%", desc: "Platform incentives, staking rewards, and collector bonuses" },
+                    { label: "Team & Advisors", value: "20%", desc: "Vested over 3 years to align long-term incentives" },
+                    { label: "Reserve & Development", value: "15%", desc: "Ongoing platform development and strategic reserves" },
+                    { label: "Partners & Marketing", value: "10%", desc: "Co-marketing campaigns and strategic exchange partnerships" },
+                  ].map((item) => (
+                    <div key={item.label} className="flex items-start gap-4">
+                      <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <span className="text-sm font-bold text-primary">{item.value}</span>
+                      </div>
+                      <div>
+                        <div className="font-semibold text-foreground">{item.label}</div>
+                        <div className="text-sm text-muted-foreground">{item.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </CardContent>
             </Card>
           </div>

@@ -86,7 +86,7 @@ export default function Home() {
                   <div className="text-sm text-muted-foreground">Collectors Worldwide</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-serif font-bold text-primary">$5B+</div>
+                  <div className="text-3xl font-serif font-bold text-primary">$12B+</div>
                   <div className="text-sm text-muted-foreground">Annual Market</div>
                 </div>
                 <div>
@@ -183,7 +183,7 @@ export default function Home() {
               </div>
               <div>
                 <TrendingUp className="w-10 h-10 mx-auto mb-4 opacity-90" />
-                <div className="text-4xl font-serif font-bold mb-2">$5B+</div>
+                <div className="text-4xl font-serif font-bold mb-2">$12B+</div>
                 <div className="text-primary-foreground/80">Market Value</div>
               </div>
             </div>
@@ -242,6 +242,7 @@ export default function Home() {
               <h5 className="font-semibold mb-4">Resources</h5>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li><Link href="/investors" className="hover:text-primary transition-colors">For Investors</Link></li>
+                <li><Link href="/partners" className="hover:text-primary transition-colors">Partners</Link></li>
                 <li><Link href="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
               </ul>
             </div>

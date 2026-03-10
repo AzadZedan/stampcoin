@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, Heart, ShoppingCart, ArrowLeft, Shield, Calendar, MapPin, Star } from "lucide-react";
+import { Sparkles, Heart, ShoppingCart, ArrowLeft, Shield, Calendar, MapPin, Star, Share2, Twitter, Facebook, Link2 } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -30,7 +30,39 @@ export default function StampDetail() {
   
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewComment, setReviewComment] = useState("");
-  
+
+  const handleShare = async (platform: string) => {
+    const url = window.location.href;
+    const title = stamp?.title ?? "this stamp";
+    const rarity = stamp?.rarity ?? "collectible";
+    const text = `Check out this ${rarity} stamp: ${title} on StampCoin!`;
+
+    switch (platform) {
+      case "twitter":
+        window.open(
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
+          "_blank",
+          "noopener,noreferrer",
+        );
+        break;
+      case "facebook":
+        window.open(
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+          "_blank",
+          "noopener,noreferrer",
+        );
+        break;
+      case "copy":
+        try {
+          await navigator.clipboard.writeText(url);
+          toast.success("Link copied to clipboard!");
+        } catch {
+          toast.error("Failed to copy link");
+        }
+        break;
+    }
+  };
+
   const handleSubmitReview = async () => {
     if (!user) {
       toast.error("Please login to submit a review");
@@ -192,6 +224,43 @@ export default function StampDetail() {
                       <Heart className="w-5 h-5" />
                       Save
                     </Button>
+                  </div>
+
+                  {/* Social Sharing */}
+                  <div className="mt-4 pt-4 border-t border-border/30">
+                    <p className="text-sm text-muted-foreground mb-3 flex items-center gap-2">
+                      <Share2 className="w-4 h-4" />
+                      Share this stamp
+                    </p>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-2"
+                        onClick={() => handleShare("twitter")}
+                      >
+                        <Twitter className="w-4 h-4" />
+                        X / Twitter
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-2"
+                        onClick={() => handleShare("facebook")}
+                      >
+                        <Facebook className="w-4 h-4" />
+                        Facebook
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-2"
+                        onClick={() => handleShare("copy")}
+                      >
+                        <Link2 className="w-4 h-4" />
+                        Copy Link
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
