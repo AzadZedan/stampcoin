@@ -1,9 +1,20 @@
 import { Request, Response } from 'express';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-12-15.clover',
-});
+let _stripe: Stripe | null = null;
+
+function getStripe(): Stripe {
+  if (!_stripe) {
+    const key = process.env.STRIPE_SECRET_KEY;
+    if (!key) {
+      throw new Error('STRIPE_SECRET_KEY is not configured');
+    }
+    _stripe = new Stripe(key, {
+      apiVersion: '2026-02-25.clover',
+    });
+  }
+  return _stripe;
+}
 
 // Error types
 enum WebhookErrorType {
@@ -206,7 +217,7 @@ export async function handleStripeWebhook(req: Request, res: Response) {
 
   // Verify webhook signature
   try {
-    event = stripe.webhooks.constructEvent(
+    event = getStripe().webhooks.constructEvent(
       req.body,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!
