@@ -1,4 +1,5 @@
 # Blockchain API Documentation
+
 # واجهة برمجة تطبيقات البلوك تشين
 
 ## Overview | نظرة عامة
@@ -14,6 +15,7 @@ http://localhost:10000/api
 ## Authentication
 
 Protected endpoints require a `Bearer` token in the `Authorization` header:
+
 ```
 Authorization: Bearer <SYNC_TOKEN>
 ```
@@ -31,6 +33,7 @@ Authorization: Bearer <SYNC_TOKEN>
 Returns static token and blockchain metadata.
 
 **Response:**
+
 ```json
 {
   "name": "StampCoin",
@@ -55,6 +58,7 @@ Returns static token and blockchain metadata.
 Returns current token supply metrics.
 
 **Response:**
+
 ```json
 {
   "totalSupply": 421000000,
@@ -74,6 +78,7 @@ Returns current token supply metrics.
 Mint new STP tokens to a specified address. Requires authentication.
 
 **Request Body:**
+
 ```json
 {
   "toAddress": "wallet_address_here",
@@ -81,12 +86,13 @@ Mint new STP tokens to a specified address. Requires authentication.
 }
 ```
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `toAddress` | string | ✅ | Recipient wallet address |
-| `amount` | integer | ✅ | Number of whole STP tokens to mint (positive integer) |
+| Field       | Type    | Required | Description                                           |
+| ----------- | ------- | -------- | ----------------------------------------------------- |
+| `toAddress` | string  | ✅       | Recipient wallet address                              |
+| `amount`    | integer | ✅       | Number of whole STP tokens to mint (positive integer) |
 
 **Response (200 OK):**
+
 ```json
 {
   "id": "uuid-here",
@@ -98,6 +104,7 @@ Mint new STP tokens to a specified address. Requires authentication.
 ```
 
 **Error Responses:**
+
 - `400` — Missing or invalid `toAddress` / `amount`
 - `400` — Mint would exceed total supply cap
 - `401` — Missing or invalid token
@@ -111,6 +118,7 @@ Mint new STP tokens to a specified address. Requires authentication.
 Get the STP token balance for a specific address.
 
 **Response:**
+
 ```json
 {
   "address": "wallet_address_here",
@@ -120,6 +128,7 @@ Get the STP token balance for a specific address.
 ```
 
 **Error Responses:**
+
 - `400` — Invalid address
 
 ---
@@ -131,6 +140,7 @@ Get the STP token balance for a specific address.
 Get the complete mint audit log. Requires authentication.
 
 **Response:**
+
 ```json
 [
   {
@@ -144,26 +154,27 @@ Get the complete mint audit log. Requires authentication.
 ```
 
 **Error Responses:**
+
 - `401` — Missing or invalid token
 
 ---
 
 ## Token Details | تفاصيل الرمز
 
-| Property | Value |
-|----------|-------|
-| **Name** | StampCoin |
-| **Symbol** | STP |
-| **Decimals** | 18 |
-| **Total Supply** | 421,000,000 STP |
-| **Blockchain** | BNB Smart Chain (BSC) |
-| **Standard** | BEP-20 |
-| **Consensus** | Proof of Staked Authority (PoSA) |
-| **Chain ID** | 56 |
+| Property         | Value                            |
+| ---------------- | -------------------------------- |
+| **Name**         | StampCoin                        |
+| **Symbol**       | STP                              |
+| **Decimals**     | 18                               |
+| **Total Supply** | 421,000,000 STP                  |
+| **Blockchain**   | BNB Smart Chain (BSC)            |
+| **Standard**     | BEP-20                           |
+| **Consensus**    | Proof of Staked Authority (PoSA) |
+| **Chain ID**     | 56                               |
 
 ## Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `SYNC_TOKEN` | Bearer token for protected endpoints |
+| Variable               | Description                                                            |
+| ---------------------- | ---------------------------------------------------------------------- |
+| `SYNC_TOKEN`           | Bearer token for protected endpoints                                   |
 | `STP_CONTRACT_ADDRESS` | On-chain contract address (defaults to `"Pending mainnet deployment"`) |

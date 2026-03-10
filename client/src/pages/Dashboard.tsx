@@ -3,20 +3,25 @@ import { getLoginUrl } from "@/const";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Sparkles, Heart, ShoppingBag, User, LogOut, ArrowLeft } from "lucide-react";
+import {
+  Sparkles,
+  Heart,
+  ShoppingBag,
+  User,
+  LogOut,
+  ArrowLeft,
+} from "lucide-react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 
 export default function Dashboard() {
   const { user, loading, isAuthenticated, logout } = useAuth();
-  const { data: favorites, isLoading: favoritesLoading } = trpc.favorites.list.useQuery(
-    undefined,
-    { enabled: isAuthenticated }
-  );
-  const { data: transactions, isLoading: transactionsLoading } = trpc.transactions.myTransactions.useQuery(
-    undefined,
-    { enabled: isAuthenticated }
-  );
+  const { data: favorites, isLoading: favoritesLoading } =
+    trpc.favorites.list.useQuery(undefined, { enabled: isAuthenticated });
+  const { data: transactions, isLoading: transactionsLoading } =
+    trpc.transactions.myTransactions.useQuery(undefined, {
+      enabled: isAuthenticated,
+    });
 
   if (loading) {
     return (
@@ -54,26 +59,47 @@ export default function Dashboard() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <Sparkles className="w-8 h-8 text-primary" />
-              <h1 className="text-2xl font-serif font-bold text-primary">StampCoin</h1>
+              <h1 className="text-2xl font-serif font-bold text-primary">
+                StampCoin
+              </h1>
             </Link>
             <div className="hidden md:flex items-center gap-6">
-              <Link href="/marketplace" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/marketplace"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Marketplace
               </Link>
-              <Link href="/gallery" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/gallery"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Gallery
               </Link>
-              <Link href="/investors" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/investors"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 For Investors
               </Link>
-              <Link href="/about" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/about"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 About
               </Link>
-              <Link href="/contact" className="text-foreground/80 hover:text-primary transition-colors">
+              <Link
+                href="/contact"
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 Contact
               </Link>
             </div>
-            <Button onClick={() => logout()} variant="outline" className="gap-2">
+            <Button
+              onClick={() => logout()}
+              variant="outline"
+              className="gap-2"
+            >
               <LogOut className="w-4 h-4" />
               Sign Out
             </Button>
@@ -102,7 +128,9 @@ export default function Dashboard() {
                   <User className="w-8 h-8 text-primary" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-serif font-bold">{user?.name || "User"}</h2>
+                  <h2 className="text-2xl font-serif font-bold">
+                    {user?.name || "User"}
+                  </h2>
                   <p className="text-muted-foreground">{user?.email}</p>
                 </div>
               </div>
@@ -119,7 +147,9 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Favorites</p>
-                    <p className="text-2xl font-bold">{favorites?.length || 0}</p>
+                    <p className="text-2xl font-bold">
+                      {favorites?.length || 0}
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -133,7 +163,9 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Purchases</p>
-                    <p className="text-2xl font-bold">{transactions?.length || 0}</p>
+                    <p className="text-2xl font-bold">
+                      {transactions?.length || 0}
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -148,7 +180,13 @@ export default function Dashboard() {
                   <div>
                     <p className="text-sm text-muted-foreground">Total Spent</p>
                     <p className="text-2xl font-bold">
-                      ${transactions?.reduce((sum: number, t: any) => sum + Number(t.amount), 0).toFixed(2) || "0.00"}
+                      $
+                      {transactions
+                        ?.reduce(
+                          (sum: number, t: any) => sum + Number(t.amount),
+                          0
+                        )
+                        .toFixed(2) || "0.00"}
                     </p>
                   </div>
                 </div>
@@ -173,21 +211,28 @@ export default function Dashboard() {
                 </CardHeader>
                 <CardContent>
                   {favoritesLoading ? (
-                    <p className="text-center text-muted-foreground py-8">Loading favorites...</p>
+                    <p className="text-center text-muted-foreground py-8">
+                      Loading favorites...
+                    </p>
                   ) : favorites && favorites.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {favorites.map((fav) => (
+                      {favorites.map(fav => (
                         <Card key={fav.id} className="border-border/30">
                           <CardContent className="p-4">
                             <div className="aspect-square bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg mb-3 flex items-center justify-center">
                               <Sparkles className="w-12 h-12 text-primary/20" />
                             </div>
-                            <p className="font-medium mb-1">Stamp #{fav.stampId}</p>
+                            <p className="font-medium mb-1">
+                              Stamp #{fav.stampId}
+                            </p>
                             <p className="text-sm text-muted-foreground">
-                              Added {new Date(fav.createdAt).toLocaleDateString()}
+                              Added{" "}
+                              {new Date(fav.createdAt).toLocaleDateString()}
                             </p>
                             <Link href={`/stamp/${fav.stampId}`}>
-                              <Button size="sm" className="w-full mt-3">View Details</Button>
+                              <Button size="sm" className="w-full mt-3">
+                                View Details
+                              </Button>
                             </Link>
                           </CardContent>
                         </Card>
@@ -196,9 +241,12 @@ export default function Dashboard() {
                   ) : (
                     <div className="text-center py-12">
                       <Heart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-lg font-medium mb-2">No favorites yet</p>
+                      <p className="text-lg font-medium mb-2">
+                        No favorites yet
+                      </p>
                       <p className="text-muted-foreground mb-4">
-                        Start adding stamps to your favorites from the marketplace
+                        Start adding stamps to your favorites from the
+                        marketplace
                       </p>
                       <Link href="/marketplace">
                         <Button>Explore Marketplace</Button>
@@ -219,7 +267,9 @@ export default function Dashboard() {
                 </CardHeader>
                 <CardContent>
                   {transactionsLoading ? (
-                    <p className="text-center text-muted-foreground py-8">Loading transactions...</p>
+                    <p className="text-center text-muted-foreground py-8">
+                      Loading transactions...
+                    </p>
                   ) : transactions && transactions.length > 0 ? (
                     <div className="space-y-4">
                       {transactions.map((transaction: any) => (
@@ -227,16 +277,29 @@ export default function Dashboard() {
                           <CardContent className="p-4">
                             <div className="flex items-center justify-between">
                               <div>
-                                <p className="font-medium mb-1">Stamp #{transaction.stampId}</p>
+                                <p className="font-medium mb-1">
+                                  Stamp #{transaction.stampId}
+                                </p>
                                 <p className="text-sm text-muted-foreground">
-                                  {new Date(transaction.createdAt).toLocaleDateString()} •{" "}
-                                  <span className="capitalize">{transaction.status}</span>
+                                  {new Date(
+                                    transaction.createdAt
+                                  ).toLocaleDateString()}{" "}
+                                  •{" "}
+                                  <span className="capitalize">
+                                    {transaction.status}
+                                  </span>
                                 </p>
                               </div>
                               <div className="text-right">
-                                <p className="text-xl font-bold text-primary">${transaction.amount}</p>
+                                <p className="text-xl font-bold text-primary">
+                                  ${transaction.amount}
+                                </p>
                                 <Link href={`/stamp/${transaction.stampId}`}>
-                                  <Button size="sm" variant="outline" className="mt-2">
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="mt-2"
+                                  >
                                     View Stamp
                                   </Button>
                                 </Link>
@@ -249,7 +312,9 @@ export default function Dashboard() {
                   ) : (
                     <div className="text-center py-12">
                       <ShoppingBag className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-lg font-medium mb-2">No purchases yet</p>
+                      <p className="text-lg font-medium mb-2">
+                        No purchases yet
+                      </p>
                       <p className="text-muted-foreground mb-4">
                         Start collecting digital stamps from our marketplace
                       </p>

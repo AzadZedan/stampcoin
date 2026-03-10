@@ -11,7 +11,7 @@ let mockTxStore;
 vi.mock("fs", () => ({
   default: {
     existsSync: vi.fn().mockReturnValue(true),
-    readFileSync: vi.fn().mockImplementation((filePath) => {
+    readFileSync: vi.fn().mockImplementation(filePath => {
       const p = String(filePath);
       if (p.includes("wallets")) return JSON.stringify(mockWalletStore);
       if (p.includes("transactions")) return JSON.stringify(mockTxStore);
@@ -49,18 +49,30 @@ describe("wallet module", () => {
 
     test("throws if wallet already exists", () => {
       walletModule.createWallet("user1", "Alice");
-      expect(() => walletModule.createWallet("user1", "Alice Again")).toThrow("Wallet already exists");
+      expect(() => walletModule.createWallet("user1", "Alice Again")).toThrow(
+        "Wallet already exists"
+      );
     });
 
     test("throws on invalid userId", () => {
-      expect(() => walletModule.createWallet("__proto__", "x")).toThrow("Invalid userId");
-      expect(() => walletModule.createWallet("", "x")).toThrow("Invalid userId");
-      expect(() => walletModule.createWallet(123, "x")).toThrow("Invalid userId");
+      expect(() => walletModule.createWallet("__proto__", "x")).toThrow(
+        "Invalid userId"
+      );
+      expect(() => walletModule.createWallet("", "x")).toThrow(
+        "Invalid userId"
+      );
+      expect(() => walletModule.createWallet(123, "x")).toThrow(
+        "Invalid userId"
+      );
     });
 
     test("throws on invalid userName", () => {
-      expect(() => walletModule.createWallet("user1", "")).toThrow("Invalid userName");
-      expect(() => walletModule.createWallet("user1", 42)).toThrow("Invalid userName");
+      expect(() => walletModule.createWallet("user1", "")).toThrow(
+        "Invalid userName"
+      );
+      expect(() => walletModule.createWallet("user1", 42)).toThrow(
+        "Invalid userName"
+      );
     });
   });
 
@@ -78,7 +90,9 @@ describe("wallet module", () => {
     });
 
     test("throws on invalid userId", () => {
-      expect(() => walletModule.getWallet("constructor")).toThrow("Invalid userId");
+      expect(() => walletModule.getWallet("constructor")).toThrow(
+        "Invalid userId"
+      );
     });
   });
 
@@ -99,15 +113,21 @@ describe("wallet module", () => {
 
     test("throws on insufficient balance", () => {
       walletModule.createWallet("user1", "Alice");
-      expect(() => walletModule.updateBalance("user1", -1)).toThrow("Insufficient balance");
+      expect(() => walletModule.updateBalance("user1", -1)).toThrow(
+        "Insufficient balance"
+      );
     });
 
     test("throws for unknown user", () => {
-      expect(() => walletModule.updateBalance("nobody", 100)).toThrow("Wallet not found");
+      expect(() => walletModule.updateBalance("nobody", 100)).toThrow(
+        "Wallet not found"
+      );
     });
 
     test("throws on invalid userId", () => {
-      expect(() => walletModule.updateBalance("prototype", 100)).toThrow("Invalid userId");
+      expect(() => walletModule.updateBalance("prototype", 100)).toThrow(
+        "Invalid userId"
+      );
     });
   });
 
@@ -130,11 +150,15 @@ describe("wallet module", () => {
     });
 
     test("throws on insufficient balance", () => {
-      expect(() => walletModule.transfer("alice", "bob", 9999)).toThrow("Insufficient balance");
+      expect(() => walletModule.transfer("alice", "bob", 9999)).toThrow(
+        "Insufficient balance"
+      );
     });
 
     test("throws when wallets do not exist", () => {
-      expect(() => walletModule.transfer("alice", "ghost", 10)).toThrow("One or both wallets not found");
+      expect(() => walletModule.transfer("alice", "ghost", 10)).toThrow(
+        "One or both wallets not found"
+      );
     });
 
     test("throws on non-positive amount without stampId", () => {
@@ -143,8 +167,12 @@ describe("wallet module", () => {
     });
 
     test("throws on invalid userId", () => {
-      expect(() => walletModule.transfer("__proto__", "bob", 10)).toThrow("Invalid userId");
-      expect(() => walletModule.transfer("alice", "__proto__", 10)).toThrow("Invalid userId");
+      expect(() => walletModule.transfer("__proto__", "bob", 10)).toThrow(
+        "Invalid userId"
+      );
+      expect(() => walletModule.transfer("alice", "__proto__", 10)).toThrow(
+        "Invalid userId"
+      );
     });
 
     test("records transaction in history", () => {
@@ -159,18 +187,25 @@ describe("wallet module", () => {
   describe("addStamp", () => {
     test("adds a stamp to wallet", () => {
       walletModule.createWallet("user1", "Alice");
-      const w = walletModule.addStamp("user1", { name: "Rare Stamp", year: 1920 });
+      const w = walletModule.addStamp("user1", {
+        name: "Rare Stamp",
+        year: 1920,
+      });
       expect(w.stamps.length).toBe(1);
       expect(w.stamps[0].name).toBe("Rare Stamp");
       expect(w.stamps[0].id).toBeDefined();
     });
 
     test("throws for unknown user", () => {
-      expect(() => walletModule.addStamp("nobody", { name: "x" })).toThrow("Wallet not found");
+      expect(() => walletModule.addStamp("nobody", { name: "x" })).toThrow(
+        "Wallet not found"
+      );
     });
 
     test("throws on invalid userId", () => {
-      expect(() => walletModule.addStamp("constructor", { name: "x" })).toThrow("Invalid userId");
+      expect(() => walletModule.addStamp("constructor", { name: "x" })).toThrow(
+        "Invalid userId"
+      );
     });
   });
 
@@ -189,7 +224,9 @@ describe("wallet module", () => {
     });
 
     test("throws on invalid userId", () => {
-      expect(() => walletModule.getTransactionHistory("")).toThrow("Invalid userId");
+      expect(() => walletModule.getTransactionHistory("")).toThrow(
+        "Invalid userId"
+      );
     });
   });
 });
