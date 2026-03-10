@@ -5,7 +5,7 @@ nixPkgs = ["nodejs-22_x", "pnpm"]
 cmds = ["pnpm install"]
 
 [phases.build]
-cmds = ["pnpm run build"]
+cmds = ["pnpm run build", "pnpm run build:frontend"]
 
 [start]
 cmd = "node dist/index.js"
