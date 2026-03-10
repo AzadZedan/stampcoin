@@ -90,7 +90,11 @@ function readTransactions() {
  */
 function writeTransactions(transactions) {
   try {
-    fs.writeFileSync(TRANSACTIONS_FILE, JSON.stringify(transactions, null, 2), "utf8");
+    fs.writeFileSync(
+      TRANSACTIONS_FILE,
+      JSON.stringify(transactions, null, 2),
+      "utf8"
+    );
     return true;
   } catch (error) {
     console.error("Error writing transactions:", error.message);
@@ -121,7 +125,7 @@ function createWallet(userId, userName) {
     balance: 0,
     stamps: [],
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
   };
 
   wallets[userId] = wallet;
@@ -197,7 +201,7 @@ function addStamp(userId, stamp) {
   const stampWithId = {
     id: crypto.randomUUID(),
     ...stamp,
-    addedAt: new Date().toISOString()
+    addedAt: new Date().toISOString(),
   };
 
   wallet.stamps.push(stampWithId);
@@ -221,7 +225,9 @@ function transfer(fromUserId, toUserId, amount = 0, stampId = null) {
   validateUserId(fromUserId);
   validateUserId(toUserId);
   if (!stampId && (!amount || amount <= 0)) {
-    throw new Error("Transfer amount must be a positive number when transferring balance");
+    throw new Error(
+      "Transfer amount must be a positive number when transferring balance"
+    );
   }
 
   const wallets = readWallets();
@@ -251,7 +257,7 @@ function transfer(fromUserId, toUserId, amount = 0, stampId = null) {
     const stamp = fromWallet.stamps.splice(stampIndex, 1)[0];
     toWallet.stamps.push({
       ...stamp,
-      transferredAt: timestamp
+      transferredAt: timestamp,
     });
   }
 
@@ -269,7 +275,7 @@ function transfer(fromUserId, toUserId, amount = 0, stampId = null) {
     amount,
     stampId,
     timestamp,
-    status: "completed"
+    status: "completed",
   };
 
   const transactions = readTransactions();
@@ -309,5 +315,5 @@ export {
   addStamp,
   transfer,
   getTransactionHistory,
-  getAllTransactions
+  getAllTransactions,
 };

@@ -1,6 +1,6 @@
 import { vi, describe, expect, it } from "vitest";
 
-vi.mock("./db", async (importOriginal) => {
+vi.mock("./db", async importOriginal => {
   const actual = await importOriginal<typeof import("./db")>();
   return {
     ...actual,
@@ -91,9 +91,7 @@ describe("stamps API", () => {
 
     const caller = appRouter.createCaller(publicCtx);
 
-    await expect(
-      caller.favorites.add({ stampId: 1 })
-    ).rejects.toThrow();
+    await expect(caller.favorites.add({ stampId: 1 })).rejects.toThrow();
   });
 
   it("should allow authenticated user to check favorites", async () => {
@@ -119,12 +117,12 @@ describe("contact API", () => {
     };
 
     const caller = appRouter.createCaller(publicCtx);
-    
+
     const result = await caller.contact.send({
       name: "Test User",
       email: "test@example.com",
       subject: "Test Subject",
-      message: "Test message content"
+      message: "Test message content",
     });
 
     expect(result).toBeDefined();
@@ -134,8 +132,6 @@ describe("contact API", () => {
     const { ctx } = createAuthContext();
     const caller = appRouter.createCaller(ctx);
 
-    await expect(
-      caller.contact.list()
-    ).rejects.toThrow("Unauthorized");
+    await expect(caller.contact.list()).rejects.toThrow("Unauthorized");
   });
 });
