@@ -1,0 +1,39 @@
+[
+  {
+    "name": "get_balance",
+    "description": "Get the balance of a wallet",
+    "arguments": [
+      {
+        "name": "wallet_id",
+        "type": "string",
+        "desc": "The unique identifier of the wallet"
+      }
+    ]
+  },
+  {
+    "name": "transfer",
+    "description": "Transfer stamps between wallets",
+    "arguments": [
+      {
+        "name": "from_wallet",
+        "type": "string",
+        "desc": "Source wallet ID"
+      },
+      {
+        "name": "to_wallet",
+        "type": "string",
+        "desc": "Destination wallet ID"
+      },
+      {
+        "name": "amount",
+        "type": "number",
+        "desc": "Amount of stamps to transfer"
+      }
+    ]
+  },
+  {
+    "name": "list_market_items",
+    "description": "List available items in the Stampcoin marketplace",
+    "arguments": []
+  }
+]
