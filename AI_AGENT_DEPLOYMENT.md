@@ -1,4 +1,5 @@
 # AI Agent Expert Deployment Guide
+
 # نشر وكيل الخبير الاصطناعي
 
 ## Overview / نظرة عامة
@@ -30,19 +31,19 @@ node src/ai-agent-expert/index.js
 
 ## API Endpoints / نقاط النهاية
 
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/agent/status` | Get agent status |
-| POST | `/agent/activate` | Activate the agent |
-| POST | `/agent/deactivate` | Deactivate the agent |
-| POST | `/agent/analyze-code` | Analyze code quality |
-| POST | `/agent/fix-issues` | Apply issue fixes |
-| POST | `/agent/organize-project` | Reorganize project structure |
-| POST | `/agent/optimize-performance` | Optimize performance |
-| POST | `/agent/audit-security` | Run security audit |
-| POST | `/agent/generate-docs` | Generate documentation |
-| POST | `/agent/create-tests` | Create test files |
-| GET | `/agent/history` | View completed task history |
+| Method | Path                          | Description                  |
+| ------ | ----------------------------- | ---------------------------- |
+| GET    | `/agent/status`               | Get agent status             |
+| POST   | `/agent/activate`             | Activate the agent           |
+| POST   | `/agent/deactivate`           | Deactivate the agent         |
+| POST   | `/agent/analyze-code`         | Analyze code quality         |
+| POST   | `/agent/fix-issues`           | Apply issue fixes            |
+| POST   | `/agent/organize-project`     | Reorganize project structure |
+| POST   | `/agent/optimize-performance` | Optimize performance         |
+| POST   | `/agent/audit-security`       | Run security audit           |
+| POST   | `/agent/generate-docs`        | Generate documentation       |
+| POST   | `/agent/create-tests`         | Create test files            |
+| GET    | `/agent/history`              | View completed task history  |
 
 ## Deployment on Render / النشر على Render
 
@@ -57,10 +58,10 @@ node src/ai-agent-expert/index.js
 
 ## Environment Variables / المتغيرات البيئية
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PORT` | `3001` | Agent server port |
-| `NODE_ENV` | `development` | Environment mode |
+| Variable   | Default       | Description       |
+| ---------- | ------------- | ----------------- |
+| `PORT`     | `3001`        | Agent server port |
+| `NODE_ENV` | `development` | Environment mode  |
 
 ## Configuration / الإعداد
 
