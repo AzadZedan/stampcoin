@@ -36,6 +36,13 @@
       "when": 1766279065703,
       "tag": "0004_odd_mongoose",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1741647729000,
+      "tag": "0005_add_partners_fix_image_url",
+      "breakpoints": true
     }
   ]
 }

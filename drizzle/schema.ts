@@ -56,7 +56,7 @@ export const stamps = mysqlTable("stamps", {
   descriptionEs: text("descriptionEs"),
   descriptionZh: text("descriptionZh"),
   descriptionKo: text("descriptionKo"),
-  imageUrl: text("imageUrl"),
+  imageUrl: text("imageUrl").notNull(),
   imageKey: varchar("imageKey", { length: 500 }),
   categoryId: int("categoryId").notNull(),
   country: varchar("country", { length: 100 }),
