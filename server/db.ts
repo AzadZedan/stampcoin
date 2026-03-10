@@ -1,6 +1,6 @@
-import { eq, desc, and, like, or, sql } from "drizzle-orm";
+import { eq, desc, and, like, or, sql, sum } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, stamps, categories, transactions, favorites, contactMessages, reviews, partners, partnerBenefits, partnerTransactions, InsertStamp, InsertCategory, InsertTransaction, InsertFavorite, InsertContactMessage, InsertReview, InsertPartner, InsertPartnerBenefit, InsertPartnerTransaction, Partner } from "../drizzle/schema";
+import { InsertUser, users, stamps, categories, transactions, favorites, contactMessages, reviews, partners, partnerBenefits, partnerTransactions, wallets, marketItems, auctions, InsertStamp, InsertCategory, InsertTransaction, InsertFavorite, InsertContactMessage, InsertReview, InsertPartner, InsertPartnerBenefit, InsertPartnerTransaction, InsertWallet, InsertMarketItem, InsertAuction, Partner } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -550,4 +550,120 @@ export async function updatePartnerTransaction(id: number, transaction: Partial<
 
   const result = await db.update(partnerTransactions).set(transaction).where(eq(partnerTransactions.id, id));
   return result;
+}
+
+// ============ Wallet Operations ============
+
+/** Extracts the auto-increment insertId from a Drizzle/MySQL2 insert result. */
+function extractInsertId(result: unknown): number {
+  const r = result as { insertId?: number } | { insertId?: number }[];
+  if (Array.isArray(r)) return Number(r[0]?.insertId ?? 0);
+  return Number((r as { insertId?: number }).insertId ?? 0);
+}
+
+export async function createWallet(data: InsertWallet) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.insert(wallets).values(data);
+  const created = await db.select().from(wallets).where(eq(wallets.address, data.address)).limit(1);
+  return created[0];
+}
+
+export async function getWalletByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.select().from(wallets).where(eq(wallets.userId, userId)).limit(1);
+  return result[0] ?? null;
+}
+
+export async function getWalletByAddress(address: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.select().from(wallets).where(eq(wallets.address, address)).limit(1);
+  return result[0] ?? null;
+}
+
+export async function updateWalletBalance(address: string, balance: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.update(wallets).set({ balance }).where(eq(wallets.address, address));
+  const updated = await db.select().from(wallets).where(eq(wallets.address, address)).limit(1);
+  return updated[0];
+}
+
+export async function getTotalTokenSupply() {
+  const db = await getDb();
+  if (!db) return "0";
+
+  const result = await db.select({ total: sum(wallets.balance) }).from(wallets);
+  return result[0]?.total ?? "0";
+}
+
+// ============ Market Item Operations ============
+
+export async function createMarketItem(data: InsertMarketItem) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(marketItems).values(data);
+  const insertId = extractInsertId(result);
+  const created = await db.select().from(marketItems).where(eq(marketItems.id, insertId)).limit(1);
+  return created[0];
+}
+
+export async function getMarketItemById(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.select().from(marketItems).where(eq(marketItems.id, id)).limit(1);
+  return result[0] ?? null;
+}
+
+export async function getListedMarketItems() {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db.select().from(marketItems).where(eq(marketItems.status, "listed")).orderBy(desc(marketItems.createdAt));
+}
+
+export async function updateMarketItemStatus(id: number, status: "listed" | "sold" | "cancelled", buyerId?: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const updateData: Partial<InsertMarketItem> = { status };
+  if (buyerId !== undefined) updateData.buyerId = buyerId;
+  await db.update(marketItems).set(updateData).where(eq(marketItems.id, id));
+  const updated = await db.select().from(marketItems).where(eq(marketItems.id, id)).limit(1);
+  return updated[0];
+}
+
+// ============ Auction Operations ============
+
+export async function createAuction(data: InsertAuction) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(auctions).values(data);
+  const insertId = extractInsertId(result);
+  const created = await db.select().from(auctions).where(eq(auctions.id, insertId)).limit(1);
+  return created[0];
+}
+
+export async function getAuctionById(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.select().from(auctions).where(eq(auctions.id, id)).limit(1);
+  return result[0] ?? null;
+}
+
+export async function getActiveAuctions() {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db.select().from(auctions).where(eq(auctions.status, "active")).orderBy(desc(auctions.createdAt));
 }
