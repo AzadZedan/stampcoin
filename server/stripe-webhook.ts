@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Stripe from 'stripe';
+import { ENV } from './_core/env';
 
 let _stripe: Stripe | null = null;
 
@@ -220,7 +221,7 @@ export async function handleStripeWebhook(req: Request, res: Response) {
     event = getStripe().webhooks.constructEvent(
       req.body,
       sig,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      ENV.stripeWebhookSecret
     );
   } catch (err: any) {
     const error = handleWebhookError(err);
