@@ -1,11 +1,18 @@
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, AlertCircle, CheckCircle, CreditCard, Zap } from 'lucide-react';
-import { trpc } from '@/lib/trpc';
-import { toast } from 'sonner';
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle, CheckCircle, CreditCard, Zap } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -24,28 +31,32 @@ export function CheckoutModal({
   stampTitle,
   stampPrice,
 }: CheckoutModalProps) {
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('card');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] =
+    useState<string>("card");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [paymentMethods, setPaymentMethods] = useState<any[]>([]);
 
   const createCheckout = trpc.payments.createCheckout.useMutation({
-    onSuccess: (data) => {
+    onSuccess: data => {
       if (data.url) {
         window.location.href = data.url;
       }
     },
-    onError: (error) => {
-      setError(error.message || 'Failed to create checkout session');
-      toast.error('Payment Error', {
-        description: error.message || 'Failed to create checkout session',
+    onError: error => {
+      setError(error.message || "Failed to create checkout session");
+      toast.error("Payment Error", {
+        description: error.message || "Failed to create checkout session",
       });
     },
   });
 
-  const getPaymentMethods = trpc.payments.getPaymentMethods.useQuery(undefined, {
-    enabled: isOpen,
-  });
+  const getPaymentMethods = trpc.payments.getPaymentMethods.useQuery(
+    undefined,
+    {
+      enabled: isOpen,
+    }
+  );
 
   useEffect(() => {
     if (getPaymentMethods.data) {
@@ -59,7 +70,7 @@ export function CheckoutModal({
       setIsLoading(true);
 
       if (!selectedPaymentMethod) {
-        setError('Please select a payment method');
+        setError("Please select a payment method");
         return;
       }
 
@@ -69,7 +80,7 @@ export function CheckoutModal({
         paymentMethod: selectedPaymentMethod as any,
       });
     } catch (err: any) {
-      setError(err.message || 'An error occurred');
+      setError(err.message || "An error occurred");
     } finally {
       setIsLoading(false);
     }
@@ -77,13 +88,13 @@ export function CheckoutModal({
 
   const getPaymentMethodIcon = (id: string) => {
     switch (id) {
-      case 'card':
+      case "card":
         return <CreditCard className="w-5 h-5" />;
-      case 'paypal':
+      case "paypal":
         return <span className="text-lg">🅿️</span>;
-      case 'apple_pay':
+      case "apple_pay":
         return <span className="text-lg">🍎</span>;
-      case 'google_pay':
+      case "google_pay":
         return <span className="text-lg">🔵</span>;
       default:
         return <Zap className="w-5 h-5" />;
@@ -133,9 +144,11 @@ export function CheckoutModal({
 
           {/* Payment Methods */}
           <div className="space-y-3">
-            <label className="text-sm font-semibold">Select Payment Method</label>
+            <label className="text-sm font-semibold">
+              Select Payment Method
+            </label>
             <div className="grid grid-cols-1 gap-3">
-              {paymentMethods.map((method) => (
+              {paymentMethods.map(method => (
                 <button
                   key={method.id}
                   onClick={() => {
@@ -145,9 +158,9 @@ export function CheckoutModal({
                   disabled={!method.supported || isLoading}
                   className={`relative flex items-start gap-4 p-4 rounded-lg border-2 transition-all ${
                     selectedPaymentMethod === method.id
-                      ? 'border-primary bg-primary/5'
-                      : 'border-border hover:border-primary/50'
-                  } ${!method.supported ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                      ? "border-primary bg-primary/5"
+                      : "border-border hover:border-primary/50"
+                  } ${!method.supported ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                 >
                   <div className="flex-shrink-0 mt-1">
                     {selectedPaymentMethod === method.id && (
@@ -181,7 +194,8 @@ export function CheckoutModal({
           <Alert className="bg-blue-50 border-blue-200">
             <CheckCircle className="h-4 w-4 text-blue-600" />
             <AlertDescription className="text-blue-800">
-              Your payment is secure and encrypted. We never store your payment details.
+              Your payment is secure and encrypted. We never store your payment
+              details.
             </AlertDescription>
           </Alert>
 
@@ -200,18 +214,18 @@ export function CheckoutModal({
               disabled={isLoading || !selectedPaymentMethod}
               className="flex-1"
             >
-              {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-              {isLoading ? 'Processing...' : `Pay $${stampPrice.toFixed(2)}`}
+              {isLoading && <Spinner className="mr-2" />}
+              {isLoading ? "Processing..." : `Pay $${stampPrice.toFixed(2)}`}
             </Button>
           </div>
 
           {/* Terms */}
           <p className="text-xs text-muted-foreground text-center">
-            By completing this purchase, you agree to our{' '}
+            By completing this purchase, you agree to our{" "}
             <a href="/terms" className="text-primary hover:underline">
               Terms of Service
-            </a>{' '}
-            and{' '}
+            </a>{" "}
+            and{" "}
             <a href="/privacy" className="text-primary hover:underline">
               Privacy Policy
             </a>
