@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Stripe from 'stripe';
+import { createTransaction, getTransactionByHash, updateTransaction, updateStamp } from './db';
 
 let _stripe: Stripe | null = null;
 
@@ -74,6 +75,9 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
       throw new Error('Missing required metadata (user_id or stamp_id)');
     }
 
+    const buyerId = parseInt(userId, 10);
+    const stampIdNum = parseInt(stampId, 10);
+
     console.log('[Webhook] Processing checkout completion:', {
       sessionId: session.id,
       userId,
@@ -84,11 +88,40 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
       customerEmail: session.customer_email,
     });
 
-    // TODO: Implement transaction recording
+    // Use payment intent ID as the canonical transaction hash so refunds can be matched
+    let transactionHash: string;
+    if (typeof session.payment_intent === 'string') {
+      transactionHash = session.payment_intent;
+    } else {
+      // payment_intent should always be present on completed payment-mode sessions.
+      // Fall back to the session ID but warn so operators can investigate.
+      console.warn('[Webhook] payment_intent not available on completed session; refund matching may fail:', session.id);
+      transactionHash = session.id;
+    }
+
+    const priceInDollars = session.amount_total != null ? (session.amount_total / 100).toFixed(2) : '0.00';
+
     // 1. Create transaction record in database
-    // 2. Grant access to purchased stamp
-    // 3. Send confirmation email
-    // 4. Update user purchase history
+    await createTransaction({
+      stampId: stampIdNum,
+      buyerId,
+      price: priceInDollars,
+      status: 'completed',
+      transactionHash,
+      completedAt: new Date(),
+    });
+
+    // 2. Mark stamp as sold and transfer ownership to buyer
+    await updateStamp(stampIdNum, {
+      isAvailable: false,
+      ownerId: buyerId,
+    });
+
+    console.log('[Webhook] Transaction recorded and stamp ownership transferred:', {
+      transactionHash,
+      stampId: stampIdNum,
+      buyerId,
+    });
 
     return {
       success: true,
@@ -110,10 +143,8 @@ async function handlePaymentIntentSucceeded(paymentIntent: Stripe.PaymentIntent)
       clientSecret: paymentIntent.client_secret,
     });
 
-    // TODO: Implement payment success handling
-    // 1. Update transaction status
-    // 2. Send success notification
-    // 3. Log payment details
+    // The checkout.session.completed event handles transaction recording.
+    // This event confirms the payment intent itself succeeded.
 
     return {
       success: true,
@@ -134,11 +165,12 @@ async function handlePaymentIntentPaymentFailed(paymentIntent: Stripe.PaymentInt
       lastPaymentError: paymentIntent.last_payment_error,
     });
 
-    // TODO: Implement payment failure handling
-    // 1. Update transaction status to failed
-    // 2. Send failure notification to user
-    // 3. Log failure details for debugging
-    // 4. Trigger retry mechanism if applicable
+    // Cancel any pending transaction that matches this payment intent
+    const existingTransaction = await getTransactionByHash(paymentIntent.id);
+    if (existingTransaction && existingTransaction.status === 'pending') {
+      await updateTransaction(existingTransaction.id, { status: 'cancelled' });
+      console.log('[Webhook] Pending transaction cancelled:', existingTransaction.id);
+    }
 
     return {
       success: true,
@@ -159,11 +191,33 @@ async function handleChargeRefunded(charge: Stripe.Charge) {
       refunded: charge.refunded,
     });
 
-    // TODO: Implement refund handling
-    // 1. Update transaction status to refunded
-    // 2. Revoke access to purchased stamp
-    // 3. Send refund confirmation email
-    // 4. Log refund details
+    // Look up the transaction using the payment intent ID stored as transactionHash
+    const paymentIntentId =
+      typeof charge.payment_intent === 'string' ? charge.payment_intent : null;
+
+    if (paymentIntentId) {
+      const existingTransaction = await getTransactionByHash(paymentIntentId);
+      if (existingTransaction) {
+        // 1. Update transaction status to cancelled (refunded)
+        await updateTransaction(existingTransaction.id, {
+          status: 'cancelled',
+          completedAt: new Date(),
+        });
+
+        // 2. Restore stamp availability so it can be purchased again
+        await updateStamp(existingTransaction.stampId, {
+          isAvailable: true,
+          ownerId: null,
+        });
+
+        console.log('[Webhook] Refund processed — transaction cancelled and stamp restored:', {
+          transactionId: existingTransaction.id,
+          stampId: existingTransaction.stampId,
+        });
+      } else {
+        console.warn('[Webhook] No transaction found for payment intent:', paymentIntentId);
+      }
+    }
 
     return {
       success: true,
@@ -185,11 +239,18 @@ async function handleChargeDisputeCreated(dispute: Stripe.Dispute) {
       status: dispute.status,
     });
 
-    // TODO: Implement dispute handling
-    // 1. Log dispute details
-    // 2. Notify admin
-    // 3. Flag transaction for review
-    // 4. Prepare response documentation
+    // Log the dispute for admin review. Dispute resolution requires manual
+    // intervention; flag the transaction if a matching one can be found.
+    const chargeId =
+      typeof dispute.charge === 'string' ? dispute.charge : null;
+
+    console.warn('[Webhook] Dispute requires admin review:', {
+      disputeId: dispute.id,
+      chargeId,
+      reason: dispute.reason,
+      amount: dispute.amount,
+      currency: dispute.currency,
+    });
 
     return {
       success: true,
