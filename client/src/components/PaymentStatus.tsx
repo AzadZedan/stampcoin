@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,12 +16,22 @@ export function PaymentStatus({ sessionId, onSuccess, onError }: PaymentStatusPr
   const [status, setStatus] = useState<'pending' | 'success' | 'failed' | 'loading'>('loading');
   const [message, setMessage] = useState<string>('');
   const [isRetrying, setIsRetrying] = useState(false);
+  const callbackFiredRef = useRef(false);
+
+  useEffect(() => {
+    callbackFiredRef.current = false;
+  }, [sessionId]);
 
   const validateCheckout = trpc.payments.validateCheckout.useQuery(
     { sessionId: sessionId || '' },
     {
       enabled: !!sessionId,
-      refetchInterval: 2000, // Poll every 2 seconds
+      refetchInterval: (query) => {
+        const paymentStatus = query.state.data?.paymentStatus;
+        if (paymentStatus === 'paid' || paymentStatus === 'no_payment_required') return false;
+        if (query.state.error) return false;
+        return 2000;
+      },
       refetchIntervalInBackground: true,
     }
   );
@@ -34,17 +44,23 @@ export function PaymentStatus({ sessionId, onSuccess, onError }: PaymentStatusPr
     if (paymentStatus === 'paid') {
       setStatus('success');
       setMessage('Payment completed successfully!');
-      toast.success('Payment Successful', {
-        description: 'Your purchase has been confirmed.',
-      });
-      onSuccess?.();
+      if (!callbackFiredRef.current) {
+        callbackFiredRef.current = true;
+        toast.success('Payment Successful', {
+          description: 'Your purchase has been confirmed.',
+        });
+        onSuccess?.();
+      }
     } else if (paymentStatus === 'unpaid') {
       setStatus('pending');
       setMessage('Payment is being processed...');
     } else if (paymentStatus === 'no_payment_required') {
       setStatus('success');
       setMessage('Order confirmed!');
-      onSuccess?.();
+      if (!callbackFiredRef.current) {
+        callbackFiredRef.current = true;
+        onSuccess?.();
+      }
     }
   }, [validateCheckout.data, onSuccess]);
 
