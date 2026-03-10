@@ -54,9 +54,11 @@ export default function Investors() {
                   Schedule a Meeting
                 </Button>
               </Link>
-              <Button size="lg" variant="outline">
-                Download Pitch Deck
-              </Button>
+              <a href="/PITCH_DECK.md" download="StampCoin_Pitch_Deck.md" aria-label="Download StampCoin pitch deck">
+                <Button size="lg" variant="outline">
+                  Download Pitch Deck
+                </Button>
+              </a>
             </div>
           </div>
         </div>
