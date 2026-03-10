@@ -202,3 +202,54 @@ export const partnerTransactions = mysqlTable("partnerTransactions", {
 
 export type PartnerTransaction = typeof partnerTransactions.$inferSelect;
 export type InsertPartnerTransaction = typeof partnerTransactions.$inferInsert;
+
+/**
+ * Wallets table for tracking on-chain token balances per user
+ */
+export const wallets = mysqlTable("wallets", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  address: varchar("address", { length: 100 }).notNull().unique(),
+  balance: decimal("balance", { precision: 20, scale: 8 }).default("0").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Wallet = typeof wallets.$inferSelect;
+export type InsertWallet = typeof wallets.$inferInsert;
+
+/**
+ * Market items table for peer-to-peer stamp sales
+ */
+export const marketItems = mysqlTable("marketItems", {
+  id: int("id").autoincrement().primaryKey(),
+  stampId: int("stampId").notNull().references(() => stamps.id, { onDelete: "cascade" }),
+  sellerId: int("sellerId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  buyerId: int("buyerId").references(() => users.id),
+  price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+  status: mysqlEnum("status", ["listed", "sold", "cancelled"]).default("listed").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type MarketItem = typeof marketItems.$inferSelect;
+export type InsertMarketItem = typeof marketItems.$inferInsert;
+
+/**
+ * Auctions table for time-limited stamp bidding
+ */
+export const auctions = mysqlTable("auctions", {
+  id: int("id").autoincrement().primaryKey(),
+  stampId: int("stampId").notNull().references(() => stamps.id, { onDelete: "cascade" }),
+  sellerId: int("sellerId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  startPrice: decimal("startPrice", { precision: 10, scale: 2 }).notNull(),
+  currentBid: decimal("currentBid", { precision: 10, scale: 2 }),
+  highestBidderId: int("highestBidderId").references(() => users.id),
+  endTime: timestamp("endTime").notNull(),
+  status: mysqlEnum("status", ["active", "ended", "cancelled"]).default("active").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Auction = typeof auctions.$inferSelect;
+export type InsertAuction = typeof auctions.$inferInsert;
