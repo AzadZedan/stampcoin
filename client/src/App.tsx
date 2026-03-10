@@ -15,6 +15,7 @@ import StampDetail from "./pages/StampDetail";
 import Dashboard from "./pages/Dashboard";
 import Partners from "./pages/Partners";
 import PaymentResult from "./pages/PaymentResult";
+import ComponentsShowcase from "./pages/ComponentShowcase";
 
 function Router() {
   return (
@@ -28,7 +29,8 @@ function Router() {
       <Route path={"/investors"} component={Investors} />
       <Route path={"/contact"} component={Contact} />
       <Route path={"/partners"} component={Partners} />
-      <Route path={"payment-result"} component={PaymentResult} />
+      <Route path={"/payment-result"} component={PaymentResult} />
+      <Route path={"/showcase"} component={ComponentsShowcase} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
