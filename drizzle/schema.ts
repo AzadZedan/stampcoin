@@ -1,4 +1,13 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, boolean } from "drizzle-orm/mysql-core";
+import {
+  int,
+  mysqlEnum,
+  mysqlTable,
+  text,
+  timestamp,
+  varchar,
+  decimal,
+  boolean,
+} from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -61,7 +70,15 @@ export const stamps = mysqlTable("stamps", {
   categoryId: int("categoryId").notNull(),
   country: varchar("country", { length: 100 }),
   year: int("year"),
-  rarity: mysqlEnum("rarity", ["common", "uncommon", "rare", "very_rare", "legendary"]).default("common").notNull(),
+  rarity: mysqlEnum("rarity", [
+    "common",
+    "uncommon",
+    "rare",
+    "very_rare",
+    "legendary",
+  ])
+    .default("common")
+    .notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   isAvailable: boolean("isAvailable").default(true).notNull(),
   ownerId: int("ownerId"),
@@ -85,7 +102,9 @@ export const transactions = mysqlTable("transactions", {
   buyerId: int("buyerId").notNull(),
   sellerId: int("sellerId"),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
-  status: mysqlEnum("status", ["pending", "completed", "cancelled"]).default("pending").notNull(),
+  status: mysqlEnum("status", ["pending", "completed", "cancelled"])
+    .default("pending")
+    .notNull(),
   transactionHash: varchar("transactionHash", { length: 200 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   completedAt: timestamp("completedAt"),
@@ -116,7 +135,9 @@ export const contactMessages = mysqlTable("contactMessages", {
   email: varchar("email", { length: 320 }).notNull(),
   subject: varchar("subject", { length: 300 }).notNull(),
   message: text("message").notNull(),
-  status: mysqlEnum("status", ["new", "read", "replied"]).default("new").notNull(),
+  status: mysqlEnum("status", ["new", "read", "replied"])
+    .default("new")
+    .notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
@@ -128,8 +149,12 @@ export type InsertContactMessage = typeof contactMessages.$inferInsert;
  */
 export const reviews = mysqlTable("reviews", {
   id: int("id").autoincrement().primaryKey(),
-  stampId: int("stampId").notNull().references(() => stamps.id, { onDelete: 'cascade' }),
-  userId: int("userId").notNull().references(() => users.id, { onDelete: 'cascade' }),
+  stampId: int("stampId")
+    .notNull()
+    .references(() => stamps.id, { onDelete: "cascade" }),
+  userId: int("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
   rating: int("rating").notNull(), // 1-5 stars
   comment: text("comment"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -144,7 +169,9 @@ export type InsertReview = typeof reviews.$inferInsert;
  */
 export const partners = mysqlTable("partners", {
   id: int("id").autoincrement().primaryKey(),
-  userId: int("userId").notNull().references(() => users.id, { onDelete: 'cascade' }),
+  userId: int("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
   companyName: varchar("companyName", { length: 200 }).notNull(),
   companyNameAr: varchar("companyNameAr", { length: 200 }),
   description: text("description"),
@@ -152,10 +179,27 @@ export const partners = mysqlTable("partners", {
   website: varchar("website", { length: 500 }),
   logo: text("logo"),
   logoKey: varchar("logoKey", { length: 500 }),
-  tier: mysqlEnum("tier", ["bronze", "silver", "gold", "platinum", "diamond"]).notNull(),
-  totalInvestment: decimal("totalInvestment", { precision: 15, scale: 2 }).notNull(),
+  tier: mysqlEnum("tier", [
+    "bronze",
+    "silver",
+    "gold",
+    "platinum",
+    "diamond",
+  ]).notNull(),
+  totalInvestment: decimal("totalInvestment", {
+    precision: 15,
+    scale: 2,
+  }).notNull(),
   investmentDate: timestamp("investmentDate").defaultNow().notNull(),
-  status: mysqlEnum("status", ["pending", "approved", "rejected", "active", "inactive"]).default("pending").notNull(),
+  status: mysqlEnum("status", [
+    "pending",
+    "approved",
+    "rejected",
+    "active",
+    "inactive",
+  ])
+    .default("pending")
+    .notNull(),
   approvedBy: int("approvedBy"),
   approvalDate: timestamp("approvalDate"),
   benefits: text("benefits"),
@@ -174,8 +218,17 @@ export type InsertPartner = typeof partners.$inferInsert;
  */
 export const partnerBenefits = mysqlTable("partnerBenefits", {
   id: int("id").autoincrement().primaryKey(),
-  partnerId: int("partnerId").notNull().references(() => partners.id, { onDelete: 'cascade' }),
-  benefitType: mysqlEnum("benefitType", ["discount", "commission", "feature", "support", "branding", "exclusive_access"]).notNull(),
+  partnerId: int("partnerId")
+    .notNull()
+    .references(() => partners.id, { onDelete: "cascade" }),
+  benefitType: mysqlEnum("benefitType", [
+    "discount",
+    "commission",
+    "feature",
+    "support",
+    "branding",
+    "exclusive_access",
+  ]).notNull(),
   description: varchar("description", { length: 500 }).notNull(),
   value: varchar("value", { length: 200 }),
   isActive: boolean("isActive").default(true).notNull(),
@@ -190,12 +243,21 @@ export type InsertPartnerBenefit = typeof partnerBenefits.$inferInsert;
  */
 export const partnerTransactions = mysqlTable("partnerTransactions", {
   id: int("id").autoincrement().primaryKey(),
-  partnerId: int("partnerId").notNull().references(() => partners.id, { onDelete: 'cascade' }),
+  partnerId: int("partnerId")
+    .notNull()
+    .references(() => partners.id, { onDelete: "cascade" }),
   transactionId: int("transactionId").references(() => transactions.id),
-  type: mysqlEnum("type", ["purchase", "commission", "reward", "refund"]).notNull(),
+  type: mysqlEnum("type", [
+    "purchase",
+    "commission",
+    "reward",
+    "refund",
+  ]).notNull(),
   amount: decimal("amount", { precision: 15, scale: 2 }).notNull(),
   description: varchar("description", { length: 500 }),
-  status: mysqlEnum("status", ["pending", "completed", "failed"]).default("pending").notNull(),
+  status: mysqlEnum("status", ["pending", "completed", "failed"])
+    .default("pending")
+    .notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   completedAt: timestamp("completedAt"),
 });
