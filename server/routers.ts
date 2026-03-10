@@ -9,9 +9,20 @@ import { randomBytes } from "crypto";
 import Stripe from 'stripe';
 import { STAMP_PRODUCTS } from './products';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-12-15.clover',
-});
+let _stripe: Stripe | null = null;
+
+function getStripe(): Stripe {
+  if (!_stripe) {
+    const key = process.env.STRIPE_SECRET_KEY;
+    if (!key) {
+      throw new Error('STRIPE_SECRET_KEY is not configured');
+    }
+    _stripe = new Stripe(key, {
+      apiVersion: '2026-02-25.clover',
+    });
+  }
+  return _stripe;
+}
 
 export const appRouter = router({
   system: systemRouter,
@@ -228,7 +239,7 @@ export const appRouter = router({
           
           const paymentMethods = paymentMethodMap[input.paymentMethod] || ['card'];
 
-          const session = await stripe.checkout.sessions.create({
+          const session = await getStripe().checkout.sessions.create({
             payment_method_types: paymentMethods as any,
             line_items: [
               {
@@ -277,7 +288,7 @@ export const appRouter = router({
       }))
       .query(async ({ input }) => {
         try {
-          const session = await stripe.checkout.sessions.retrieve(input.sessionId);
+          const session = await getStripe().checkout.sessions.retrieve(input.sessionId);
           return {
             status: session.payment_status,
             paymentStatus: session.payment_status,

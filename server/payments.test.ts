@@ -1,6 +1,25 @@
-import { describe, expect, it } from "vitest";
+import { vi, describe, expect, it, beforeAll } from "vitest";
+
+vi.mock("stripe", () => {
+  const mockSessionCreate = vi.fn().mockResolvedValue({
+    id: "cs_test_mock_session_123",
+    url: "https://checkout.stripe.com/pay/cs_test_mock_session_123",
+    payment_status: "unpaid",
+    customer_email: null,
+    metadata: {},
+  });
+  const MockStripe = vi.fn().mockImplementation(() => ({
+    checkout: { sessions: { create: mockSessionCreate } },
+  }));
+  return { default: MockStripe };
+});
+
 import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
+
+beforeAll(() => {
+  process.env.STRIPE_SECRET_KEY = "sk_test_mock_key_for_tests";
+});
 
 type AuthenticatedUser = NonNullable<TrpcContext["user"]>;
 
