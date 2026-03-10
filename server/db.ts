@@ -413,18 +413,22 @@ export async function getPartnerByUserId(userId: number) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-export async function getAllPartners(status?: string) {
+export async function getAllPartners(status?: string, tier?: string) {
   const db = await getDb();
   if (!db) return [];
 
-  if (status) {
+  const conditions = [];
+  if (status) conditions.push(eq(partners.status, status as any));
+  if (tier) conditions.push(eq(partners.tier, tier as any));
+
+  if (conditions.length > 0) {
     return await db
       .select()
       .from(partners)
-      .where(eq(partners.status, status as any))
+      .where(conditions.length === 1 ? conditions[0] : and(...conditions))
       .orderBy(desc(partners.totalInvestment));
   }
-  
+
   return await db
     .select()
     .from(partners)
