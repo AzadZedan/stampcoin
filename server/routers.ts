@@ -8,6 +8,7 @@ import { storagePut } from "./storage";
 import { randomBytes } from "crypto";
 import Stripe from 'stripe';
 import { STAMP_PRODUCTS } from './products';
+import { ENV } from './_core/env';
 
 let _stripe: Stripe | null = null;
 
@@ -526,6 +527,38 @@ export const appRouter = router({
           }
           return await db.getPartnerTotalEarnings(input.partnerId);
         }),
+    }),
+  }),
+
+  // Blockchain / STP Token
+  blockchain: router({
+    getInfo: publicProcedure.query(() => {
+      return {
+        name: "StampCoin",
+        symbol: "STP",
+        decimals: 18,
+        totalSupply: 421000000,
+        blockchain: "BNB Smart Chain",
+        consensus: "Proof of Staked Authority (PoSA)",
+        standard: "BEP-20",
+        network: "BSC Mainnet",
+        chainId: 56,
+        contractAddress: ENV.stpContractAddress || "Pending mainnet deployment",
+      };
+    }),
+
+    getSupply: publicProcedure.query(async () => {
+      const STP_TOTAL_SUPPLY = 421000000;
+      // Each completed marketplace transaction represents one STP token transfer.
+      // Use the completed transaction count as a proxy for tokens in circulation.
+      const completedTransactions = await db.getCompletedTransactionCount();
+      return {
+        totalSupply: STP_TOTAL_SUPPLY,
+        mintedSupply: completedTransactions,
+        remainingSupply: STP_TOTAL_SUPPLY - completedTransactions,
+        symbol: "STP",
+        decimals: 18,
+      };
     }),
   }),
 });
