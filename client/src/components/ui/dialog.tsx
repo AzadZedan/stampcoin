@@ -98,15 +98,16 @@ function DialogContent({
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean;
 }) {
-  const { isComposing } = useDialogComposition();
+  const { isComposing, justEndedComposing } = useDialogComposition();
 
   const handleEscapeKeyDown = React.useCallback(
     (e: KeyboardEvent) => {
       // Check both the native isComposing property and our context state
       // This handles Safari's timing issues with composition events
-      const isCurrentlyComposing = (e as any).isComposing || isComposing();
+      const isCurrentlyComposing =
+        (e as any).isComposing || isComposing() || justEndedComposing();
 
-      // If IME is composing, prevent dialog from closing
+      // If IME is composing or just ended composing, prevent dialog from closing
       if (isCurrentlyComposing) {
         e.preventDefault();
         return;
@@ -115,7 +116,7 @@ function DialogContent({
       // Call user's onEscapeKeyDown if provided
       onEscapeKeyDown?.(e);
     },
-    [isComposing, onEscapeKeyDown]
+    [isComposing, justEndedComposing, onEscapeKeyDown]
   );
 
   return (
