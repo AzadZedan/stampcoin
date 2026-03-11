@@ -2,6 +2,14 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Sparkles, Heart, ShoppingBag, User, LogOut, ArrowLeft, Coins, ExternalLink } from "lucide-react";
 import { Link } from "wouter";
@@ -197,16 +205,23 @@ export default function Dashboard() {
                       ))}
                     </div>
                   ) : (
-                    <div className="text-center py-12">
-                      <Heart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-lg font-medium mb-2">No favorites yet</p>
-                      <p className="text-muted-foreground mb-4">
-                        Start adding stamps to your favorites from the marketplace
-                      </p>
-                      <Link href="/marketplace">
-                        <Button>Explore Marketplace</Button>
-                      </Link>
-                    </div>
+                    <Empty>
+                      <EmptyHeader>
+                        <EmptyMedia variant="icon">
+                          <Heart />
+                        </EmptyMedia>
+                        <EmptyTitle>No favorites yet</EmptyTitle>
+                        <EmptyDescription>
+                          Start adding stamps to your favorites from the
+                          marketplace
+                        </EmptyDescription>
+                      </EmptyHeader>
+                      <EmptyContent>
+                        <Link href="/marketplace">
+                          <Button>Explore Marketplace</Button>
+                        </Link>
+                      </EmptyContent>
+                    </Empty>
                   )}
                 </CardContent>
               </Card>
@@ -250,16 +265,22 @@ export default function Dashboard() {
                       ))}
                     </div>
                   ) : (
-                    <div className="text-center py-12">
-                      <ShoppingBag className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-lg font-medium mb-2">No purchases yet</p>
-                      <p className="text-muted-foreground mb-4">
-                        Start collecting digital stamps from our marketplace
-                      </p>
-                      <Link href="/marketplace">
-                        <Button>Browse Stamps</Button>
-                      </Link>
-                    </div>
+                    <Empty>
+                      <EmptyHeader>
+                        <EmptyMedia variant="icon">
+                          <ShoppingBag />
+                        </EmptyMedia>
+                        <EmptyTitle>No purchases yet</EmptyTitle>
+                        <EmptyDescription>
+                          Start collecting digital stamps from our marketplace
+                        </EmptyDescription>
+                      </EmptyHeader>
+                      <EmptyContent>
+                        <Link href="/marketplace">
+                          <Button>Browse Stamps</Button>
+                        </Link>
+                      </EmptyContent>
+                    </Empty>
                   )}
                 </CardContent>
               </Card>

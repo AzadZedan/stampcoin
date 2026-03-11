@@ -1,5 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -188,13 +195,17 @@ export default function Marketplace() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12">
-              <Sparkles className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-              <p className="text-xl font-medium text-foreground mb-2">No stamps found</p>
-              <p className="text-muted-foreground">
-                Try adjusting your search or filter criteria
-              </p>
-            </div>
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <Sparkles />
+                </EmptyMedia>
+                <EmptyTitle>No stamps found</EmptyTitle>
+                <EmptyDescription>
+                  Try adjusting your search or filter criteria
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
           )}
         </div>
       </section>
