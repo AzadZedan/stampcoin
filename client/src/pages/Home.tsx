@@ -2,11 +2,13 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getLoginUrl } from "@/const";
-import { ArrowRight, Shield, TrendingUp, Users, Sparkles, Globe, Award } from "lucide-react";
+import { ArrowRight, Shield, TrendingUp, Users, Sparkles, Globe, Award, Coins } from "lucide-react";
 import { Link } from "wouter";
+import { trpc } from "@/lib/trpc";
 
 export default function Home() {
   const { user, isAuthenticated } = useAuth();
+  const { data: tokenInfo } = trpc.blockchain.getInfo.useQuery();
 
   return (
     <div className="min-h-screen bg-vintage-texture">
@@ -182,9 +184,11 @@ export default function Home() {
                 <div className="text-primary-foreground/80">Countries</div>
               </div>
               <div>
-                <TrendingUp className="w-10 h-10 mx-auto mb-4 opacity-90" />
-                <div className="text-4xl font-serif font-bold mb-2">$5B+</div>
-                <div className="text-primary-foreground/80">Market Value</div>
+                <Coins className="w-10 h-10 mx-auto mb-4 opacity-90" />
+                <div className="text-4xl font-serif font-bold mb-2">
+                  {tokenInfo ? (tokenInfo.totalSupply / 1_000_000).toFixed(0) + "M" : "421M"}
+                </div>
+                <div className="text-primary-foreground/80">STP Token Supply</div>
               </div>
             </div>
           </div>

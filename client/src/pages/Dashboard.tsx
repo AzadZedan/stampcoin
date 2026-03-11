@@ -3,7 +3,7 @@ import { getLoginUrl } from "@/const";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Sparkles, Heart, ShoppingBag, User, LogOut, ArrowLeft } from "lucide-react";
+import { Sparkles, Heart, ShoppingBag, User, LogOut, ArrowLeft, Coins, ExternalLink } from "lucide-react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 
@@ -17,6 +17,8 @@ export default function Dashboard() {
     undefined,
     { enabled: isAuthenticated }
   );
+  const { data: tokenInfo } = trpc.blockchain.getInfo.useQuery();
+  const { data: tokenSupply } = trpc.blockchain.getSupply.useQuery();
 
   if (loading) {
     return (
@@ -158,9 +160,10 @@ export default function Dashboard() {
 
           {/* Tabs */}
           <Tabs defaultValue="favorites" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-6">
+            <TabsList className="grid w-full grid-cols-3 mb-6">
               <TabsTrigger value="favorites">My Favorites</TabsTrigger>
               <TabsTrigger value="purchases">Purchase History</TabsTrigger>
+              <TabsTrigger value="token">STP Token</TabsTrigger>
             </TabsList>
 
             <TabsContent value="favorites">
@@ -258,6 +261,105 @@ export default function Dashboard() {
                       </Link>
                     </div>
                   )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="token">
+              <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Coins className="w-5 h-5" />
+                    STP Token Information
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-lg">Token Details</h4>
+                      <dl className="space-y-3 text-sm">
+                        <div className="flex justify-between py-2 border-b border-border/30">
+                          <dt className="text-muted-foreground">Token Name</dt>
+                          <dd className="font-medium">{tokenInfo?.name ?? "StampCoin"}</dd>
+                        </div>
+                        <div className="flex justify-between py-2 border-b border-border/30">
+                          <dt className="text-muted-foreground">Symbol</dt>
+                          <dd className="font-bold text-primary">{tokenInfo?.symbol ?? "STP"}</dd>
+                        </div>
+                        <div className="flex justify-between py-2 border-b border-border/30">
+                          <dt className="text-muted-foreground">Standard</dt>
+                          <dd className="font-medium">{tokenInfo?.standard ?? "BEP-20"}</dd>
+                        </div>
+                        <div className="flex justify-between py-2 border-b border-border/30">
+                          <dt className="text-muted-foreground">Blockchain</dt>
+                          <dd className="font-medium">{tokenInfo?.blockchain ?? "BNB Smart Chain"}</dd>
+                        </div>
+                        <div className="flex justify-between py-2 border-b border-border/30">
+                          <dt className="text-muted-foreground">Network</dt>
+                          <dd className="font-medium">{tokenInfo?.network ?? "BSC Mainnet"}</dd>
+                        </div>
+                        <div className="flex justify-between py-2 border-b border-border/30">
+                          <dt className="text-muted-foreground">Decimals</dt>
+                          <dd className="font-medium">{tokenInfo?.decimals ?? 18}</dd>
+                        </div>
+                        <div className="flex justify-between py-2">
+                          <dt className="text-muted-foreground">Chain ID</dt>
+                          <dd className="font-medium">{tokenInfo?.chainId ?? 56}</dd>
+                        </div>
+                      </dl>
+                    </div>
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-lg">Supply Metrics</h4>
+                      <div className="space-y-4">
+                        <Card className="border-border/30 bg-primary/5">
+                          <CardContent className="p-4 text-center">
+                            <div className="text-sm text-muted-foreground mb-1">Total Supply</div>
+                            <div className="text-3xl font-serif font-bold text-primary">
+                              {tokenSupply ? (tokenSupply.totalSupply / 1_000_000).toFixed(0) + "M" : "421M"}
+                            </div>
+                            <div className="text-xs text-muted-foreground">STP tokens</div>
+                          </CardContent>
+                        </Card>
+                        <Card className="border-border/30 bg-secondary/5">
+                          <CardContent className="p-4 text-center">
+                            <div className="text-sm text-muted-foreground mb-1">In Circulation</div>
+                            <div className="text-3xl font-serif font-bold text-secondary">
+                              {tokenSupply ? tokenSupply.mintedSupply.toLocaleString() : "—"}
+                            </div>
+                            <div className="text-xs text-muted-foreground">from completed transactions</div>
+                          </CardContent>
+                        </Card>
+                        <Card className="border-border/30 bg-accent/5">
+                          <CardContent className="p-4 text-center">
+                            <div className="text-sm text-muted-foreground mb-1">Remaining Supply</div>
+                            <div className="text-3xl font-serif font-bold text-accent">
+                              {tokenSupply
+                                ? (tokenSupply.remainingSupply / 1_000_000).toFixed(2) + "M"
+                                : "421M"}
+                            </div>
+                            <div className="text-xs text-muted-foreground">STP tokens available</div>
+                          </CardContent>
+                        </Card>
+                      </div>
+                      {tokenInfo?.contractAddress && tokenInfo.contractAddress !== "Pending mainnet deployment" && (
+                        <a
+                          href={`https://bscscan.com/token/${tokenInfo.contractAddress}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Button variant="outline" className="w-full gap-2">
+                            <ExternalLink className="w-4 h-4" />
+                            View on BscScan
+                          </Button>
+                        </a>
+                      )}
+                      <Link href="/investors">
+                        <Button variant="outline" className="w-full">
+                          Learn More About STP Token
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>

@@ -528,6 +528,37 @@ export const appRouter = router({
         }),
     }),
   }),
+
+  // Blockchain / STP Token
+  blockchain: router({
+    getInfo: publicProcedure.query(() => {
+      return {
+        name: "StampCoin",
+        symbol: "STP",
+        decimals: 18,
+        totalSupply: 421000000,
+        blockchain: "BNB Smart Chain",
+        consensus: "Proof of Staked Authority (PoSA)",
+        standard: "BEP-20",
+        network: "BSC Mainnet",
+        chainId: 56,
+        contractAddress: process.env.STP_CONTRACT_ADDRESS ?? "Pending mainnet deployment",
+      };
+    }),
+
+    getSupply: publicProcedure.query(async () => {
+      const totalSupply = 421000000;
+      const soldCount = await db.getCompletedTransactionCount();
+      const mintedSupply = soldCount;
+      return {
+        totalSupply,
+        mintedSupply,
+        remainingSupply: totalSupply - mintedSupply,
+        symbol: "STP",
+        decimals: 18,
+      };
+    }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

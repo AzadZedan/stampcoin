@@ -551,3 +551,15 @@ export async function updatePartnerTransaction(id: number, transaction: Partial<
   const result = await db.update(partnerTransactions).set(transaction).where(eq(partnerTransactions.id, id));
   return result;
 }
+
+export async function getCompletedTransactionCount(): Promise<number> {
+  const db = await getDb();
+  if (!db) return 0;
+
+  const result = await db
+    .select({ count: sql<number>`COUNT(*)` })
+    .from(transactions)
+    .where(eq(transactions.status, "completed"));
+
+  return result[0]?.count ? Number(result[0].count) : 0;
+}
