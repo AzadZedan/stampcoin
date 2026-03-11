@@ -1,4 +1,5 @@
 # Digital Wallet API Documentation
+
 # واجهة برمجة تطبيقات المحفظة الرقمية
 
 ## Overview | نظرة عامة
@@ -14,6 +15,7 @@ http://localhost:10000/api
 ## Authentication
 
 Protected endpoints require a `Bearer` token in the `Authorization` header:
+
 ```
 Authorization: Bearer <SYNC_TOKEN>
 ```
@@ -29,6 +31,7 @@ Authorization: Bearer <SYNC_TOKEN>
 ```
 
 **Response (200 OK):**
+
 ```json
 {
   "userId": "user123",
@@ -65,6 +68,7 @@ Requires authentication.
 ```
 
 **Response:**
+
 ```json
 {
   "id": "transaction-uuid-1",
