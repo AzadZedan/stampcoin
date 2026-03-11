@@ -160,7 +160,7 @@ export default function Dashboard() {
 
           {/* Tabs */}
           <Tabs defaultValue="favorites" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-6">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 mb-6">
               <TabsTrigger value="favorites">My Favorites</TabsTrigger>
               <TabsTrigger value="purchases">Purchase History</TabsTrigger>
               <TabsTrigger value="token">STP Token</TabsTrigger>

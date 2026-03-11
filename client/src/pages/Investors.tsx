@@ -107,7 +107,7 @@ export default function Investors() {
                 <Shield className="w-10 h-10 text-primary mx-auto mb-3" />
                 <div className="text-sm text-muted-foreground mb-1">Tokens in Circulation</div>
                 <div className="text-3xl font-serif font-bold text-primary">
-                  {tokenSupply ? tokenSupply.mintedSupply.toLocaleString() : "—"}
+                  {tokenSupply ? tokenSupply.mintedSupply.toLocaleString() : "0"}
                 </div>
                 <div className="text-sm text-muted-foreground mt-1">from transactions</div>
               </CardContent>

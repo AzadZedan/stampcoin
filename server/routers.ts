@@ -8,6 +8,7 @@ import { storagePut } from "./storage";
 import { randomBytes } from "crypto";
 import Stripe from 'stripe';
 import { STAMP_PRODUCTS } from './products';
+import { ENV } from './_core/env';
 
 let _stripe: Stripe | null = null;
 
@@ -542,18 +543,19 @@ export const appRouter = router({
         standard: "BEP-20",
         network: "BSC Mainnet",
         chainId: 56,
-        contractAddress: process.env.STP_CONTRACT_ADDRESS ?? "Pending mainnet deployment",
+        contractAddress: ENV.stpContractAddress || "Pending mainnet deployment",
       };
     }),
 
     getSupply: publicProcedure.query(async () => {
-      const totalSupply = 421000000;
-      const soldCount = await db.getCompletedTransactionCount();
-      const mintedSupply = soldCount;
+      const STP_TOTAL_SUPPLY = 421000000;
+      // Each completed marketplace transaction represents one STP token transfer.
+      // Use the completed transaction count as a proxy for tokens in circulation.
+      const completedTransactions = await db.getCompletedTransactionCount();
       return {
-        totalSupply,
-        mintedSupply,
-        remainingSupply: totalSupply - mintedSupply,
+        totalSupply: STP_TOTAL_SUPPLY,
+        mintedSupply: completedTransactions,
+        remainingSupply: STP_TOTAL_SUPPLY - completedTransactions,
         symbol: "STP",
         decimals: 18,
       };
