@@ -1,9 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, TrendingUp, DollarSign, BarChart3, Target, Users, Globe } from "lucide-react";
+import { Sparkles, TrendingUp, DollarSign, BarChart3, Target, Users, Globe, Coins, Cpu, Shield } from "lucide-react";
 import { Link } from "wouter";
+import { trpc } from "@/lib/trpc";
 
 export default function Investors() {
+  const { data: tokenInfo } = trpc.blockchain.getInfo.useQuery();
+  const { data: tokenSupply } = trpc.blockchain.getSupply.useQuery();
+
   return (
     <div className="min-h-screen bg-stamps-luxury">
       {/* Navigation */}
@@ -59,6 +63,95 @@ export default function Investors() {
               </Button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* STP Token Information */}
+      <section className="py-20 bg-background/50">
+        <div className="container mx-auto px-4">
+          <h3 className="text-4xl font-serif font-bold text-foreground mb-4 text-center">
+            STP Token
+          </h3>
+          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+            The StampCoin (STP) token powers the entire ecosystem — from marketplace transactions to governance and rewards.
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-6 text-center">
+                <Coins className="w-10 h-10 text-primary mx-auto mb-3" />
+                <div className="text-sm text-muted-foreground mb-1">Token Symbol</div>
+                <div className="text-3xl font-serif font-bold text-primary">{tokenInfo?.symbol ?? "STP"}</div>
+                <div className="text-sm text-muted-foreground mt-1">{tokenInfo?.name ?? "StampCoin"}</div>
+              </CardContent>
+            </Card>
+            <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-6 text-center">
+                <BarChart3 className="w-10 h-10 text-secondary mx-auto mb-3" />
+                <div className="text-sm text-muted-foreground mb-1">Total Supply</div>
+                <div className="text-3xl font-serif font-bold text-secondary">
+                  {tokenInfo ? (tokenInfo.totalSupply / 1_000_000).toFixed(0) + "M" : "421M"}
+                </div>
+                <div className="text-sm text-muted-foreground mt-1">STP tokens</div>
+              </CardContent>
+            </Card>
+            <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-6 text-center">
+                <Cpu className="w-10 h-10 text-accent mx-auto mb-3" />
+                <div className="text-sm text-muted-foreground mb-1">Blockchain</div>
+                <div className="text-xl font-serif font-bold text-accent">{tokenInfo?.blockchain ?? "BNB Smart Chain"}</div>
+                <div className="text-sm text-muted-foreground mt-1">{tokenInfo?.standard ?? "BEP-20"}</div>
+              </CardContent>
+            </Card>
+            <Card className="border-border/50 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-6 text-center">
+                <Shield className="w-10 h-10 text-primary mx-auto mb-3" />
+                <div className="text-sm text-muted-foreground mb-1">Tokens in Circulation</div>
+                <div className="text-3xl font-serif font-bold text-primary">
+                  {tokenSupply ? tokenSupply.mintedSupply.toLocaleString() : "0"}
+                </div>
+                <div className="text-sm text-muted-foreground mt-1">from transactions</div>
+              </CardContent>
+            </Card>
+          </div>
+          <Card className="border-border/50 bg-card/80 backdrop-blur-sm max-w-2xl mx-auto">
+            <CardContent className="p-6">
+              <h4 className="text-lg font-serif font-semibold mb-4">Token Details</h4>
+              <dl className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <dt className="text-muted-foreground">Standard</dt>
+                  <dd className="font-medium">{tokenInfo?.standard ?? "BEP-20"}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-muted-foreground">Network</dt>
+                  <dd className="font-medium">{tokenInfo?.network ?? "BSC Mainnet"}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-muted-foreground">Chain ID</dt>
+                  <dd className="font-medium">{tokenInfo?.chainId ?? 56}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-muted-foreground">Decimals</dt>
+                  <dd className="font-medium">{tokenInfo?.decimals ?? 18}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-muted-foreground">Consensus</dt>
+                  <dd className="font-medium">{tokenInfo?.consensus ?? "PoSA"}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-muted-foreground">Contract Address</dt>
+                  <dd className="font-medium text-primary">
+                    {tokenInfo?.contractAddress ?? "Pending mainnet deployment"}
+                  </dd>
+                </div>
+                {tokenSupply && (
+                  <div className="flex justify-between">
+                    <dt className="text-muted-foreground">Remaining Supply</dt>
+                    <dd className="font-medium">{tokenSupply.remainingSupply.toLocaleString()} STP</dd>
+                  </div>
+                )}
+              </dl>
+            </CardContent>
+          </Card>
         </div>
       </section>
 

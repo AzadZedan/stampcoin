@@ -2,7 +2,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
-import { Analytics } from "@vercel/analytics/react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
@@ -28,7 +27,7 @@ function Router() {
       <Route path={"/investors"} component={Investors} />
       <Route path={"/contact"} component={Contact} />
       <Route path={"/partners"} component={Partners} />
-      <Route path={"payment-result"} component={PaymentResult} />
+      <Route path={"/payment-result"} component={PaymentResult} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
@@ -42,7 +41,6 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
-          <Analytics />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

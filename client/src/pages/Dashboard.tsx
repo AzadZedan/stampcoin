@@ -11,7 +11,7 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Sparkles, Heart, ShoppingBag, User, LogOut, ArrowLeft } from "lucide-react";
+import { Sparkles, Heart, ShoppingBag, User, LogOut, ArrowLeft, Coins, ExternalLink } from "lucide-react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 
@@ -25,6 +25,8 @@ export default function Dashboard() {
     undefined,
     { enabled: isAuthenticated }
   );
+  const { data: tokenInfo } = trpc.blockchain.getInfo.useQuery();
+  const { data: tokenSupply } = trpc.blockchain.getSupply.useQuery();
 
   if (loading) {
     return (
@@ -166,9 +168,10 @@ export default function Dashboard() {
 
           {/* Tabs */}
           <Tabs defaultValue="favorites" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-6">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 mb-6">
               <TabsTrigger value="favorites">My Favorites</TabsTrigger>
               <TabsTrigger value="purchases">Purchase History</TabsTrigger>
+              <TabsTrigger value="token">STP Token</TabsTrigger>
             </TabsList>
 
             <TabsContent value="favorites">
