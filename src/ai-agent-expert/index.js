@@ -3,6 +3,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import cors from "cors";
 import { fileURLToPath } from "url";
+import { codeAnalysisUtils, securityUtils, performanceUtils } from "./utils.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -55,6 +56,61 @@ async function writeProjectData(data) {
     }
 }
 
+// Default fallback responses for agent endpoints
+const DEFAULT_CODE_ISSUES = [
+    {
+        type: "performance",
+        severity: "medium",
+        description: "Potential memory leak in loop",
+        suggestion: "Consider using object pooling for frequently created objects"
+    },
+    {
+        type: "security",
+        severity: "high",
+        description: "Input validation missing in user data processing",
+        suggestion: "Add comprehensive input validation to prevent injection attacks"
+    }
+];
+
+const DEFAULT_PERFORMANCE_IMPROVEMENTS = [
+    {
+        area: "database",
+        improvement: "Added query indexing",
+        expectedImpact: "30% faster database queries"
+    },
+    {
+        area: "frontend",
+        improvement: "Implemented lazy loading",
+        expectedImpact: "40% reduction in initial load time"
+    },
+    {
+        area: "api",
+        improvement: "Added response caching",
+        expectedImpact: "50% reduction in API response time"
+    }
+];
+
+const DEFAULT_SECURITY_FINDINGS = [
+    {
+        type: "vulnerability",
+        severity: "high",
+        description: "Cross-site scripting (XSS) vulnerability in user profile",
+        recommendation: "Implement proper output encoding and content security policy"
+    },
+    {
+        type: "vulnerability",
+        severity: "medium",
+        description: "Insufficient rate limiting on API endpoints",
+        recommendation: "Implement rate limiting to prevent brute force attacks"
+    },
+    {
+        type: "best-practice",
+        severity: "low",
+        description: "Missing dependency version pinning",
+        recommendation: "Pin dependency versions to prevent unexpected updates"
+    }
+];
+
 // Agent API endpoints
 app.get("/agent/status", (req, res) => {
     res.json({
@@ -81,26 +137,24 @@ app.post("/agent/analyze-code", async (req, res) => {
     }
 
     try {
-        const { filePath, analysisType } = req.body;
+        const { filePath, analysisType, code } = req.body;
+
+        let metrics = null;
+        let issues = DEFAULT_CODE_ISSUES;
+
+        if (code) {
+            metrics = codeAnalysisUtils.analyzeCodeQuality(code);
+            const securityIssues = securityUtils.checkSecurityVulnerabilities(code);
+            const performanceIssues = performanceUtils.checkPerformanceIssues(code);
+            issues = [...securityIssues, ...performanceIssues];
+        }
 
         const analysis = {
             filePath,
             analysisType: analysisType || "general",
             timestamp: new Date().toISOString(),
-            issues: [
-                {
-                    type: "performance",
-                    severity: "medium",
-                    description: "Potential memory leak in loop",
-                    suggestion: "Consider using object pooling for frequently created objects"
-                },
-                {
-                    type: "security",
-                    severity: "high",
-                    description: "Input validation missing in user data processing",
-                    suggestion: "Add comprehensive input validation to prevent injection attacks"
-                }
-            ]
+            metrics,
+            issues
         };
 
         agentState.currentTask = {
@@ -202,28 +256,25 @@ app.post("/agent/optimize-performance", async (req, res) => {
     }
 
     try {
-        const { targetArea } = req.body;
+        const { targetArea, code } = req.body;
+
+        let improvements = DEFAULT_PERFORMANCE_IMPROVEMENTS;
+
+        if (code) {
+            const issues = performanceUtils.checkPerformanceIssues(code);
+            if (issues.length > 0) {
+                improvements = issues.map(issue => ({
+                    area: targetArea || "general",
+                    improvement: issue.suggestion,
+                    expectedImpact: `Fix ${issue.severity} severity: ${issue.message}`
+                }));
+            }
+        }
 
         const optimization = {
             targetArea: targetArea || "general",
             timestamp: new Date().toISOString(),
-            improvements: [
-                {
-                    area: "database",
-                    improvement: "Added query indexing",
-                    expectedImpact: "30% faster database queries"
-                },
-                {
-                    area: "frontend",
-                    improvement: "Implemented lazy loading",
-                    expectedImpact: "40% reduction in initial load time"
-                },
-                {
-                    area: "api",
-                    improvement: "Added response caching",
-                    expectedImpact: "50% reduction in API response time"
-                }
-            ]
+            improvements
         };
 
         agentState.currentTask = {
@@ -249,31 +300,26 @@ app.post("/agent/audit-security", async (req, res) => {
     }
 
     try {
-        const { scanDepth } = req.body;
+        const { scanDepth, code } = req.body;
+
+        let findings = DEFAULT_SECURITY_FINDINGS;
+
+        if (code) {
+            const vulnerabilities = securityUtils.checkSecurityVulnerabilities(code);
+            if (vulnerabilities.length > 0) {
+                findings = vulnerabilities.map(v => ({
+                    type: "vulnerability",
+                    severity: v.severity,
+                    description: v.message,
+                    recommendation: v.suggestion
+                }));
+            }
+        }
 
         const audit = {
             scanDepth: scanDepth || "standard",
             timestamp: new Date().toISOString(),
-            findings: [
-                {
-                    type: "vulnerability",
-                    severity: "high",
-                    description: "Cross-site scripting (XSS) vulnerability in user profile",
-                    recommendation: "Implement proper output encoding and content security policy"
-                },
-                {
-                    type: "vulnerability",
-                    severity: "medium",
-                    description: "Insufficient rate limiting on API endpoints",
-                    recommendation: "Implement rate limiting to prevent brute force attacks"
-                },
-                {
-                    type: "best-practice",
-                    severity: "low",
-                    description: "Missing dependency version pinning",
-                    recommendation: "Pin dependency versions to prevent unexpected updates"
-                }
-            ]
+            findings
         };
 
         agentState.currentTask = {
