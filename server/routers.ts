@@ -256,7 +256,7 @@ export const appRouter = router({
               },
             ],
             mode: 'payment',
-            success_url: `${origin}/dashboard?payment=success&sessionId={CHECKOUT_SESSION_ID}`,
+            success_url: `${origin}/payment-result?sessionId={CHECKOUT_SESSION_ID}`,
             cancel_url: `${origin}/marketplace?payment=cancelled`,
             customer_email: ctx.user.email || undefined,
             client_reference_id: ctx.user.id.toString(),
