@@ -407,10 +407,7 @@ export const appRouter = router({
         tier: z.string().optional(),
       }))
       .query(async ({ input }) => {
-        if (input.status) {
-          return await db.getAllPartners(input.status);
-        }
-        return await db.getAllPartners();
+        return await db.getAllPartners(input.status, input.tier);
       }),
     
     getById: publicProcedure
