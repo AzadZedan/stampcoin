@@ -80,6 +80,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+  FieldTitle,
+} from "@/components/ui/field";
+import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
@@ -672,6 +684,96 @@ export default function ComponentsShowcase() {
                       Selected: {selectedYear}/{selectedMonth}/
                     </p>
                   )}
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* FieldSet Section */}
+          <section className="space-y-4">
+            <h3 className="text-2xl font-semibold">FieldSet</h3>
+            <Card>
+              <CardContent className="pt-6 space-y-6">
+                {/* Basic FieldSet with legend */}
+                <div className="space-y-2">
+                  <Label>Basic FieldSet with Legend</Label>
+                  <FieldSet>
+                    <FieldLegend>Personal Information</FieldLegend>
+                    <FieldGroup>
+                      <Field>
+                        <FieldLabel htmlFor="showcase-name">Full Name</FieldLabel>
+                        <Input id="showcase-name" placeholder="Enter your name" />
+                        <FieldDescription>
+                          Your name as it appears on your account.
+                        </FieldDescription>
+                      </Field>
+                      <Field>
+                        <FieldLabel htmlFor="showcase-email">
+                          Email Address
+                        </FieldLabel>
+                        <Input
+                          id="showcase-email"
+                          type="email"
+                          placeholder="name@example.com"
+                        />
+                        <FieldDescription>
+                          We&apos;ll never share your email with anyone else.
+                        </FieldDescription>
+                      </Field>
+                    </FieldGroup>
+                  </FieldSet>
+                </div>
+                <Separator />
+                {/* FieldSet with error state */}
+                <div className="space-y-2">
+                  <Label>Field with Error State</Label>
+                  <FieldGroup>
+                    <Field>
+                      <FieldLabel htmlFor="showcase-username">Username</FieldLabel>
+                      <Input
+                        id="showcase-username"
+                        placeholder="Enter username"
+                        aria-invalid="true"
+                      />
+                      <FieldError
+                        errors={[{ message: "Username is already taken." }]}
+                      />
+                    </Field>
+                  </FieldGroup>
+                </div>
+                <Separator />
+                {/* FieldSet with FieldContent and FieldTitle */}
+                <div className="space-y-2">
+                  <Label>Horizontal Field Layout</Label>
+                  <FieldGroup>
+                    <Field orientation="horizontal">
+                      <FieldContent>
+                        <FieldTitle>Notifications</FieldTitle>
+                        <FieldDescription>
+                          Receive email notifications for account activity.
+                        </FieldDescription>
+                      </FieldContent>
+                      <Switch id="showcase-notifications" />
+                    </Field>
+                  </FieldGroup>
+                </div>
+                <Separator />
+                {/* FieldSeparator demo */}
+                <div className="space-y-2">
+                  <Label>FieldSeparator with Label</Label>
+                  <FieldGroup>
+                    <Field>
+                      <FieldLabel htmlFor="showcase-first">
+                        First Name
+                      </FieldLabel>
+                      <Input id="showcase-first" placeholder="First" />
+                    </Field>
+                    <FieldSeparator>or</FieldSeparator>
+                    <Field>
+                      <FieldLabel htmlFor="showcase-last">Last Name</FieldLabel>
+                      <Input id="showcase-last" placeholder="Last" />
+                    </Field>
+                  </FieldGroup>
                 </div>
               </CardContent>
             </Card>
