@@ -249,6 +249,26 @@ export async function createTransaction(transaction: InsertTransaction) {
   return result;
 }
 
+export async function getTransactionByHash(transactionHash: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db
+    .select()
+    .from(transactions)
+    .where(eq(transactions.transactionHash, transactionHash))
+    .limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function updateTransaction(id: number, transaction: Partial<InsertTransaction>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.update(transactions).set(transaction).where(eq(transactions.id, id));
+  return result;
+}
+
 // ============ Favorite Operations ============
 
 export async function getUserFavorites(userId: number) {
