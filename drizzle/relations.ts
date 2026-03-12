@@ -1,1 +1,108 @@
-import {} from "./schema";
+import { relations } from "drizzle-orm";
+import {
+  users,
+  categories,
+  stamps,
+  transactions,
+  favorites,
+  reviews,
+  partners,
+  partnerBenefits,
+  partnerTransactions,
+} from "./schema";
+
+export const usersRelations = relations(users, ({ many }) => ({
+  stamps: many(stamps),
+  favorites: many(favorites),
+  purchasedTransactions: many(transactions, { relationName: "buyer" }),
+  soldTransactions: many(transactions, { relationName: "seller" }),
+  reviews: many(reviews),
+  partner: many(partners),
+}));
+
+export const categoriesRelations = relations(categories, ({ many }) => ({
+  stamps: many(stamps),
+}));
+
+export const stampsRelations = relations(stamps, ({ one, many }) => ({
+  category: one(categories, {
+    fields: [stamps.categoryId],
+    references: [categories.id],
+  }),
+  owner: one(users, {
+    fields: [stamps.ownerId],
+    references: [users.id],
+  }),
+  favorites: many(favorites),
+  transactions: many(transactions),
+  reviews: many(reviews),
+}));
+
+export const transactionsRelations = relations(transactions, ({ one, many }) => ({
+  stamp: one(stamps, {
+    fields: [transactions.stampId],
+    references: [stamps.id],
+  }),
+  buyer: one(users, {
+    fields: [transactions.buyerId],
+    references: [users.id],
+    relationName: "buyer",
+  }),
+  seller: one(users, {
+    fields: [transactions.sellerId],
+    references: [users.id],
+    relationName: "seller",
+  }),
+  partnerTransactions: many(partnerTransactions),
+}));
+
+export const favoritesRelations = relations(favorites, ({ one }) => ({
+  user: one(users, {
+    fields: [favorites.userId],
+    references: [users.id],
+  }),
+  stamp: one(stamps, {
+    fields: [favorites.stampId],
+    references: [stamps.id],
+  }),
+}));
+
+export const reviewsRelations = relations(reviews, ({ one }) => ({
+  stamp: one(stamps, {
+    fields: [reviews.stampId],
+    references: [stamps.id],
+  }),
+  user: one(users, {
+    fields: [reviews.userId],
+    references: [users.id],
+  }),
+}));
+
+export const partnersRelations = relations(partners, ({ one, many }) => ({
+  user: one(users, {
+    fields: [partners.userId],
+    references: [users.id],
+  }),
+  benefits: many(partnerBenefits),
+  transactions: many(partnerTransactions),
+}));
+
+export const partnerBenefitsRelations = relations(partnerBenefits, ({ one }) => ({
+  partner: one(partners, {
+    fields: [partnerBenefits.partnerId],
+    references: [partners.id],
+  }),
+}));
+
+export const partnerTransactionsRelations = relations(partnerTransactions, ({ one }) => ({
+  partner: one(partners, {
+    fields: [partnerTransactions.partnerId],
+    references: [partners.id],
+  }),
+  transaction: one(transactions, {
+    fields: [partnerTransactions.transactionId],
+    references: [transactions.id],
+  }),
+}));
+
+
