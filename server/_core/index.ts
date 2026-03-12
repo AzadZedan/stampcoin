@@ -63,6 +63,35 @@ async function startServer() {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
   });
 
+  // Simple Contact page (GET)
+  app.get("/contact", (req, res) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.status(200).send(`
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Contact | Stampcoin Platform</title>
+        <style>
+          body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:40px;max-width:720px}
+          a{color:#2563eb}
+          .card{border:1px solid #e5e7eb;border-radius:12px;padding:18px}
+          code{background:#f3f4f6;padding:2px 6px;border-radius:6px}
+        </style>
+      </head>
+      <body>
+        <h1>Contact</h1>
+        <div class="card">
+          <p>This is the contact page for the Stampcoin Platform.</p>
+          <p>Status: <code>OK</code></p>
+          <p>Health check: <a href="/health">/health</a></p>
+        </div>
+      </body>
+    </html>
+  `);
+  });
+
   // Stripe webhook MUST be registered BEFORE express.json() to preserve raw body
   app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
   
