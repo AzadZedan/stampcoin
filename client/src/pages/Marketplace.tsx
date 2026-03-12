@@ -27,8 +27,12 @@ export default function Marketplace() {
 
   const { data: stamps, isLoading } = trpc.stamps.list.useQuery({
     search: searchQuery || undefined,
-    categoryId: selectedCategory ? parseInt(selectedCategory) : undefined,
-    rarity: selectedRarity || undefined,
+    categoryId:
+      selectedCategory && selectedCategory !== "all"
+        ? parseInt(selectedCategory)
+        : undefined,
+    rarity:
+      selectedRarity && selectedRarity !== "all" ? selectedRarity : undefined,
   });
 
   const { data: categories } = trpc.categories.list.useQuery();
