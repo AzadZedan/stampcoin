@@ -30,6 +30,7 @@ These are automatically loaded from your environment variables.
 Use these card numbers to test different payment scenarios:
 
 #### Successful Payment
+
 ```
 Card Number: 4242 4242 4242 4242
 Type: Visa
@@ -40,6 +41,7 @@ Expected Result: ✅ Payment succeeds
 ```
 
 #### Payment Requiring Authentication (3D Secure)
+
 ```
 Card Number: 4000 0025 0000 3155
 Type: Visa
@@ -50,6 +52,7 @@ Expected Result: ✅ Payment succeeds after 3D Secure verification
 ```
 
 #### Declined Payment (Insufficient Funds)
+
 ```
 Card Number: 4000 0000 0000 9995
 Type: Visa
@@ -60,6 +63,7 @@ Expected Result: ❌ Payment declined
 ```
 
 #### Declined Payment (Generic)
+
 ```
 Card Number: 4000 0000 0000 0002
 Type: Visa
@@ -125,11 +129,13 @@ To test webhooks locally, use Stripe CLI:
 #### 1. Install Stripe CLI
 
 **macOS:**
+
 ```bash
 brew install stripe/stripe-cli/stripe
 ```
 
 **Linux:**
+
 ```bash
 curl https://files.stripe.com/stripe-cli/install.sh -O
 bash install.sh
@@ -173,11 +179,11 @@ stripe trigger payment_intent.payment_failed
 
 The StampCoin platform handles these Stripe events:
 
-| Event | Handler | Action |
-|-------|---------|--------|
-| `checkout.session.completed` | `/api/stripe/webhook` | Process successful payment |
-| `payment_intent.succeeded` | `/api/stripe/webhook` | Update transaction status |
-| `payment_intent.payment_failed` | `/api/stripe/webhook` | Handle failed payment |
+| Event                           | Handler               | Action                     |
+| ------------------------------- | --------------------- | -------------------------- |
+| `checkout.session.completed`    | `/api/stripe/webhook` | Process successful payment |
+| `payment_intent.succeeded`      | `/api/stripe/webhook` | Update transaction status  |
+| `payment_intent.payment_failed` | `/api/stripe/webhook` | Handle failed payment      |
 
 ### Webhook Verification
 
@@ -217,6 +223,7 @@ All webhooks are verified using the webhook signing secret:
 ### Application Logs
 
 Check your application logs for:
+
 - Webhook receipt
 - Event processing
 - Database updates
@@ -278,6 +285,7 @@ Check your application logs for:
 
 **Problem:** Checkout page shows error  
 **Solution:**
+
 1. Verify Stripe keys are correct
 2. Check browser console for errors
 3. Verify webhook endpoint is accessible
@@ -287,6 +295,7 @@ Check your application logs for:
 
 **Problem:** Webhook events not triggering  
 **Solution:**
+
 1. Verify webhook URL is correct
 2. Check Stripe CLI is running
 3. Verify webhook signing secret matches
@@ -296,6 +305,7 @@ Check your application logs for:
 
 **Problem:** Test card being declined  
 **Solution:**
+
 1. Use correct test card number
 2. Verify expiry date is in future
 3. Try different test card
@@ -305,6 +315,7 @@ Check your application logs for:
 
 **Problem:** Checkout session creation fails  
 **Solution:**
+
 1. Verify API keys are correct
 2. Check database connection
 3. Verify user is authenticated
@@ -398,17 +409,20 @@ Check your application logs for:
 ## Additional Resources
 
 ### Stripe Documentation
+
 - [Stripe API Reference](https://stripe.com/docs/api)
 - [Stripe Checkout](https://stripe.com/docs/payments/checkout)
 - [Stripe Webhooks](https://stripe.com/docs/webhooks)
 - [Stripe Testing](https://stripe.com/docs/testing)
 
 ### StampCoin Documentation
+
 - [Project Completion Report](./PROJECT_COMPLETION_REPORT.md)
 - [API Documentation](./API_DOCUMENTATION.md)
 - [Database Schema](./drizzle/schema.ts)
 
 ### Support
+
 - **Stripe Support:** [support.stripe.com](https://support.stripe.com)
 - **Stripe Status:** [status.stripe.com](https://status.stripe.com)
 - **StampCoin Support:** support@stampcoin.io

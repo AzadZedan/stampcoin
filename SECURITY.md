@@ -30,6 +30,7 @@ If you discover a security vulnerability in the Stampcoin Platform, please repor
 When running the Stampcoin Platform in production:
 
 ### Environment Variables
+
 ```
 NODE_ENV=production
 SYNC_TOKEN=<strong-random-secret>
@@ -43,6 +44,7 @@ PORT=10000
 ### API Authentication
 
 Protected endpoints require a `Bearer` token in the `Authorization` header:
+
 ```
 Authorization: Bearer <SYNC_TOKEN>
 ```
