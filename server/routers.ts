@@ -1,6 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
+import { agentRouter } from "./agentRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
@@ -27,6 +28,7 @@ function getStripe(): Stripe {
 
 export const appRouter = router({
   system: systemRouter,
+  agent: agentRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
